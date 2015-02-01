@@ -102,12 +102,11 @@ start_form();
 if (!isset($_POST['stock_id']))
 	$_POST['stock_id'] = get_global_stock_item();
 
-echo "<center>" . _("Item:"). "&nbsp;";
 //Chaitanya : Manufcatured item visible
+start_selector(_("Item:"));
 echo stock_items_list('stock_id', $_POST['stock_id'], false, true);
 //echo stock_purchasable_items_list('stock_id', $_POST['stock_id'], false, true);
-
-echo "<hr></center>";
+end_selector();
 
 set_global_stock_item($_POST['stock_id']);
 
@@ -121,7 +120,7 @@ $result = get_all_item_codes($_POST['stock_id']);
 div_start('code_table');
 	start_table(TABLESTYLE, "width=60%");
 
-	$th = array(_("EAN/UPC Code"), _("Quantity"), _("Units"), 
+	$th = array(_("EAN/UPC Code"), _("Quantity") => array('align' => 'right'), _("Units"), 
 		_("Description"),_("Category"), "", "");
 
         table_header($th);

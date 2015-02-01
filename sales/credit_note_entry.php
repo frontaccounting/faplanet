@@ -270,20 +270,18 @@ hidden('cart_id');
 $customer_error = display_credit_header($_SESSION['Items']);
 
 if ($customer_error == "") {
-	start_table(TABLESTYLE, "width=80%", 10);
+	start_table(TABLESTYLE3, "width=100%", 10);
 	echo "<tr><td>";
 	display_credit_items(_("Credit Note Items"), $_SESSION['Items']);
 	credit_options_controls($_SESSION['Items']);
 	echo "</td></tr>";
-	end_table();
+	end_table(1);
 } else {
 	display_error($customer_error);
 }
 
-echo "<br><center><table><tr>";
-submit_cells('Update', _("Update"));
-submit_cells('ProcessCredit', _("Process Credit Note"), '', false, 'default');
-echo "</tr></table></center>";
+submit_center_first('Update', _("Update"));
+submit_center_last('ProcessCredit', _("Process Credit Note"), '', false, 'default');
 
 end_form();
 end_page();

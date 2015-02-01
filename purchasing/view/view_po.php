@@ -35,15 +35,21 @@ read_po($_GET['trans_no'], $purchase_order);
 echo "<br>";
 display_po_summary($purchase_order, true);
 
-start_table(TABLESTYLE, "width=90%", 6);
+start_table(TABLESTYLE3, "width=100%", 6);
 echo "<tr><td valign=top>"; // outer table
 
-display_heading2(_("Line Details"));
 
-start_table(TABLESTYLE, "colspan=9 width=100%");
+start_table(VIEW_ITEMS, "colspan=9 width=100%");
+display_caption(_("Line Details"));
 
-$th = array(_("Item Code"), _("Item Description"), _("Quantity"), _("Unit"), _("Price"),
-	_("Requested By"), _("Line Total"), _("Quantity Received"), _("Quantity Invoiced"));
+$th = array(_("Item Code"), _("Item Description"),
+  _("Quantity") => array('align' => 'right'), 
+  _("Unit") => array('align' => 'right'), 
+  _("Price") => array('align' => 'right'),
+	_("Requested By") => array('align' => 'right'), 
+  _("Line Total") => array('align' => 'right'),
+  _("Quantity Received") => array('align' => 'right'), 
+  _("Quantity Invoiced") => array('align' => 'right'));
 table_header($th);
 $total = $k = 0;
 $overdue_items = false;
@@ -110,8 +116,8 @@ if (db_num_rows($grns_result) > 0)
 
     echo "</td><td valign=top>"; // outer table
 
-    display_heading2(_("Deliveries"));
     start_table(TABLESTYLE);
+    display_caption(_("Deliveries"));
     $th = array(_("#"), _("Reference"), _("Delivered On"));
     table_header($th);
     while ($myrow = db_fetch($grns_result))
@@ -135,8 +141,8 @@ if (db_num_rows($invoice_result) > 0)
 
     echo "</td><td valign=top>"; // outer table
 
-    display_heading2(_("Invoices/Credits"));
     start_table(TABLESTYLE);
+    display_caption(_("Invoices/Credits"));
     $th = array(_("#"), _("Date"), _("Total"));
     table_header($th);
     while ($myrow = db_fetch($invoice_result))
@@ -153,7 +159,7 @@ if (db_num_rows($invoice_result) > 0)
 
 echo "</td></tr>";
 
-end_table(1); // outer table
+end_table(0); // outer table
 
 //----------------------------------------------------------------------------------------------------
 

@@ -81,8 +81,8 @@ INSERT INTO `0_menu` VALUES ('default','purchase_orders','purchase','Orders','',
 INSERT INTO `0_menu` VALUES ('default','purchase_order_inquiry','purchase_orders','Purchase Orders &Inquiry','purchasing/inquiry/po_search_completed.php?','SA_SUPPTRANSVIEW','inquiry',0,0,'');
 INSERT INTO `0_menu` VALUES ('default','purchase_order_entry','purchase_orders','Purchase &Order Entry','purchasing/po_entry_items.php?NewOrder=Yes','SA_PURCHASEORDER','entry',0,0,'');
 INSERT INTO `0_menu` VALUES ('default','purchase_deliveries','purchase','Deliveries','','','',0,0,'');
-INSERT INTO `0_menu` VALUES ('default','purchase_invoice_against','purchase_deliveries','Supplier &Invoices','purchasing/supplier_invoice.php?New=1','SA_SUPPLIERINVOICE','entry',0,0,'');
 INSERT INTO `0_menu` VALUES ('default','purchase_grn_entry','purchase_deliveries','Direct &GRN','purchasing/po_entry_items.php?NewGRN=Yes','SA_GRN','entry',0,0,'');
+INSERT INTO `0_menu` VALUES ('default','purchase_invoice_against','purchase_deliveries','Supplier &Invoices','purchasing/supplier_invoice.php?New=1','SA_SUPPLIERINVOICE','entry',0,0,'');
 INSERT INTO `0_menu` VALUES ('default','purchase_orders_out','purchase_deliveries','&Outstanding Purchase Orders Maintenance','purchasing/inquiry/po_search.php?','SA_GRN','inquiry',0,0,'');
 INSERT INTO `0_menu` VALUES ('default','purchase_invoices','purchase','Invoices','','','',0,0,'');
 INSERT INTO `0_menu` VALUES ('default','supplier_transactions','purchase_invoices','Supplier Transactions','purchasing/inquiry/supplier_inquiry.php?','SA_SUPPTRANSVIEW','inquiry',0,0,'');

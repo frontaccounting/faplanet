@@ -96,9 +96,9 @@ function fmt_errors($center=false) {
     global $messages, $path_to_root, $go_debug;
   
   $msg_class = array(
-  	E_USER_ERROR => 'err_msg',
-  	E_USER_WARNING =>'warn_msg', 
-	E_USER_NOTICE => 'note_msg');
+  	E_USER_ERROR => 'danger',
+  	E_USER_WARNING =>'warning', 
+	E_USER_NOTICE => 'success');
 
   $type = E_USER_NOTICE;
   $content = '';
@@ -130,7 +130,9 @@ function fmt_errors($center=false) {
 		$content .= ($cnt ? '<hr>' : '').$str;
 	}
 	$class = $msg_class[$type];
-    $content = "<div class='$class'>$content</div>";
+    //$content = "<div class='$class'>$content</div>";
+    $content ='<div class="alert alert-'.$class.' alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button> '.$content.' </div>';
   } else
   if ($path_to_root=='.')
 	return '';

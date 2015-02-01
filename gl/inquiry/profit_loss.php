@@ -233,9 +233,9 @@ function display_profit_and_loss()
 
 	$tableheader =  "<tr>
         <td class='tableheader'>" . _("Group/Account Name") . "</td>
-        <td class='tableheader'>" . _("Period") . "</td>
-		<td class='tableheader'>" . $sel[$compare] . "</td>
-		<td class='tableheader'>" . _("Achieved %") . "</td>
+        <td class='tableheader align-right'>" . _("Period") . "</td>
+		<td class='tableheader align-right'>" . $sel[$compare] . "</td>
+		<td class='tableheader align-right'>" . _("Achieved %") . "</td>
         </tr>";	
 	
 	if (!$drilldown) //Root Level
@@ -324,7 +324,7 @@ function display_profit_and_loss()
 	}
 		
 
-	end_table(1); // outer table
+	end_table(0); // outer table
 	div_end();
 }
 

@@ -22,11 +22,13 @@ if ($use_popup_windows)
 if (isset($_GET['outstanding_only']) && ($_GET['outstanding_only'] == true))
 {
 // curently outstanding simply means not closed
+  $page_id = 'work_orders_out';
 	$outstanding_only = 1;
 	page(_($help_context = "Search Outstanding Work Orders"), false, false, "", $js);
 }
 else
 {
+  $page_id = 'work_order_inquiry';
 	$outstanding_only = 0;
 	page(_($help_context = "Search Work Orders"), false, false, "", $js);
 }

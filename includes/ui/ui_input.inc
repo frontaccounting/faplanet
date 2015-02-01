@@ -148,8 +148,23 @@ function submit($name, $value, $echo=true, $title=false, $atype=false, $icon=fal
 			}
 		}
 	}
-	$submit_str = "<button class=\""
-	    .($atype ? 'ajaxsubmit' : 'inputsubmit')
+  $icon = false;
+  $class = "";
+
+  $green_names = array('addupdate', 'install_coas', 'db_test', 'install_langs', 'continue', 'set_admin', 'ProcessOrder', 'ProcessGoodsReceived', 'process_invoice', 'process_delivery', 'ShowMoves', 'Show', 'submit', 'ADD_ITEM', 'UPDATE_ITEM', 'Process', 'Commit', 'Search',  'SearchOrders', 'RefreshInquiry', 'ProcessSuppPayment', 'AddPaymentItem', 'ProcessCredit');
+  if (in_array($name, $green_names))
+    $class = 'btn-success';
+
+  if (substr($name, 0, 3) == 'Rep')
+    $class = 'btn-success';
+
+  if ($name == 'Update')
+    $class .= ' btn-sm';
+  else
+    $class .= ' btn-sm';
+
+	$submit_str = "<button class=\"btn btn-default $class"
+	    .''
 		."\" type=\"submit\""
 		.$aspect
 	    ." name=\"$name\"  id=\"$name\" value=\"$value\""
@@ -230,7 +245,10 @@ function submit_add_or_update_row($add=true, $right=true, $extra="", $title=fals
 
 function submit_cells($name, $value, $extra="", $title=false, $async=false)
 {
-	echo "<td $extra>";
+  $class = '';
+  if ($name == 'AddItem')
+    $class = 'button-add';
+	echo "<td $extra class='button-submit $class'>";
 	submit($name, $value, true, $title, $async);
 	echo "</td>\n";
 }
@@ -284,13 +302,24 @@ function button($name, $value, $title=false, $icon=false,  $aspect='')
 	{
 		if ($value == _("Delete")) // Helper during implementation
 			$icon = ICON_DELETE;
-		return "<button type='submit' class='editbutton' name='"
+    if ($icon == ICON_EDIT)
+      $icon = '<span class="glyphicon glyphicon-pencil"></span>';
+    elseif ($icon == ICON_DELETE)
+      $icon = '<span class="glyphicon glyphicon-trash"></span>';
+    elseif ($icon == ICON_UPDATE)
+      $icon = '<span class="glyphicon glyphicon-ok"></span>';
+    elseif ($icon == ICON_CANCEL)
+      $icon = '<span class="glyphicon glyphicon-remove"></span>';
+    else
+      //$icon = '<span class="glyphicon glyphicon-question-sign"></span>';
+      $icon = '<span class="glyphicon glyphicon-ok"></span>';
+		return "<button type='submit' class='editbutton btn btn-default btn-sm' name='"
 			.htmlentities(strtr($name, array('.'=>'=2E', '='=>'=3D',// ' '=>'=20','['=>'=5B'
 			)))
 			."' value='1'" . ($title ? " title='$title'":" title='$value'")
 			. ($aspect ? " aspect='$aspect'" : '')
 			. $rel
-			." />".set_icon($icon)."</button>\n";
+			." />".$icon."</button>\n";
 	}
 	else
 		return "<input type='submit' class='editbutton' name='"
@@ -305,7 +334,7 @@ function button($name, $value, $title=false, $icon=false,  $aspect='')
 
 function button_cell($name, $value, $title=false, $icon=false, $aspect='')
 {
-	echo "<td align='center'>";
+	echo "<td align='center' class='button-cell'>";
 	echo button($name, $value, $title, $icon, $aspect);
 	echo "</td>";
 }
@@ -400,7 +429,11 @@ function radio($label, $name, $value, $selected=null, $submit_on_change=false)
 //-----------------------------------------------------------------------------------
 function labelheader_cell($label, $params="")
 {
-	echo "<td class='tableheader' $params>$label</td>\n";
+  if (is_array($label)) {
+	  echo "<th class='tableheader align-".$label['align']."' $params>".$label['text']."</th>\n";
+  }
+  else
+	  echo "<th class='tableheader' $params>$label</th>\n";
 }
 
 function label_cell($label, $params="", $id=null)
@@ -412,7 +445,10 @@ function label_cell($label, $params="", $id=null)
 	    $params .= " id='$id'";
 	    $Ajax->addUpdate($id, $id, $label);
 	}
-	echo "<td $params>$label</td>\n";
+  $params2 = '';
+  if (strpos($params, 'class') === FALSE)
+    $params2 = 'class="static"';
+	echo "<td $params2 $params>$label</td>\n";
 
 	return $label;
 }
@@ -460,8 +496,10 @@ function qty_cell($label, $bold=false, $dec=null, $id=null)
 		$dec = get_qty_dec();
 	if ($bold)
 		label_cell("<b>".number_format2($label, $dec)."</b>", "nowrap align=right", $id);
+		//label_cell("<b>".number_format2($label, $dec)."</b>", "nowrap ", $id);
 	else
 		label_cell(number_format2($label, $dec), "nowrap align=right", $id);
+		//label_cell(number_format2($label, $dec), "nowrap ", $id);
 }
 
 function label_cells($label, $value, $params="", $params2="", $id='')
@@ -496,15 +534,21 @@ function text_cells($label, $name, $value=null, $size="", $max="", $title=false,
 	if ($label != null)
 		label_cell($label, $labparams);
 	echo "<td>";
+	if ($post_label) {
+    echo '<div class="input-group">';
+  }
 
 	if ($value === null)
 		$value = get_post($name);
-	echo "<input $inparams type=\"text\" name=\"$name\" size=\"$size\" maxlength=\"$max\" value=\"$value\""
+	echo "<input class='form-control input-sm' $inparams type=\"text\" name=\"$name\" size=\"$size\" maxlength=\"$max\" value=\"$value\""
 	    .($title ? " title='$title'" : '')
 	    .">";
 
-	if ($post_label != "")
-		echo " " . $post_label;
+	if ($post_label) {
+		//echo " " . $post_label;
+    echo '<span class="input-group-addon">'.$post_label.'</span>';
+    echo '</div>';
+  }
 
 	echo "</td>\n";
 	$Ajax->addUpdate($name, $name, $value);
@@ -530,12 +574,18 @@ function text_cells_ex($label, $name, $size, $max=null, $init=null, $title=null,
 		$max = $size;
 
 	echo "<td>";
-	$class = $submit_on_change ? 'class="searchbox"' : '';
-	echo "<input $class type=\"text\" name=\"$name\" size=\"$size\" maxlength=\"$max\" value=\"" . $_POST[$name]. "\""
+	if ($post_label) {
+    echo '<div class="input-group">';
+  }
+	$class = $submit_on_change ? 'searchbox' : '';
+	echo "<input class='form-control input-sm $class' type=\"text\" name=\"$name\" size=\"$size\" maxlength=\"$max\" value=\"" . $_POST[$name]. "\""
 	 .($title ? " title='$title'": '')." >";
 
-	if ($post_label)
-		echo " " . $post_label;
+	if ($post_label) {
+		//echo " " . $post_label;
+    echo '<span class="input-group-addon">'.$post_label.'</span>';
+    echo '</div>';
+  }
 
 	echo "</td>\n";
 	$Ajax->addUpdate($name, $name, $_POST[$name]);
@@ -646,9 +696,18 @@ function date_cells($label, $name, $title = null, $check=null, $inc_days=0,
 
 	default_focus($name);
 	$size = (user_date_format()>3)?11:10; 
-	echo "<input type=\"text\" name=\"$name\" class=\"$class\" $aspect size=\"$size\" maxlength=\"12\" value=\"" 
+  echo '<div class="date-group">';
+  echo '<div class="input-group date">
+            <input type="text" name="'.$name.'" value="'.$_POST[$name].'" class="form-control input-sm"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i>
+            '.$post_label.'</span>
+                </div>
+                </div>
+  ';
+  /*
+	echo "<input type=\"text\" name=\"$name\" class=\"$class form-control input-sm\" $aspect size=\"$size\" maxlength=\"12\" value=\"" 
 	 . $_POST[$name]. "\""
 	 .($title ? " title='$title'": '')." > $post_label";
+   */
 	echo "</td>\n";
 	$Ajax->addUpdate($name, $name, $_POST[$name]);
 }
@@ -666,7 +725,7 @@ function date_row($label, $name, $title=null, $check=null, $inc_days=0, $inc_mon
 function password_row($label, $name, $value)
 {
 	echo "<tr><td class='label'>$label</td>";
-	label_cell("<input type='password' name='$name' size=20 maxlength=20 value='$value' />");
+	label_cell("<input type='password' class='form-control input-sm' name='$name' size=20 maxlength=20 value='$value' />");
 	echo "</tr>\n";
 }	
 
@@ -740,11 +799,16 @@ function amount_cells_ex($label, $name, $size, $max=null, $init=null, $params=nu
 	else
 		echo "<td align='right'>";
 
-	echo "<input class='amount' type=\"text\" name=\"$name\" size=\"$size\" maxlength=\"$max\" dec=\"$dec\" value=\"" . $_POST[$name]. "\">";
+  if ($post_label) {
+    echo '<div class="input-group">';
+  }
+	echo "<input class='amount form-control input-sm' type=\"text\" name=\"$name\" size=\"$size\" maxlength=\"$max\" dec=\"$dec\" value=\"" . $_POST[$name]. "\">";
 
 	if ($post_label) {
-		echo "<span id='_{$name}_label'> $post_label</span>";
+		//echo "<span id='_{$name}_label'> $post_label</span>";
 		$Ajax->addUpdate($name, '_'.$name.'_label', $post_label);
+    echo '<span class="input-group-addon">'.$post_label.'</span>';
+    echo '</div>';
 	}
 	echo "</td>\n";
 	$Ajax->addUpdate($name, $name, $_POST[$name]);
@@ -830,7 +894,20 @@ function small_qty_cells($label, $name, $init=null, $params=null, $post_label=nu
 
 //-----------------------------------------------------------------------------------
 
-function textarea_cells($label, $name, $value, $cols, $rows, $title = null, $params="")
+function textarea($name, $value, $cols, $rows, $title = null, $placeholder='')
+{
+  global $Ajax;
+
+	default_focus($name);
+	if ($value == null)
+		$value = (!isset($_POST[$name]) ? "" : $_POST[$name]);
+	echo "<textarea placeholder='$placeholder' name='$name' class='form-control' cols='$cols' rows='$rows'"
+	.($title ? " title='$title'" : '')
+	.">$value</textarea>\n";
+	$Ajax->addUpdate($name, $name, $value);
+}
+
+function textarea_cells($label, $name, $value, $cols, $rows, $title = null, $params="", $placeholder = "")
 {
   	global $Ajax;
 
@@ -839,17 +916,32 @@ function textarea_cells($label, $name, $value, $cols, $rows, $title = null, $par
 		echo "<td $params>$label</td>\n";
 	if ($value == null)
 		$value = (!isset($_POST[$name]) ? "" : $_POST[$name]);
-	echo "<td><textarea name='$name' cols='$cols' rows='$rows'"
+  if ($placeholder != '')
+    $placeholder = "placeholder='$placeholder'";
+	echo "<td><textarea $placeholder name='$name' class='form-control' cols='$cols' rows='$rows'"
 	.($title ? " title='$title'" : '')
 	.">$value</textarea></td>\n";
 	$Ajax->addUpdate($name, $name, $value);
 }
 
-function textarea_row($label, $name, $value, $cols, $rows, $title=null, $params="")
+function textarea_row($label, $name, $value, $cols, $rows, $title=null, $params="", $placeholder="")
 {
 	echo "<tr><td class='label'>$label</td>";
-	textarea_cells(null, $name, $value, $cols, $rows, $title, $params);
+	textarea_cells(null, $name, $value, $cols, $rows, $title, $params, $placeholder);
 	echo "</tr>\n";
+}
+
+function memo_control($name, $value, $cols, $rows) {
+  global $Ajax;
+  start_table(TABLESTYLE2);
+	echo "<tr>\n";
+	default_focus($name);
+	if ($value == null)
+		$value = (!isset($_POST[$name]) ? "" : $_POST[$name]);
+	echo "<td><textarea placeholder='Memo' name='$name' class='form-control memo' cols='$cols' rows='$rows'>$value</textarea></td>\n";
+	$Ajax->addUpdate($name, $name, $value);
+	echo "</tr>\n";
+  end_table();
 }
 
 //-----------------------------------------------------------------------------------
@@ -898,12 +990,12 @@ function inactive_control_cell($id, $value, $table, $key)
 //	Displays controls for optional display of inactive records
 //
 function inactive_control_row($th) {
-	echo  "<tr><td colspan=".(count($th)).">"
-		."<div style='float:left;'>"
+	echo  "<tfoot><tr class='control-row'><td colspan=".(count($th)).">"
+		."<div style='float:left;' class='footer-inactive'>"
 		. checkbox(null, 'show_inactive', null, true). _("Show also Inactive")
 		."</div><div style='float:right;'>"
 		. submit('Update', _('Update'), false, '', null)
-		."</div></td></tr>";
+		."</div></td></tr></tfoot>";
 }
 //
 //	Inserts additional column header when display of inactive records is on.
@@ -912,7 +1004,7 @@ function inactive_control_column(&$th) {
 	global $Ajax;
 	
 	if (check_value('show_inactive')) 
-		array_insert($th, count($th)-2 , _("Inactive"));
+		array_insert($th, count($th)-2 , array(_("Inactive") => array('align' => 'center')));
 	if (get_post('_show_inactive_update')) {
 		$Ajax->activate('_page_body');
 	}

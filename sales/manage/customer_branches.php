@@ -277,9 +277,9 @@ if($selected_id!=-1)
 
 start_form();
 
-echo "<center>" . _("Select a customer: ") . "&nbsp;&nbsp;";
+start_selector(_("Select a customer: "));
 echo customer_list('customer_id', null, false, true);
-echo "</center><br>";
+end_selector();
 
 $num_branches = db_customer_has_branches($_POST['customer_id']);
 

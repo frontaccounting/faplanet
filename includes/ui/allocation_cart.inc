@@ -282,9 +282,9 @@ function show_allocatable($show_totals) {
 
 	if (count($cart->allocs)) 
 	{
+		start_table(ENTRY_ITEMS, "width=100%");
 		if ($cart->currency != $cart->person_curr)
-			display_heading(sprintf(_("Allocated amounts in %s:"), $cart->person_curr));
-		start_table(TABLESTYLE, "width=60%");
+			display_caption(sprintf(_("Allocated amounts in %s"), $cart->person_curr));
    		$th = array(_("Transaction Type"), _("#"), $supp_ref ? _("Supplier Ref"): _("Ref"), _("Date"), _("Due Date"), _("Amount"),
    			_("Other Allocations"), _("Left to Allocate"), _("This Allocation"),'','');
 

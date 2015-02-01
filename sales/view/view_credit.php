@@ -43,7 +43,7 @@ start_table(TABLESTYLE2, "width=95%");
 echo "<tr valign=top><td>"; // outer table
 
 /*Now the customer charged to details in a sub table*/
-start_table(TABLESTYLE, "width=100%");
+start_table(VIEW_HEADER, "width=100%");
 $th = array(_("Customer"));
 table_header($th);
 
@@ -54,7 +54,7 @@ end_table();
 
 echo "</td><td>"; // outer table
 
-start_table(TABLESTYLE, "width=100%");
+start_table(VIEW_HEADER, "width=100%");
 $th = array(_("Branch"));
 table_header($th);
 
@@ -87,8 +87,12 @@ start_table(TABLESTYLE, "width=95%");
 
 if (db_num_rows($result) > 0)
 {
-	$th = array(_("Item Code"), _("Item Description"), _("Quantity"),
-		_("Unit"), _("Price"), _("Discount %"), _("Total"));
+	$th = array(_("Item Code"), _("Item Description"), 
+    _("Quantity") => array('align' => 'right'),
+		_("Unit") => array('align' => 'right'),
+    _("Price") => array('align' => 'right'),
+    _("Discount %") => array('align' => 'right'), 
+    _("Total") => array('align' => 'right'));
 	table_header($th);
 
 	$k = 0;	//row colour counter
@@ -142,7 +146,7 @@ display_customer_trans_tax_details($tax_items, 6);
 
 label_row("<font color=red>" . _("TOTAL CREDIT") . "</font",
 	"<font color=red>$display_total</font>", "colspan=6 align=right", "nowrap align=right");
-end_table(1);
+end_table(0);
 
 $voided = is_voided_display(ST_CUSTCREDIT, $trans_id, _("This credit note has been voided."));
 

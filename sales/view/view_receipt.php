@@ -32,8 +32,7 @@ $receipt = get_customer_trans($trans_id, ST_CUSTPAYMENT);
 
 display_heading(sprintf(_("Customer Payment #%d"),$trans_id));
 
-echo "<br>";
-start_table(TABLESTYLE, "width=80%");
+start_table(VIEW_HEADER, "width=80%");
 start_row();
 label_cells(_("From Customer"), $receipt['DebtorName'], "class='tableheader2'");
 label_cells(_("Reference"), $receipt['reference'], "class='tableheader2'");
@@ -51,7 +50,7 @@ label_cells(_("Payment Type"), $bank_transfer_types[$receipt['BankTransType']], 
 end_row();
 comments_display_row(ST_CUSTPAYMENT, $trans_id);
 
-end_table(1);
+end_table(0);
 
 $voided = is_voided_display(ST_CUSTPAYMENT, $trans_id, _("This customer payment has been voided."));
 

@@ -95,10 +95,14 @@ if ($Mode == 'RESET')
 $result = get_salesmen(check_value('show_inactive'));
 
 start_form();
-start_table(TABLESTYLE, "width=60%");
-$th = array(_("Name"), _("Phone"), _("Fax"), _("Email"), _("Provision"), _("Break Pt."), _("Provision")." 2", "", "");
+start_table(TABLESTYLE, "width='100%'");
+$th = array(_("Name"), _("Phone"), _("Fax"), _("Email"),
+  _("Provision") => array('align' => 'right'),
+  _("Break Pt.") => array('align' => 'right'),
+  _("Provision")." 2" => array('align' => 'right'), "", "");
 inactive_control_column($th);
 table_header($th);
+echo '<tbody>';
 
 $k = 0;
 
@@ -123,6 +127,7 @@ while ($myrow = db_fetch($result))
 } //END WHILE LIST LOOP
 
 inactive_control_row($th);
+echo '</tbody>';
 end_table();
 echo '<br>';
 

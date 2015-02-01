@@ -33,11 +33,11 @@ start_form();
     if (!isset($_POST['supplier_id']))
     	$_POST['supplier_id'] = get_global_supplier();
 
-    echo "<center>" . _("Select a Supplier: ") . "&nbsp;&nbsp;";
+  start_selector(_("Select a Supplier: "));
 	echo supplier_list('supplier_id', $_POST['supplier_id'], true, true);
-    echo "<br>";
+    echo "</td><td>";
     check(_("Show Settled Items:"), 'ShowSettled', null, true);
-	echo "</center><br><br>";
+    end_selector();
 	set_global_supplier($_POST['supplier_id']);
 
 	if (isset($_POST['supplier_id']) && ($_POST['supplier_id'] == ALL_TEXT)) 

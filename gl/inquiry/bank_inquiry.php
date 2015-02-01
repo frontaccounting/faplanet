@@ -63,12 +63,15 @@ $result = get_bank_trans_for_bank_account($_POST['bank_account'], $_POST['TransA
 
 div_start('trans_tbl');
 $act = get_bank_account($_POST["bank_account"]);
-display_heading($act['bank_account_name']." - ".$act['bank_curr_code']);
 
 start_table(TABLESTYLE);
+display_caption($act['bank_account_name']." - ".$act['bank_curr_code']);
 
 $th = array(_("Type"), _("#"), _("Reference"), _("Date"),
-	_("Debit"), _("Credit"), _("Balance"), _("Person/Item"), _("Memo"), "");
+	_("Debit") => array('align' => 'right'),
+  _("Credit") => array('align' => 'right'), 
+  _("Balance") => array('align' => 'right'), 
+  _("Person/Item"), _("Memo"), "");
 table_header($th);
 
 $bfw = get_balance_before_for_bank_account($_POST['bank_account'], $_POST['TransAfterDate']);

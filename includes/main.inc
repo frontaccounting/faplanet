@@ -28,6 +28,7 @@ function page($title, $no_menu=false, $is_index=false, $onload="", $js="", $scri
 
    	global $path_to_root, $page_security;
 
+    load_page_id();
 
    	$hide_menu = $no_menu;
 
@@ -50,7 +51,7 @@ function end_page($no_menu=false, $is_index=false, $final_screen=false, $type_no
 {
 	global $path_to_root;
 
-	if (!$is_index && function_exists('hyperlink_back'))
+	if (!$is_index && function_exists('hyperlink_back') && $no_menu)
 		hyperlink_back(true, $no_menu, $type_no, $trans_no, $final_screen);
 	div_end();	// end of _page_body section
 

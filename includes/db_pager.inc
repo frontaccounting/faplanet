@@ -245,6 +245,7 @@ class db_pager {
 				if (is_array($coldef)) {
 					$h = '';
 					$c = $coldef;
+            $c['option'] = true;
 				} else {
 					$h = $coldef;
 					$c = 'text';

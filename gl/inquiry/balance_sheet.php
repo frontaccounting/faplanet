@@ -255,7 +255,7 @@ function display_balance_sheet()
 			$convert, $dimension, $dimension2, $drilldown, $path_to_root);
 	}
 	
-	end_table(1); // outer table
+	end_table(0); // outer table
 	div_end();
 }
 

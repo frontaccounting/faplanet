@@ -44,11 +44,12 @@ if (!@$_GET['popup'])
 if (!isset($_POST['supplier_id']))
 	$_POST['supplier_id'] = get_global_supplier();
 
+start_search();
 start_table(TABLESTYLE_NOBORDER);
 start_row();
 
 if (!@$_GET['popup'])
-	supplier_list_cells(_("Select a supplier:"), 'supplier_id', null, true, false, false, !@$_GET['popup']);
+	supplier_list_cells(_("Supplier:"), 'supplier_id', null, true, false, false, !@$_GET['popup']);
 
 date_cells(_("From:"), 'TransAfterDate', '', null, -30);
 date_cells(_("To:"), 'TransToDate');
@@ -59,6 +60,7 @@ submit_cells('RefreshInquiry', _("Search"),'',_('Refresh Inquiry'), 'default');
 
 end_row();
 end_table();
+end_search();
 set_global_supplier($_POST['supplier_id']);
 
 //------------------------------------------------------------------------------------------------
@@ -73,8 +75,12 @@ function display_supplier_summary($supplier_record)
 	
 
     start_table(TABLESTYLE, "width=80%");
-    $th = array(_("Currency"), _("Terms"), _("Current"), $nowdue,
-    	$pastdue1, $pastdue2, _("Total Balance"));
+    $th = array(_("Currency"), _("Terms"), 
+      _("Current") => array('align' => 'right'), 
+      $nowdue => array('align' => 'right'),
+    	$pastdue1 => array('align' => 'right'),
+      $pastdue2 => array('align' => 'right'),
+      _("Total Balance") => array('align' => 'right'));
 
 	table_header($th);
     start_row();

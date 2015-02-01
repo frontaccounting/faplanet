@@ -529,14 +529,10 @@ if (isset($_POST['CancelUpdate']) || isset($_POST['UpdateLine'])) {
 start_form();
 
 display_po_header($_SESSION['PO']);
-echo "<br>";
 
 display_po_items($_SESSION['PO']);
 
-start_table(TABLESTYLE2);
-textarea_row(_("Memo:"), 'Comments', null, 70, 4);
-
-end_table(1);
+memo_control('Comments', null, 70, 4);
 
 div_start('controls', 'items_table');
 $process_txt = _("Place Order");

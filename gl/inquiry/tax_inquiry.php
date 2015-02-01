@@ -79,7 +79,9 @@ function show_results()
 	div_start('trans_tbl');
 	start_table(TABLESTYLE);
 
-	$th = array(_("Type"), _("Description"), _("Amount"), _("Outputs")."/"._("Inputs"));
+	$th = array(_("Type"), _("Description"), 
+    _("Amount") => array('align' => 'right'), 
+    _("Outputs")."/"._("Inputs") => array('align' => 'right'));
 	table_header($th);
 	$k = 0;
 	$total = 0;

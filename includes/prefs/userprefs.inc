@@ -176,6 +176,24 @@ class user_prefs
 			return "Y".$sep."M".$sep."j";
 	}
 
+	function date_display_2() 
+	{
+		global $dateseps;
+		$sep = $dateseps[$this->date_sep];
+		if ($this->date_format == 0)
+			return "mm".$sep."dd".$sep."yyyy";
+		elseif ($this->date_format == 1)
+			return "dd".$sep."mm".$sep."yyyy";
+		elseif ($this->date_format == 2)
+			return "yyyy".$sep."mm".$sep."dd";
+		elseif ($this->date_format == 3)
+			return "M".$sep."d".$sep."yyyy";
+		elseif ($this->date_format == 4)
+			return "d".$sep."M".$sep."yyyy";
+		else
+			return "yyyy".$sep."M".$sep."d";
+	}
+
 	function tho_sep() 
 	{
 		return $this->tho_sep;

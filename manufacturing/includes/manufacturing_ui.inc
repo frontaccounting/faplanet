@@ -26,7 +26,10 @@ function display_bom($item_check)
 
         start_table(TABLESTYLE);
         $th = array(_("Component"), _("Description"), _("Work Centre"),
-        	_("From Location"), _("Quantity"), _("Unit Cost"), _("Total Cost"));
+        	_("From Location"), 
+          _("Quantity") => array('align' => 'right'), 
+          _("Unit Cost") => array('align' => 'right'), 
+          _("Total Cost") => array('align' => 'right'));
 
         table_header($th);
 
@@ -270,7 +273,7 @@ function display_wo_details($woid, $suppress_view_link=false)
     	exit;
     }
 
-   	start_table(TABLESTYLE, "width=80%");
+   	start_table(TABLESTYLE, "width=100%");
 
 	if ($myrow["released"] == true)
 		$th = array(_("#"), _("Reference"), _("Type"), _("Manufactured Item"),

@@ -48,7 +48,7 @@ function get_gl_view_str($type, $trans_no, $label="", $force=false, $class='', $
 	$icon = false;
 	if ($label == "")
 	{
-		$label = _("GL");
+		$label = _("View GL");
 		$icon = ICON_GL;
 	}	
 
@@ -318,7 +318,7 @@ function exchange_rate_display($from_currency, $to_currency, $date_, $force_edit
 		$rate = number_format2($rate, user_exrate_dec());
 
 		if ($force_edit || !$readonly)
-			$ctrl = "<input type=\"text\" name=\"_ex_rate\" size=\"8\" maxlength=\"8\" value=\"$rate\">";
+			$ctrl = "<input type=\"text\" class='form-control input-sm' name=\"_ex_rate\" size=\"8\" maxlength=\"8\" value=\"$rate\">";
 	    else
 	    	$ctrl = "<span id=\"_ex_rate\">$rate</span>";
 
@@ -523,7 +523,7 @@ function display_edit_tax_items($taxes, $columns, $tax_included, $rightspan=0, $
 
 //--------------------------------------------------------------------------------------
 
-function display_footer_exit($space=2)
+function display_footer_exit($space=0)
 {
 	if ($space)
 		br($space);
@@ -540,12 +540,13 @@ function display_allocations($alloc_result, $total, $payments=false)
 	if (!$alloc_result || db_num_rows($alloc_result) == 0)
 		return;
 
-    display_heading2(($payments ? _("Payments") : _("Allocations")));
-
     start_table(TABLESTYLE, "width=80%");
+    display_caption(($payments ? _("Payments") : _("Allocations")));
 
-    $th = array( _("Type"), _("Number"), _("Date"), _("Total Amount"),
-    	_("Left to Allocate"), _("This Allocation"));
+    $th = array( _("Type"), _("Number"), _("Date"),
+      _("Total Amount") => array('align' => 'right'),
+    	_("Left to Allocate") => array('align' => 'right'), 
+      _("This Allocation") => array('align' => 'right'));
 	table_header($th);
     $k = $total_allocated = 0;
 

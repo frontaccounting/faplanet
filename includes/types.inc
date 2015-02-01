@@ -212,6 +212,12 @@ define('ALL_NUMERIC', -1);
 define('TABLESTYLE',  1);
 define('TABLESTYLE2', 2);
 define('TABLESTYLE_NOBORDER', 3);
+define('TABLESTYLE3', 4);
+define('ENTRY_HEADER', 5);
+define('ENTRY_ITEMS', 6);
+define('ENTRY_FOOTER', 7);
+define('VIEW_HEADER', 8);
+define('VIEW_ITEMS', 9);
 
 //----------------------------------------------------------------------------------
 

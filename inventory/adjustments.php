@@ -224,12 +224,12 @@ start_form();
 
 display_order_header($_SESSION['adj_items']);
 
-start_outer_table(TABLESTYLE, "width=70%", 10);
+start_outer_table(TABLESTYLE3, "width=100%", 10);
 
 display_adjustment_items(_("Adjustment Items"), $_SESSION['adj_items']);
 adjustment_options_controls();
 
-end_outer_table(1, false);
+end_outer_table(0, false);
 
 submit_center_first('Update', _("Update"), '', null);
 submit_center_last('Process', _("Process Adjustment"), '', 'default');

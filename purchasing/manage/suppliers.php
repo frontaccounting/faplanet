@@ -282,14 +282,13 @@ start_form();
 
 if (db_has_suppliers()) 
 {
-	start_table(false, "", 3);
-//	start_table(TABLESTYLE_NOBORDER);
-	start_row();
-	supplier_list_cells(_("Select a supplier: "), 'supplier_id', null,
+  start_selector(_("Select a supplier: "));
+	echo supplier_list(_("Select a supplier: "), 'supplier_id', null,
 		  _('New supplier'), true, check_value('show_inactive'));
+  echo '</td>';
 	check_cells(_("Show inactive:"), 'show_inactive', null, true);
-	end_row();
-	end_table();
+  echo '<td>';
+	end_selector();
 	if (get_post('_show_inactive_update')) {
 		$Ajax->activate('supplier_id');
 		set_focus('supplier_id');

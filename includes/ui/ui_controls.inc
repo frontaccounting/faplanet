@@ -76,23 +76,56 @@ function check_csrf_token()
 	return true;
 }
 
+function start_selector($label) {
+  echo '<center><table class="selector">';
+  echo '<tr><td class="label">'.$label.'</td><td class="input">';
+}
+
+function end_selector() {
+  echo '</td></tr></table></center><br>';
+}
+
+function start_search() {
+  echo '<div class="search pull-left"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></div>';
+}
+
+function end_search() {}
+
 function start_table($class=false, $extra="", $padding='2', $spacing='0')
 {
+	//if ($class == TABLESTYLE2) 
+    //echo '<div class="panel panel-default">';
+  //else
+    echo '<div>';
 	echo "<center><table";
 	if ($class == TABLESTYLE_NOBORDER)
 		echo " class='tablestyle_noborder'";
-	elseif ($class == TABLESTYLE2)
+	elseif ($class == TABLESTYLE2) 
 		echo " class='tablestyle2'";
+	elseif ($class == TABLESTYLE3) 
+		echo " class='tablestyle3'";
 	elseif ($class == TABLESTYLE)
-		echo " class='tablestyle'";
+		echo " class='tablestyle table table-striped table-condensed'";
+	elseif ($class == ENTRY_ITEMS)
+		echo " class='entry-items table table-striped table-condensed table-items'";
+	elseif ($class == VIEW_HEADER)
+		echo " class='view-header tablestyle table table-condensed'";
+	elseif ($class == VIEW_ITEMS)
+		echo " class='view-items table table-striped table-condensed'";
+	elseif ($class == ENTRY_HEADER)
+		echo " class='entry-header'";
+	elseif ($class == ENTRY_FOOTER)
+		echo " class='entry-footer'";
 	if ($extra != "")
 		echo " $extra";
-	echo " cellpadding=$padding cellspacing=$spacing>\n";
+  echo ">\n";
+	//echo " cellpadding=$padding cellspacing=$spacing>\n";
 }
 
 function end_table($breaks=0)
 {
 	echo "</table></center>\n";
+  echo '</div>';
 	if ($breaks)
 		br($breaks);
 }
@@ -112,9 +145,9 @@ function table_section($number=1, $width=false)
 		echo "</table>\n";
 		$width = ($width ? "width=$width" : "");
 		//echo "</td><td class='tableseparator' $width>\n"; // outer table
-		echo "</td><td style='border-left:1px solid #cccccc;' $width>\n"; // outer table
+		echo "</td><td class='section-".$number."' $width>\n"; // outer table
 	}
-	echo "<table class='tablestyle_inner'>\n";
+	echo "<table class='tablestyle_inner' width='100%'>\n";
 }	
 
 function end_outer_table($breaks=0, $close_table=true)
@@ -202,10 +235,10 @@ function hyperlink_no_params($target, $label, $center=true)
 	if ($target == '')
 		$target = $_SERVER['PHP_SELF'];
 	if ($center)
-		echo "<br><center>";
+		echo "<p>";
 	echo "<a href='$target' id='$id' $pars[1]>$pars[0]</a>\n";
 	if ($center)
-		echo "</center>";
+		echo "</p>";
 }
 
 function hyperlink_no_params_td($target, $label)
@@ -228,8 +261,8 @@ function viewer_link($label, $url='', $class='', $id='',  $icon=null)
 	if ($url != "")
 	{
 		$pars = access_string($label);
-		if (user_graphic_links() && $icon)
-			$pars[0] = set_icon($icon, $pars[0]);
+		//if (user_graphic_links() && $icon)
+	//		$pars[0] = set_icon($icon, $pars[0]);
 		$preview_str = "<a target='_blank' $class $id href='$path_to_root/$url' onclick=\"javascript:openWindow(this.href,this.target); return false;\"$pars[1]>$pars[0]</a>";
 	}
 	else
@@ -270,10 +303,10 @@ function hyperlink_params($target, $label, $params, $center=true)
 	if ($target == '')
 		$target = $_SERVER['PHP_SELF'];
 	if ($center)
-		echo "<br><center>";
+		echo "<p>";
 	echo "<a id='$id' href='$target?$params'$pars[1]>$pars[0]</a>\n";
 	if ($center)
-		echo "</center>";
+		echo "</p>";
 }
 
 function hyperlink_params_td($target, $label, $params)
@@ -329,10 +362,18 @@ function table_section_title($msg, $colspan=2)
 
 function table_header($labels, $params='')
 {
-	start_row();
-	foreach ($labels as $label)
-		labelheader_cell($label, $params);
-	end_row();
+	echo "<thead><tr>";
+	foreach ($labels as $key => $label) {
+		//labelheader_cell($label, $params);
+    if (is_array($label)) {
+      if (!isset($label['text']))
+        $label['text'] = $key;
+      echo "<th class='tableheader align-".$label['align']."' $params>".$label['text']."</th>\n";
+    }
+    else
+      echo "<th class='tableheader' $params>$label</th>\n";
+  }
+	echo "</tr></thead>";
 }
 //-----------------------------------------------------------------------------------
 
@@ -408,13 +449,14 @@ function tabbed_content_start($name, $tabs, $dft='') {
 	$_POST[$selname] = $sel;
 
 	div_start($name);
-	$str = "<ul class='ajaxtabs' rel='$div'>\n";
+	$str = "<ul class='ajaxtabs nav nav-pills' rel='$div'>\n";
 	foreach($tabs as $tab_no => $tab) {
 		
 		$acc = access_string(is_array($tab) ? $tab[0] : $tab);
-		$disabled = (is_array($tab) && !$tab[1])  ? 'disabled ' : '';
-		$str .= ( "<li>"
-			."<button type='submit' name='{$name}_".$tab_no
+		//$disabled = (is_array($tab) && !$tab[1])  ? 'disabled ' : '';
+    $disabled= '';
+		$str .= ( "<li role='presentation'>"
+			."<button type='submit' class='btn btn-sm btn-default' name='{$name}_".$tab_no
 			."' class='".((string)$tab_no===$sel ? 'current':'ajaxbutton')."' $acc[1] $disabled>"
 			."<span>$acc[0]</span>"
 			."</button>\n"

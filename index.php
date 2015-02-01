@@ -18,9 +18,13 @@
 	include_once("includes/session.inc");
 
 	add_access_extensions();
+  header("HTTP/1.1 303 See Other");
+  header("Location: ".$path_to_root.'/includes/start.php');
+  /*
 	$app = &$_SESSION["App"];
 	if (isset($_GET['application']))
 		$app->selected_application = $_GET['application'];
 
 	$app->display();
+  */
 ?>

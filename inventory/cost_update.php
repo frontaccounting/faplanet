@@ -92,11 +92,10 @@ if (!isset($_POST['stock_id']))
 
 if (!@$_GET['popup'])
 {
-	echo "<center>" . _("Item:"). "&nbsp;";
+  start_selector(_("Item:"));
 	//echo stock_costable_items_list('stock_id', $_POST['stock_id'], false, true);
 	echo stock_items_list('stock_id', $_POST['stock_id'], false, true);
-
-	echo "</center><hr>";
+  end_selector();
 }
 else
 	br(2);

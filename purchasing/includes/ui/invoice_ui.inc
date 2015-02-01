@@ -74,7 +74,7 @@ function invoice_header(&$supp_trans)
 	if (!isset($_POST['tran_date']))
 		copy_from_trans($supp_trans);
 
-	start_outer_table(TABLESTYLE2, "width=95%");
+	start_outer_table(TABLESTYLE2, "width=100%");
 
 	table_section(1);
 
@@ -169,10 +169,7 @@ function invoice_totals(&$supp_trans)
 		label_row(_("Credit Note Total"),
 			$display_total, "colspan=$colspan align=right style='font-weight:bold;color:red;'", "nowrap align=right style='font-weight:bold;color:red;'");
 
-    end_table(1);
-    start_table(TABLESTYLE2);
-    textarea_row(_("Memo:"), "Comments", null, 50, 3);
-    end_table(1);
+    memo_control("Comments", null, 50, 3);
 }
 
 //--------------------------------------------------------------------------------------------------
@@ -221,7 +218,7 @@ function display_gl_items(&$supp_trans, $mode=0)
 	else
 		$heading = _("GL Items for this Credit Note");
 
-	start_outer_table(TABLESTYLE, "width=95%");
+	start_outer_table(TABLESTYLE3, "width=100%");
 
 	if ($mode == 1)
 	{
@@ -251,15 +248,15 @@ function display_gl_items(&$supp_trans, $mode=0)
 	end_outer_table(0, false);
 
 	div_start('gl_items');
-	start_table(TABLESTYLE, "width=95%");
+	start_table(ENTRY_ITEMS, "width=95%");
 
 	$dim = get_company_pref('use_dimension');
 	if ($dim == 2)
-    	$th = array(_("Account"), _("Name"), _("Dimension")." 1", _("Dimension")." 2", _("Amount"), _("Memo"));
+    	$th = array(_("Account"), _("Name"), _("Dimension")." 1", _("Dimension")." 2", _("Amount") => array('align' => 'right'), _("Memo"));
 	else if ($dim == 1)
-    	$th = array(_("Account"), _("Name"), _("Dimension"), _("Amount"), _("Memo"));
+    	$th = array(_("Account"), _("Name"), _("Dimension"), _("Amount") => array('align' => 'right'), _("Memo"));
     else
-    	$th = array(_("Account"), _("Name"), _("Amount"), _("Memo"));
+    	$th = array(_("Account"), _("Name"), _("Amount") => array('align' => 'right'), _("Memo"));
 
 	if ($mode == 1)
 	{
@@ -432,7 +429,7 @@ function display_grn_items(&$supp_trans, $mode=0)
     if (($mode == 2  || $mode == 3) && count($supp_trans->grn_items) == 0)
     	return 0;
 
-	start_outer_table("style='border:1px solid #cccccc;' width=95%");
+	start_outer_table(TABLESTYLE3);
 
 	$heading2 = "";
 	if ($mode == 1)
@@ -478,13 +475,17 @@ function display_grn_items(&$supp_trans, $mode=0)
 	end_outer_table(0, false);
 
   	div_start('grn_items');
-	start_table(TABLESTYLE, "width=95%");
+	start_table(ENTRY_ITEMS, "width=95%");
 	if ($mode == 1)
 	{
+      $tax_text = $supp_trans->tax_included ? _("Price after Tax") : _("Price before Tax");
     	$th = array(_("Delivery"), _("P.O."), _("Item"), _("Description"),
-    		_("Received On"), _("Quantity Received"), _("Quantity Invoiced"),
-    		_("Qty Yet To Invoice"), $supp_trans->tax_included ? _("Price after Tax") : _("Price before Tax"), 
-    		_("Total"), "");
+    		_("Received On") => array('align' => 'right'), 
+        _("Quantity Received") => array('align' => 'right'), 
+        _("Quantity Invoiced") => array('align' => 'right'),
+    		_("Qty Yet To Invoice") => array('align' => 'right'), 
+        $tax_text => array('align' => 'right'),
+    		_("Total") => array('align' => 'right'), "");
     	if (($supp_trans->trans_type == ST_SUPPINVOICE) && $_SESSION["wa_current_user"]->can_access('SA_GRNDELETE'))	// Added 2008-10-18 by Joe Hunt. Only admins can remove GRNs
     		$th[] = "";
 		if ($supp_trans->trans_type == ST_SUPPCREDIT)

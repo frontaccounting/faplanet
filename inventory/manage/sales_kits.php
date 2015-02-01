@@ -37,7 +37,7 @@ function display_kit_items($selected_kit)
 	$result = get_item_kit($selected_kit);
 	div_start('bom');
 	start_table(TABLESTYLE, "width=60%");
-	$th = array(_("Stock Item"), _("Description"), _("Quantity"), _("Units"),
+	$th = array(_("Stock Item"), _("Description"), _("Quantity") => array('align' => 'right'), _("Units"),
 		'','');
 	table_header($th);
 
@@ -180,9 +180,9 @@ if ($Mode == 'RESET')
 
 start_form();
 
-echo "<center>" . _("Select a sale kit:") . "&nbsp;";
+start_selector(_("Select a sale kit:"));
 echo sales_kits_list('item_code', null, _('New kit'), true);
-echo "</center><br>";
+end_selector();
 $props = get_kit_props($_POST['item_code']);
 
 if (list_updated('item_code')) {

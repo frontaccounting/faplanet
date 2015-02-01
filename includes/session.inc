@@ -361,6 +361,7 @@ include_once($path_to_root . "/includes/errors.inc");
 set_error_handler('error_handler' /*, errtypes */);
 
 include_once($path_to_root . "/includes/current_user.inc");
+include_once($path_to_root . "/includes/menu.inc");
 include_once($path_to_root . "/frontaccounting.php");
 include_once($path_to_root . "/admin/db/security_db.inc");
 include_once($path_to_root . "/includes/lang/language.php");
@@ -439,6 +440,8 @@ html_cleanup($_POST);
 html_cleanup($_REQUEST);
 html_cleanup($_SERVER);
 
+$login_fail = 0;
+
 // logout.php is the only page we should have always 
 // accessable regardless of access level and current login status.
 if (!defined('FA_LOGOUT_PHP_FILE')){
@@ -510,7 +513,10 @@ if (!defined('FA_LOGOUT_PHP_FILE')){
 			if (!$succeed)
 			{
 			// Incorrect password
-				login_fail();
+				//login_fail();
+        $login_fail = true;
+			  include($path_to_root . "/access/login.php");
+        exit;
 			}
 			elseif(isset($_SESSION['timeout']) && !$_SESSION['timeout']['post'])
 			{
@@ -529,10 +535,14 @@ if (!defined('FA_LOGOUT_PHP_FILE')){
 	if (!isset($_SESSION["App"])) {
 		$_SESSION["App"] = new front_accounting();
 		$_SESSION["App"]->init();
+    header("HTTP/1.1 303 See Other");
+    header("Location: ".$path_to_root.'/includes/start.php');
 	}
 }
 
 $SysPrefs = &$_SESSION['SysPrefs'];
+
+load_menu();
 
 // POST vars cleanup needed for direct reuse.
 // We quote all values later with db_escape() before db update.

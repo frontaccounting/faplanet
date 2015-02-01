@@ -29,11 +29,11 @@ start_form();
 	if (!isset($_POST['customer_id']))
     	$_POST['customer_id'] = get_global_customer();
 
-    echo "<center>" . _("Select a customer: ") . "&nbsp;&nbsp;";
+  start_selector(_("Select a customer: "));
 	echo customer_list('customer_id', $_POST['customer_id'], true, true);
-    echo "<br>";
+  echo '</td><td>';
     check(_("Show Settled Items:"), 'ShowSettled', null, true);
-	echo "</center><br><br>";
+  end_selector();
 
 	set_global_customer($_POST['customer_id']);
 
@@ -96,7 +96,7 @@ $cols = array(
 	_("Date") => array('name'=>'tran_date', 'type'=>'date', 'ord'=>'asc'),
 	_("Customer") => array('ord'=>''),
 	_("Currency") => array('align'=>'center'),
-	_("Total") => 'amount', 
+	_("Total") => array('align' => 'right', 'type' => 'amount'), 
 	_("Left to Allocate") => array('align'=>'right','insert'=>true, 'fun'=>'amount_left'), 
 	array('insert'=>true, 'fun'=>'alloc_link')
 	);

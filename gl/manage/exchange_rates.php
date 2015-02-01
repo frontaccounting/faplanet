@@ -138,8 +138,10 @@ function display_rate_edit()
 			maxprec_format(retrieve_exrate($_POST['curr_abrev'], $_POST['date_']));
 		$Ajax->activate('BuyRate');
 	}
-	amount_row(_("Exchange Rate:"), 'BuyRate', null, '',
-	  	submit('get_rate',_("Get"), false, _('Get current rate from') . ' ' . $xchg_rate_provider , true), 'max');
+	amount_row(_("Exchange Rate:"), 'BuyRate', null, '', '', 'max');
+	echo "<tr><td></td><td>\n";
+  echo submit('get_rate',_("Get"), false, _('Get current rate from') . ' ' . $xchg_rate_provider , true);
+	echo "</td></tr>\n";
 
 	end_table(1);
 
@@ -175,10 +177,9 @@ start_form();
 if (!isset($_POST['curr_abrev']))
 	$_POST['curr_abrev'] = get_global_curr_code();
 
-echo "<center>";
-echo _("Select a currency :") . "  ";
+start_selector(_("Select a currency :"));
 echo currencies_list('curr_abrev', null, true);
-echo "</center>";
+end_selector();
 
 // if currency sel has changed, clear the form
 if ($_POST['curr_abrev'] != get_global_curr_code())
@@ -193,7 +194,7 @@ $sql = get_sql_for_exchange_rates();
 
 $cols = array(
 	_("Date to Use From") => 'date', 
-	_("Exchange Rate") => 'rate',
+	_("Exchange Rate") => array('type' => 'rate', 'align' => 'center'),
 	array('insert'=>true, 'fun'=>'edit_link'),
 	array('insert'=>true, 'fun'=>'del_link'),
 );
@@ -208,12 +209,10 @@ if (is_company_currency($_POST['curr_abrev']))
 else
 {
 
-	br(1);
 	$table->width = "40%";
 	if ($table->rec_count == 0)
 		$table->ready = false;
 	display_db_pager($table);
-   	br(1);
     display_rate_edit();
 }
 

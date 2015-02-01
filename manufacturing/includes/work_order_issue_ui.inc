@@ -27,9 +27,9 @@ function display_issue_items($title, &$order)
 {
 	global $path_to_root;
 
-	display_heading($title);
     div_start('items_table');
-	start_table(TABLESTYLE, "width=80% colspan=7");
+	start_table(ENTRY_ITEMS, "width=100% colspan=7");
+	display_caption($title);
 	$th = array(_("Item Code"), _("Item Description"), _("Quantity"),
 		_("Unit"), _("Unit Cost"), '');
 	if ( count($order->line_items)) $th[] = '';
@@ -158,8 +158,8 @@ function issue_options_controls()
 {
 	global $Refs;
 
-	echo "<br>";
-	start_table();
+//	echo "<br>";
+	start_table(TABLESTYLE2);
     ref_row(_("Reference:"), 'ref', '', $Refs->get_next(28));
  
  	if (!isset($_POST['IssueType']))

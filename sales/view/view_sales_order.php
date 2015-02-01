@@ -41,7 +41,8 @@ if (isset($_SESSION['View']))
 
 $_SESSION['View'] = new Cart($_GET['trans_type'], $_GET['trans_no']);
 
-start_table(TABLESTYLE2, "width=95%", 5);
+/*
+start_table(VIEW_HEADER, "width=95%", 5);
 
 if ($_GET['trans_type'] != ST_SALESQUOTE)
 {
@@ -55,8 +56,9 @@ if ($_GET['trans_type'] != ST_SALESQUOTE)
 }	
 
 echo "<tr valign=top><td>";
+*/
 
-start_table(TABLESTYLE, "width=95%");
+start_table(VIEW_HEADER, "width=95%");
 label_row(_("Customer Name"), $_SESSION['View']->customer_name, "class='tableheader2'",
 	"colspan=3");
 start_row();
@@ -87,13 +89,13 @@ end_table();
 
 if ($_GET['trans_type'] != ST_SALESQUOTE)
 {
-	echo "</td><td valign='top'>";
+	//echo "</td><td valign='top'>";
 
-	start_table(TABLESTYLE);
-	display_heading2(_("Delivery Notes"));
+	start_table(VIEW_ITEMS);
+	display_caption(_("Delivery Notes"));
 
 
-	$th = array(_("#"), _("Ref"), _("Date"), _("Total"));
+	$th = array(_("#"), _("Ref"), _("Date"), _("Total") => array('align' => 'right'));
 	table_header($th);
 
 	$dn_numbers = array();
@@ -121,12 +123,12 @@ if ($_GET['trans_type'] != ST_SALESQUOTE)
 	label_row(null, price_format($delivery_total), " ", "colspan=4 align=right");
 
 	end_table();
-	echo "</td><td valign='top'>";
+	//echo "</td><td valign='top'>";
 
-	start_table(TABLESTYLE);
-	display_heading2(_("Sales Invoices"));
+	start_table(VIEW_ITEMS);
+	display_caption(_("Sales Invoices"));
 
-	$th = array(_("#"), _("Ref"), _("Date"), _("Total"));
+	$th = array(_("#"), _("Ref"), _("Date"), _("Total") => array('align' => 'right'));
 	table_header($th);
 	
 	$inv_numbers = array();
@@ -155,10 +157,10 @@ if ($_GET['trans_type'] != ST_SALESQUOTE)
 
 	end_table();
 
-	display_heading2(_("Credit Notes"));
 
-	start_table(TABLESTYLE);
-	$th = array(_("#"), _("Ref"), _("Date"), _("Total"));
+	start_table(VIEW_ITEMS);
+	display_caption(_("Credit Notes"));
+	$th = array(_("#"), _("Ref"), _("Date"), _("Total") => array('align' => 'right'));
 	table_header($th);
 	
 	$credits_total = 0;
@@ -188,18 +190,21 @@ if ($_GET['trans_type'] != ST_SALESQUOTE)
 
 	end_table();
 
-	echo "</td></tr>";
+	//echo "</td></tr>";
 
-	end_table();
+	//end_table();
 }
 echo "<center>";
 if ($_SESSION['View']->so_type == 1)
 	display_note(_("This Sales Order is used as a Template."), 0, 0, "class='currentfg'");
-display_heading2(_("Line Details"));
 
-start_table(TABLESTYLE, "colspan=9 width=95%");
+start_table(VIEW_ITEMS, "colspan=9 width=95%");
+display_caption(_("Line Details"));
 $th = array(_("Item Code"), _("Item Description"), _("Quantity"), _("Unit"),
-	_("Price"), _("Discount"), _("Total"), _("Quantity Delivered"));
+	_("Price") => array('align' => 'right'), 
+  _("Discount") => array('align' => 'right'), 
+  _("Total") => array('align' => 'right'), 
+  _("Quantity Delivered") => array('align' => 'right'));
 table_header($th);
 
 $k = 0;  //row colour counter
@@ -244,7 +249,7 @@ start_row();
 label_cells(_("Amount Total"), $display_total, "colspan=6 align='right'","align='right'");
 label_cell('', "colspan=2");
 end_row();
-end_table(2);
+end_table(0);
 
 end_page(true, false, false, $_GET['trans_type'], $_GET['trans_no']);
 

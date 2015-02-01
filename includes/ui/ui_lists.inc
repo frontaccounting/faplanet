@@ -52,6 +52,7 @@ $opts = array(		// default options
 		// 3 - TODO reverse: box with hidden selector available via enter; this
 		// would be convenient for optional ad hoc adding of new item
 	'search_submit' => true, //search submit button: true/false
+  'typeahead' => false,
 	'size' => 8,	// size and max of box tag
 	'max' => 50,
 	'height' => false,	// number of lines in select box
@@ -242,7 +243,8 @@ $opts = array(		// default options
 
 	$selector = "<select autocomplete='off' ".($multi ? "multiple" : '')
 		. ($opts['height']!==false ? ' size="'.$opts['height'].'"' : '')
-		. "$disabled name='$name".($multi ? '[]':'')."' class='$class' title='"
+		. "$disabled name='$name".($multi ? '[]':'')."' class='$class form-control input-sm"
+    .($opts['typeahead'] ? ' select2' : '')."' title='"
 		. $opts['sel_hint']."' $rel>".$selector."</select>\n";
 
 	if ($by_id && ($search_box != false || $opts['editable']) ) {
@@ -264,6 +266,9 @@ $opts = array(		// default options
 	// span for select list/input field update
 	$selector = "<span id='_{$name}_sel'>".$selector."</span>\n";
 
+  if ($opts['typeahead'])
+    $selector = '<div class="combo-container">'.$selector.'</div>';
+
 	 // if selectable or editable list is used - add select button
 	if ($select_submit != false || $search_button) {
 		global $_select_button;
@@ -277,7 +282,7 @@ $opts = array(		// default options
 	if ($search_box != false) {
 		$edit_entry = "<input $disabled type='text' name='$search_box' id='$search_box' size='".
 			$opts['size']."' maxlength='".$opts['max'].
-			"' value='$txt' class='$class' rel='$name' autocomplete='off' title='"
+			"' value='$txt' class='$class form-control input-sm' rel='$name' autocomplete='off' title='"
 			.$opts['box_hint']."'"
 			.(!fallback_mode() && !$by_id ? " style=display:none;":'')
 			.">\n";
@@ -290,10 +295,16 @@ $opts = array(		// default options
 	}
 	default_focus(($search_box && $by_id) ? $search_box : $name);
 
+  //$edit_entry = ''; // use more sophisticated input controls.
 	if ($search_box && $opts['cells'])
-		$str = ($edit_entry!='' ? "<td>$edit_entry</td>" : '')."<td>$selector</td>";
+    if ($opts['typeahead'])
+		  $str = ($edit_entry!='' ? "<td colspan='2'>" : '<td>')."$selector</td>";
+    else
+		  $str = ($edit_entry!='' ? "<td>$edit_entry</td>" : '')."<td>$selector</td>";
 	else
-		$str = $edit_entry.$selector;
+		$str = $selector;
+		//$str = $edit_entry.$selector;
+
 	return $str;
 }
 
@@ -386,7 +397,7 @@ $opts = array(		// default options
 
 	$selector = "<select autocomplete='off' ".($multi  ? "multiple" : '')
 		. ($opts['height']!==false ? ' size="'.$opts['height'].'"' : '')
-		. "$disabled name='$name".($multi ? '[]' : '')."' class='combo' title='"
+		. "$disabled name='$name".($multi ? '[]' : '')."' class='combo form-control input-sm combobox' title='"
 		. $opts['sel_hint']."'>".$selector."</select>\n";
 
 	$Ajax->addUpdate($name, "_{$name}_sel", $selector);
@@ -454,6 +465,7 @@ function supplier_list($name, $selected_id=null, $spec_option=false, $submit_on_
 		'spec_option' => $spec_option === true ? _("All Suppliers") : $spec_option,
 		'spec_id' => $all_items,
 		'select_submit'=> $submit_on_change,
+    'typeahead' => true,
 		'async' => false,
 		'sel_hint' => $mode ? _('Press Space tab to filter by name fragment') :
 		_('Select supplier'),
@@ -507,6 +519,7 @@ function customer_list($name, $selected_id=null, $spec_option=false, $submit_on_
 		'spec_option' => $spec_option === true ? _("All Customers") : $spec_option,
 		'spec_id' => $all_items,
 		'select_submit'=> $submit_on_change,
+    'typeahead' => true,
 		'async' => false,
 		'sel_hint' => $mode ? _('Press Space tab to filter by name fragment; F2 - entry new customer') :
 		_('Select customer'),
@@ -759,6 +772,7 @@ function stock_items_list($name, $selected_id=null, $all_option=false,
 		'search_submit' => get_company_pref('no_item_list')!=0,
 		'size'=>10,
 		'select_submit'=> $submit_on_change,
+    'typeahead' => true,
 		'category' => 2,
 		'order' => array('c.description','stock_id')
 	  ), $opts) );
@@ -777,7 +791,7 @@ function stock_items_list_cells($label, $name, $selected_id=null, $all_option=fa
 	$submit_on_change=false, $all=false, $editkey = false)
 {
 	if ($label != null)
-		echo "<td>$label</td>\n";
+		echo "<td class='label'>$label</td>\n";
 	echo stock_items_list($name, $selected_id, $all_option, $submit_on_change,
 		array('cells'=>true, 'show_inactive'=>$all), $editkey);
 }
@@ -826,6 +840,7 @@ function sales_items_list($name, $selected_id=null, $all_option=false,
 		'search_box' => true,
 		'search' => array("i.item_code", "c.description", "i.description"),
 		'search_submit' => get_company_pref('no_item_list')!=0,
+    'typeahead' => true,
 		'size'=>15,
 		'select_submit'=> $submit_on_change,
 		'category' => 2,
@@ -1392,6 +1407,7 @@ function workcenter_list($name, $selected_id=null, $all_option=false)
 	array(
 		'spec_option' =>$all_option===true ? _("All Suppliers") : $all_option,
 		'spec_id' => $all_items,
+    'typeahead' => true,
 	) );
 }
 
@@ -1633,6 +1649,7 @@ function gl_all_accounts_list($name, $selected_id=null, $skip_bank_accounts=fals
 		'type' => 2,
 		'order' => array('type.class_id','type.id','account_code'),
 		'search_box' => $cells,
+    'typeahead' => true,
 			'search_submit' => false,
 			'size' => 12,
 			'max' => 10,

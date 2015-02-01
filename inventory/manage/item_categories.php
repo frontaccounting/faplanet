@@ -95,9 +95,12 @@ $result = get_item_categories(check_value('show_inactive'));
 
 start_form();
 start_table(TABLESTYLE, "width=80%");
-$th = array(_("Name"), _("Tax type"), _("Units"), _("Type"), _("Sales Act"),
-_("Inventory Account"), _("COGS Account"), _("Adjustment Account"),
-_("Assembly Account"), "", "");
+$th = array(_("Name"), _("Tax type"), _("Units"), _("Type"), 
+  _("Sales Act") => array('align' => 'right'),
+  _("Inventory Account") => array('align' => 'right'),
+  _("COGS Account") => array('align' => 'right'),
+  _("Adjustment Account") => array('align' => 'right'),
+  _("Assembly Account") => array('align' => 'right'), "", "");
 inactive_control_column($th);
 
 table_header($th);
@@ -110,13 +113,13 @@ while ($myrow = db_fetch($result))
 
 	label_cell($myrow["description"]);
 	label_cell($myrow["tax_name"]);
-	label_cell($myrow["dflt_units"], "align=center");
+	label_cell($myrow["dflt_units"], "align=left");
 	label_cell($stock_types[$myrow["dflt_mb_flag"]]);
-	label_cell($myrow["dflt_sales_act"], "align=center");
-	label_cell($myrow["dflt_inventory_act"], "align=center");
-	label_cell($myrow["dflt_cogs_act"], "align=center");
-	label_cell($myrow["dflt_adjustment_act"], "align=center");
-	label_cell($myrow["dflt_assembly_act"], "align=center");
+	label_cell($myrow["dflt_sales_act"], "align=right");
+	label_cell($myrow["dflt_inventory_act"], "align=right");
+	label_cell($myrow["dflt_cogs_act"], "align=right");
+	label_cell($myrow["dflt_adjustment_act"], "align=right");
+	label_cell($myrow["dflt_assembly_act"], "align=right");
 	inactive_control_cell($myrow["category_id"], $myrow["inactive"], 'stock_category', 'category_id');
  	edit_button_cell("Edit".$myrow["category_id"], _("Edit"));
  	delete_button_cell("Delete".$myrow["category_id"], _("Delete"));

@@ -141,8 +141,8 @@ function print_link($link_text, $rep, $pars = array(), $dir = '',
 	if ($id != '')
 		$id = " id='$id'";
 	$pars = access_string($link_text);
-	if (user_graphic_links() && $icon)
-		$pars[0] = set_icon($icon, $pars[0]);
+	//if (user_graphic_links() && $icon)
+//		$pars[0] = set_icon($icon, $pars[0]);
 	return "<a target='_blank' href='$url'$id$class $pars[1]>$pars[0]</a>";
 }
 

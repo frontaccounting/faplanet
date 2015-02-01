@@ -86,7 +86,7 @@ function gl_inquiry_controls()
 	end_row();
 	end_table();
 
-	echo '<hr>';
+	//echo '<hr>';
     end_form();
 }
 
@@ -137,12 +137,14 @@ function show_results()
 	else
 		$dim_cols = array();
 	
+	$remaining_cols = array(_("Person/Item"), 
+    _("Debit") => array('align' => 'right'), 
+    _("Credit") => array('align' => 'right'));
+
 	if ($show_balances)
-	    $remaining_cols = array(_("Person/Item"), _("Debit"), _("Credit"), _("Balance"), _("Memo"));
-	else
-	    $remaining_cols = array(_("Person/Item"), _("Debit"), _("Credit"), _("Memo"));
+    $remaining_cols = array_merge($remaining_cols, array(_("Balance")));
 	    
-	$th = array_merge($first_cols, $account_col, $dim_cols, $remaining_cols);
+	$th = array_merge($first_cols, $account_col, $dim_cols, $remaining_cols, array(_("Memo")));
 			
 	table_header($th);
 	if ($_POST["account"] != null && is_account_balancesheet($_POST["account"]))

@@ -109,10 +109,10 @@ $result = get_all_tax_types(check_value('show_inactive'));
 
 start_form();
 
-display_note(_("To avoid problems with manual journal entry all tax types should have unique Sales/Purchasing GL accounts."), 0, 1);
+display_note_warning(_("To avoid problems with manual journal entry all tax types should have unique Sales/Purchasing GL accounts."), 0, 1);
 start_table(TABLESTYLE);
 
-$th = array(_("Description"), _("Default Rate (%)"),
+$th = array(_("Description"), _("Default Rate (%)") => array('align' => 'right'),
 	_("Sales GL Account"), _("Purchasing GL Account"), "", "");
 inactive_control_column($th);
 table_header($th);

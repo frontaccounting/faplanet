@@ -72,7 +72,7 @@ function send_scripts()
 function page_header($title, $no_menu=false, $is_index=false, $onload="", $js="", $css='')
 {
 	// titles and screen header
-	global $path_to_root, $def_app, $use_popup_windows, $help_base_url, $db_connections;
+	global $page_id, $path_to_root, $def_app, $use_popup_windows, $help_base_url, $db_connections;
 
 	if (in_ajax())
 		return; // just for speed up
@@ -127,23 +127,45 @@ function page_header($title, $no_menu=false, $is_index=false, $onload="", $js=""
 	echo "<html dir='" . $_SESSION['language']->dir . "' >\n";
 	echo "<head profile=\"http://www.w3.org/2005/10/profile\"><title>$title</title>";
 	echo "<meta http-equiv='Content-type' content='text/html; charset=$encoding'>";
+	//echo "<link href='$path_to_root/themes/$theme/css/bootstrap-theme.min.css' rel='stylesheet' type='text/css'> \n";
+	echo "<link href='$path_to_root/themes/$theme/css/bootstrap.css' rel='stylesheet' type='text/css'> \n";
+	echo "<link href='$path_to_root/themes/$theme/css/select2.css' rel='stylesheet' type='text/css'> \n";
+	echo "<link href='$path_to_root/themes/$theme/css/select2-bootstrap.css' rel='stylesheet' type='text/css'> \n";
+	echo "<link href='$path_to_root/themes/$theme/css/datepicker3.css' rel='stylesheet' type='text/css'> \n";
+	echo "<link href='$path_to_root/themes/$theme/css/dataTables.bootstrap.css' rel='stylesheet' type='text/css'> \n";
+	echo "<link href='$path_to_root/themes/$theme/css/bootstrap-custom.css' rel='stylesheet' type='text/css'> \n";
 	echo "<link href='$path_to_root/themes/$theme/default.css' rel='stylesheet' type='text/css'> \n";
  	echo "<link href='$path_to_root/themes/default/images/favicon.ico' rel='icon' type='image/x-icon'> \n";
+ 	echo "<script language='javascript' type='text/javascript' src='$path_to_root/themes/$theme/js/jquery-1.11.2.min.js'></script>";
+ 	echo "<script language='javascript' type='text/javascript' src='$path_to_root/themes/$theme/js/bootstrap.min.js'></script>";
+ 	echo "<script language='javascript' type='text/javascript' src='$path_to_root/themes/$theme/js/select2.min.js'></script>";
+ 	echo "<script language='javascript' type='text/javascript' src='$path_to_root/themes/$theme/js/bootstrap-datepicker.js'></script>";
+ 	echo "<script language='javascript' type='text/javascript' src='$path_to_root/themes/$theme/js/jquery.dataTables.min.js'></script>";
+ 	echo "<script language='javascript' type='text/javascript' src='$path_to_root/themes/$theme/js/dataTables.bootstrap.min.js'></script>";
+
+  echo "<script type='text/javascript' src='$path_to_root/themes/$theme/js/Chart.js'></script>\n";
+  echo '<script> $(document).ready(function() { $(".select2").select2({ placeholder: "Select a State", maximumSelectionSize: 6 }); }); </script>';
+  echo '<script> $(document).ready(function() { $(".dynamic-table").DataTable({"columnDefs": [{orderable: false, "targets": -1}], "paging": false, "info": false}); }); </script>';
+
 	if ($css)
 		echo '<link href="'.$css.'" rel="stylesheet" type="text/css">';
 
 	send_scripts();
 
 	echo "</head> \n";
+  $class = '';
+  if (!empty($page_id))
+    $class= 'page-'.$page_id;
+    
 	if ($onload == "")
-		echo "<body>";
+		echo "<body class='$class'>";
 	else
-		echo "<body onload=\"$onload\">";
+		echo "<body class='$class' onload=\"$onload\">";
 
 	include_once($path_to_root . "/themes/$theme/renderer.php");
 	$rend = new renderer();
 	$rend->menu_header($title, $no_menu, $is_index);
-	error_box();
+	//error_box();
 }
 
 ?>

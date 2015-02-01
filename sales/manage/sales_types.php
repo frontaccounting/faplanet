@@ -116,7 +116,7 @@ while ($myrow = db_fetch($result))
 	$f = number_format2($myrow["factor"],4);
 	if($myrow["id"] == $base_sales) $f = "<I>"._('Base')."</I>";
 	label_cell($f);
-	label_cell($myrow["tax_included"] ? _('Yes'):_('No'), 'align=center');
+	label_cell($myrow["tax_included"] ? _('Yes'):_('No'), 'align=left');
 	inactive_control_cell($myrow["id"], $myrow["inactive"], 'sales_types', 'id');
  	edit_button_cell("Edit".$myrow['id'], _("Edit"));
  	delete_button_cell("Delete".$myrow['id'], _("Delete"));
@@ -124,8 +124,8 @@ while ($myrow = db_fetch($result))
 }
 inactive_control_row($th);
 end_table();
-
 display_note(_("Marked sales type is the company base pricelist for prices calculations."), 0, 0, "class='overduefg'");
+
 
 //----------------------------------------------------------------------------------------------------
 

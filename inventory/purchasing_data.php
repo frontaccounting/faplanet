@@ -114,11 +114,11 @@ if (!isset($_POST['stock_id']))
 
 if (!@$_GET['popup'])
 {
-	echo "<center>" . _("Item:"). "&nbsp;";
+  start_selector(_("Item:"));
 	//Chaitanya : All items can be purchased
 	echo stock_items_list('stock_id', $_POST['stock_id'], false, true);
 	//echo stock_purchasable_items_list('stock_id', $_POST['stock_id'], false, true);
-	echo "<hr></center>";
+  end_selector();
 }
 else
 	br(2);
@@ -144,8 +144,8 @@ else
     {
         start_table(TABLESTYLE, "width=65%");
 
-		$th = array(_("Supplier"), _("Price"), _("Currency"),
-			_("Supplier's Unit"), _("Conversion Factor"), _("Supplier's Description"), "", "");
+		$th = array(_("Supplier"), _("Price") => array('align' => 'right'), _("Currency"),
+			_("Supplier's Unit"), _("Conversion Factor") => array('align' => 'right'), _("Supplier's Description"), "", "");
 
         table_header($th);
 

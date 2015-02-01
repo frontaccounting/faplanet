@@ -28,7 +28,7 @@ function display_order_header(&$order)
 {
 	global $Refs;
 
-	start_outer_table(TABLESTYLE, "width=70%");
+	start_outer_table(ENTRY_HEADER, "width=100%");
 
 	table_section(1);
 	
@@ -45,7 +45,7 @@ function display_order_header(&$order)
 
     movement_types_list_row(_("Transfer Type:"), 'type', null);
 
-	end_outer_table(1); // outer table
+	end_outer_table(); // outer table
 }
 
 //---------------------------------------------------------------------------------
@@ -54,10 +54,11 @@ function display_transfer_items($title, &$order)
 {
 	global $path_to_root;
 
-	display_heading($title);
+	//display_heading($title);
     div_start('items_table');
-	start_table(TABLESTYLE, "width=80%");
-	$th = array(_("Item Code"), _("Item Description"), _("Quantity"), _("Unit"), '');
+	start_table(ENTRY_ITEMS);
+	display_caption($title);
+	$th = array(_("Item Code"), _("Item Description"), _("Quantity") => array('align' => 'right'), _("Unit"), '');
 	if ( count($order->line_items)) $th[] = '';
 	table_header($th);
 	$subtotal = 0;
@@ -161,12 +162,7 @@ function transfer_edit_item_controls(&$order, $line_no=-1)
 
 function transfer_options_controls()
 {
-	  echo "<br>";
-	  start_table();
-
-	  textarea_row(_("Memo"), 'memo_', null, 50, 3);
-
-	  end_table(1);
+    memo_control('memo_', null, 50, 3);
 }
 
 

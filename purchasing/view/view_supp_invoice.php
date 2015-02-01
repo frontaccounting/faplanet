@@ -40,7 +40,7 @@ $supplier_curr_code = get_supplier_currency($supp_trans->supplier_id);
 display_heading(_("SUPPLIER INVOICE") . " # " . $trans_no);
 echo "<br>";
 
-start_table(TABLESTYLE, "width=95%");   
+start_table(VIEW_HEADER, "width=95%");   
 start_row();
 label_cells(_("Supplier"), $supp_trans->supplier_name, "class='tableheader2'");
 label_cells(_("Reference"), $supp_trans->reference, "class='tableheader2'");
@@ -71,7 +71,7 @@ $display_total = number_format2($supp_trans->ov_amount + $supp_trans->ov_gst,use
 
 label_row(_("TOTAL INVOICE"), $display_total, "colspan=1 align=right", "nowrap align=right");
 
-end_table(1);
+end_table(0);
 
 $voided = is_voided_display(ST_SUPPINVOICE, $trans_no, _("This invoice has been voided."));
 

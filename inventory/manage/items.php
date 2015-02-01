@@ -425,14 +425,14 @@ start_form(true);
 
 if (db_has_stock_items()) 
 {
-	start_table(TABLESTYLE_NOBORDER);
-	start_row();
-    stock_items_list_cells(_("Select an item:"), 'stock_id', null,
-	  _('New item'), true, check_value('show_inactive'));
+  start_selector(_("Select an item:"));
+  echo stock_items_list('stock_id', null,
+	  _('New item'), true, array('cells' => false, 'show_inactive'=>check_value('show_inactive')));
 	$new_item = get_post('stock_id')=='';
+  echo '</td>';
 	check_cells(_("Show inactive:"), 'show_inactive', null, true);
-	end_row();
-	end_table();
+  echo '<td>';
+	end_selector();
 
 	if (get_post('_show_inactive_update')) {
 		$Ajax->activate('stock_id');

@@ -218,14 +218,14 @@ start_form();
 
 display_order_header($_SESSION['transfer_items']);
 
-start_table(TABLESTYLE, "width=70%", 10);
-start_row();
-echo "<td>";
+//start_table(TABLESTYLE, "width=100%", 10);
+//start_row();
+//echo "<td>";
 display_transfer_items(_("Items"), $_SESSION['transfer_items']);
 transfer_options_controls();
-echo "</td>";
-end_row();
-end_table(1);
+//echo "</td>";
+//end_row();
+//end_table(1);
 
 submit_center_first('Update', _("Update"), '', null);
 submit_center_last('Process', _("Process Transfer"), '',  'default');

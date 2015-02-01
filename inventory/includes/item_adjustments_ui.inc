@@ -28,7 +28,7 @@ function display_order_header(&$order)
 {
 	global $Refs;
 
-	start_outer_table(TABLESTYLE2, "width=70%"); // outer table
+	start_outer_table(TABLESTYLE2, "width=100%"); // outer table
 	table_section(1);
 
 	locations_list_row(_("Location:"), 'StockLocation', null);
@@ -56,11 +56,15 @@ function display_adjustment_items($title, &$order)
 {
 	global $path_to_root;
 
-	display_heading($title);
+  //echo '<div class="panel panel-default">';
+  //echo '<div class="panel-heading">'.$title.'</div>';
+  //echo '<div class="panel-body">';
+  
     div_start('items_table');
-	start_table(TABLESTYLE, "width=80%");
-	$th = array(_("Item Code"), _("Item Description"), _("Quantity"),
-		_("Unit"), _("Unit Cost"), _("Total"), "");
+	start_table(ENTRY_ITEMS, "width=100%");
+	display_caption($title);
+	$th = array(_("Item Code"), _("Item Description"), _("Quantity") => array('align' => 'right'),
+		_("Unit"), _("Unit Cost") => array('align' => 'right'), _("Total") => array('align' => 'right'), "");
 	if ( count($order->line_items)) $th[] = '';
 
 	table_header($th);
@@ -109,6 +113,7 @@ function display_adjustment_items($title, &$order)
 	if ($low_stock)
 		display_note(_("Marked items have insufficient quantities in stock as on day of adjustment."), 0, 1, "class='stockmankofg'");
 	div_end();
+ // echo '</div>';
 }
 
 //---------------------------------------------------------------------------------
@@ -181,12 +186,8 @@ function adjustment_edit_item_controls(&$order, $line_no=-1)
 
 function adjustment_options_controls()
 {
-	  echo "<br>";
-	  start_table();
-
-	  textarea_row(_("Memo"), 'memo_', null, 50, 3);
-
-	  end_table(1);
+	  //echo "<br>";
+    memo_control('memo_', null, 50, 3);
 }
 
 

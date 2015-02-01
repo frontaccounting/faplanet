@@ -41,11 +41,12 @@ if (!@$_GET['popup'])
 if (!isset($_POST['customer_id']))
 	$_POST['customer_id'] = get_global_customer();
 
+start_search();
 start_table(TABLESTYLE_NOBORDER);
 start_row();
 
 if (!@$_GET['popup'])
-	customer_list_cells(_("Select a customer: "), 'customer_id', null, true, false, false, !@$_GET['popup']);
+	customer_list_cells(_("Customer:"), 'customer_id', null, true, false, false, !@$_GET['popup']);
 
 date_cells(_("From:"), 'TransAfterDate', '', null, -30);
 date_cells(_("To:"), 'TransToDate', '', null, 1);
@@ -58,6 +59,7 @@ cust_allocations_list_cells(null, 'filterType', $_POST['filterType'], true);
 submit_cells('RefreshInquiry', _("Search"),'',_('Refresh Inquiry'), 'default');
 end_row();
 end_table();
+end_search();
 
 set_global_customer($_POST['customer_id']);
 
@@ -77,8 +79,12 @@ function display_customer_summary($customer_record)
 	$pastdue2 = _('Over') . " " . $past2 . " " . _('Days');
 
     start_table(TABLESTYLE, "width=80%");
-    $th = array(_("Currency"), _("Terms"), _("Current"), $nowdue,
-    	$pastdue1, $pastdue2, _("Total Balance"));
+    $th = array(_("Currency"), _("Terms"), 
+      _("Current") => array('align' => 'right'), 
+      $nowdue => array('align' => 'right'),
+    	$pastdue1 => array('align' => 'right'), 
+      $pastdue2 => array('align' => 'right'), 
+      _("Total Balance") => array('align' => 'right'));
     table_header($th);
 
 	start_row();
@@ -100,7 +106,7 @@ if ($_POST['customer_id'] != "" && $_POST['customer_id'] != ALL_TEXT)
 {
 	$customer_record = get_customer_details($_POST['customer_id'], $_POST['TransToDate']);
     display_customer_summary($customer_record);
-    echo "<br>";
+    //echo "<br>";
 }
 div_end();
 

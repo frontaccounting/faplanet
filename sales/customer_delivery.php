@@ -308,10 +308,10 @@ if (isset($_POST['Update']) || isset($_POST['_Location_update']) || isset($_POST
 start_form();
 hidden('cart_id');
 
-start_table(TABLESTYLE2, "width=80%", 5);
+start_table(TABLESTYLE3, "width=100%", 5);
 echo "<tr><td>"; // outer table
 
-start_table(TABLESTYLE, "width=100%");
+start_table(TABLESTYLE2, "width=100%");
 start_row();
 label_cells(_("Customer"), $_SESSION['Items']->customer_name, "class='tableheader2'");
 label_cells(_("Branch"), get_branch_name($_SESSION['Items']->Branch), "class='tableheader2'");
@@ -360,7 +360,7 @@ end_table();
 
 echo "</td><td>";// outer table
 
-start_table(TABLESTYLE, "width=90%");
+start_table(TABLESTYLE2, "width=100%");
 
 if (!isset($_POST['due_date']) || !is_date($_POST['due_date'])) {
 	$_POST['due_date'] = get_invoice_duedate($_SESSION['Items']->payment, $_POST['DispatchDate']);
@@ -401,14 +401,14 @@ if ($row['dissallow_invoices'] == 1)
 	end_page();
 	exit();
 }	
-display_heading(_("Delivery Items"));
 div_start('Items');
-start_table(TABLESTYLE, "width=80%");
+start_table(ENTRY_ITEMS, "width=80%");
+display_caption(_("Delivery Items"));
 
 $new = $_SESSION['Items']->trans_no==0;
 $th = array(_("Item Code"), _("Item Description"), 
 	$new ? _("Ordered") : _("Max. delivery"), _("Units"), $new ? _("Delivered") : _("Invoiced"),
-	_("This Delivery"), _("Price"), _("Tax Type"), _("Discount"), _("Total"));
+	_("This Delivery") => array('align' => 'right'), _("Price") => array('align' => 'right'), _("Tax Type"), _("Discount") => array('align' => 'right'), _("Total") => array('align' => 'right'));
 
 table_header($th);
 $k = 0;

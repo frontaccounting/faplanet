@@ -64,8 +64,9 @@ class BoxReports
 			set_focus('class'.$_GET['Class']);
 
 		$cur_class = $_REQUEST['Class'];
+    $class_id = $cur_class;
 
-		foreach($this->ar_classes as $class_id => $name)
+		/*foreach($this->ar_classes as $class_id => $name)
 		{
 			if (!isset($this->ar_reports[$class_id]))
 				continue; // e.g. no dimensions
@@ -76,17 +77,21 @@ class BoxReports
 				." style='font-weight:". ($cur_class == $class_id ? 'bold' : 'normal')."'"
 				." class='repclass_link' id='".'class'.$class_id."'"
 				."$acc[1]>$acc[0]</a> <br>";
+        */
 
-			$style = $class_id==$cur_class ? '' : "style='display:none'";
-			$st_reports .= "<table class='repclass' id='TAB_" . $class_id ."' $style cellpadding=0 cellspacing=0 border=0 width='100%'><tr><td><b>" . _("Reports For Class: ") . "&nbsp;$name</b></td></tr>\n";
+		//	$style = $class_id==$cur_class ? '' : "style='display:none'";
+		//	$st_reports .= "<table class='repclass' id='TAB_" . $class_id ."' $style cellpadding=0 cellspacing=0 border=0 width='100%'><tr><td><b>" . _("Reports For Class: ") . "&nbsp;$name</b></td></tr>\n";
+      $st_reports .= '<ul class="nav nav-pills nav-stacked">';
 			foreach($this->ar_reports[$class_id] as $rep_id => $report)
 			{
 				$acc = access_string($report->name);
-				$st_reports .= "<tr><td><a class='repopts_link'"
+				$st_reports .= '<li role="presentation">';
+				$st_reports .= "<a class='repopts_link'"
 					." href='".$_SERVER['PHP_SELF']."?Class=$class_id&REP_ID=$report->id'"
 					." style='font-weight:". (@$_REQUEST['REP_ID'] == $report->id ? 'bold' : 'normal')."'"
 					." id='".$id = default_focus()."'"
-					."$acc[1]>$acc[0]</a><tr><td>\n";
+					."$acc[1]>$acc[0]</a>\n";
+				$st_reports .= '</li>';
 
 				if (@$_REQUEST['REP_ID'] == $report->id) {
 					$Ajax->activate($id);
@@ -107,17 +112,19 @@ class BoxReports
 					$Ajax->addUpdate(true, 'rep_form', $st_params);
 				}
 			}
-			$st_reports .= "</table>";
-		}
+      $st_reports .= '</ul>';
+			//$st_reports .= "</table>";
+		//}
 
 		$st_params = "<div id='rep_form'>".
 			"$st_params</div>";
 		
-		$st = "<table align='center' width='80%' style='border:1px solid #cccccc;'><tr valign='top'>";
-		$st .= "<td width='30%'>$st_classes</td>";
-		$st .= "<td width='35%' style='border-left:1px solid #cccccc;border-right:1px solid #cccccc;padding-left:3px;'>$st_reports</td>";
-		$st .= "<td width='35%'>$st_params</td>";
-		$st .= "</tr></table><br>";
+		$st = "<div class='row'>";
+		//$st .= "<td width='30%'>$st_classes</td>";
+		$st .= "<div class='col-md-3 report-reports'>$st_reports</div>";
+		$st .= "<div class='col-md-7 report-params'>$st_params</div>";
+		$st .= "</div>";
+    //$st = $st_reports;
 
 		return $st;
 	}
@@ -147,7 +154,7 @@ class BoxReports
 			if ($ctrl != '')  {
 				$st .= $title . ':<br>';
 				$st .= $ctrl;
-				$st .= "<br><br>";
+				$st .= "<br>";
 			} else {
 				display_error(_('Unknown report parameter type:').$type);
 			}
@@ -213,7 +220,7 @@ class BoxReports
 					}
 					else // saved parameters 2010-10-16 Joe Hunt
 						$date = $_POST[$name];
-					$st = "<input type='text' name='$name' value='$date'>";
+					$st = "<input type='text' class='form-control input-sm' name='$name' value='$date'>";
 					if ($use_date_picker)
 					{
 						$calc_image = (file_exists("$path_to_root/themes/".user_theme()."/images/cal.gif")) ? 
@@ -260,11 +267,11 @@ class BoxReports
 					return systypes_list($name, null, _("No Type Filter"));
 
 				case 'TEXT':
-					return "<input type='text' name='$name'>";
+					return "<input type='text' class='form-control input-sm' name='$name'>";
 
 				case 'TEXTBOX':
 					$value = (isset($_POST[$name]) ? $_POST[$name] : "");
-					return "<textarea rows=4 cols=30 name='$name'>$value</textarea>";
+					return "<textarea class='form-control' rows=4 cols=30 name='$name'>$value</textarea>";
 
 				case 'ACCOUNTS': // not used
 					return gl_account_types_list($name, null, _("No Account Group Filter"), true);

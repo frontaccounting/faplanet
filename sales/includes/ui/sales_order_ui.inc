@@ -138,17 +138,32 @@ function get_customer_details_to_order(&$order, $customer_id, $branch_id)
 function display_order_summary($title, &$order, $editable_items=false)
 {
 
-	display_heading($title);
+  //echo '<div class="panel panel-default">';
+  //echo '<div class="panel-heading">'.$title.'</div>';
+  //echo '<div class="panel-body">';
 
     div_start('items_table');
-	start_table(TABLESTYLE, "colspan=7 width=90%");
-	$th = array(_("Item Code"), _("Item Description"), _("Quantity"),
-		_("Delivered"),
-		_("Unit"), $order->tax_included ? _("Price after Tax") : _("Price before Tax"), _("Discount %"), _("Total"), "");
+	start_table(ENTRY_ITEMS, "colspan=7 width=90%");
+	display_caption($title);
+  $tax_text = $order->tax_included ? _("Price after Tax") : _("Price before Tax");
 
 	if ($order->trans_no == 0) {
-	unset( $th[3] );
+    $th = array(_("Item Code"), _("Item Description"), 
+      _("Quantity") => array('align' => 'right'),
+      _("Unit"), 
+      $tax_text => array('align' => 'right'),
+      _("Discount %") => array('align' => 'right'),
+      _("Total") => array('align' => 'right') , "");
 	}
+  else {
+    $th = array(_("Item Code"), _("Item Description"), 
+      _("Quantity") => array('align' => 'right'),
+      _("Delivered"),
+      _("Unit"), 
+      $tax_text => array('align' => 'right'),
+      _("Discount %") => array('align' => 'right'),
+      _("Total") => array('align' => 'right') , "");
+  }
 
 	if (count($order->line_items))
 	     $th[]= '';
@@ -236,6 +251,7 @@ function display_order_summary($title, &$order, $editable_items=false)
 		display_note(_("Marked items have insufficient quantities in stock as on day of delivery."), 0, 1, "class='stockmankofg'");
 
     div_end();
+  //  echo '</div>';
 }
 
 // ------------------------------------------------------------------------------
@@ -244,9 +260,9 @@ function display_order_header(&$order, $editable, $date_text)
 {
 	global $Ajax, $SysPrefs;
 
-	start_outer_table(TABLESTYLE2, "width=80%");
+	start_outer_table(TABLESTYLE2, "width=100%");
 
-	table_section(1);
+	table_section(1, "33%");
 	
 	$customer_error = "";
 	$change_prices = 0;
@@ -362,20 +378,13 @@ function display_order_header(&$order, $editable, $date_text)
 
 	ref_row(_("Reference").':', 'ref', _('Reference number unique for this document type'), null, '');
 
-	table_section(2);
+	//table_section(2);
 
-	if (!is_company_currency($order->customer_currency) && in_array($order->trans_type, array(ST_SALESINVOICE, ST_CUSTDELIVERY)))
-	{
-		label_row(_("Customer Currency:"), $order->customer_currency);
-		exchange_rate_display(get_company_currency(), $order->customer_currency,
-			($editable ? $_POST['OrderDate'] : $order->document_date));
-	}
+	//customer_credit_row($_POST['customer_id'], $order->credit);
 
-	customer_credit_row($_POST['customer_id'], $order->credit);
+	//label_row(_("Customer Discount:"), ($order->default_discount * 100) . "%");
 
-	label_row(_("Customer Discount:"), ($order->default_discount * 100) . "%");
-
-	table_section(3);
+	table_section(2, "33%");
 	if ($order->pos['cash_sale'] || $order->pos['credit_sale']) {
 		 // editable payment type 
 		if (get_post('payment') !== $order->payment) {
@@ -412,7 +421,15 @@ function display_order_header(&$order, $editable, $date_text)
 		$change_prices = 1;
 	}
 
-	table_section(4);
+	if (!is_company_currency($order->customer_currency) && in_array($order->trans_type, array(ST_SALESINVOICE, ST_CUSTDELIVERY)))
+	{
+		//label_row(_("Customer Currency:"), $order->customer_currency);
+		exchange_rate_display(get_company_currency(), $order->customer_currency,
+			($editable ? $_POST['OrderDate'] : $order->document_date));
+	}
+
+
+	table_section(3, "33%");
 
 	if ($editable)
 	{
@@ -454,6 +471,8 @@ function display_order_header(&$order, $editable, $date_text)
 		label_row($date_text, $order->document_date);
 		hidden('OrderDate', $order->document_date);
 	}
+
+	customer_credit_row($_POST['customer_id'], $order->credit);
 
 	end_outer_table(1); // outer table
 
@@ -569,8 +588,10 @@ function display_delivery_details(&$order)
 
 	if ($order->payment_terms['cash_sale']) {	// Direct payment sale
 		$Ajax->activate('items_table');
-		display_heading(_('Cash payment'));
+    //echo '<div class="panel panel-default">';
+    //echo '<div class="panel-heading">'.$title.'</div>';
 		start_table(TABLESTYLE2, "width=60%");
+		display_caption(_('Cash payment'));
 
 		locations_list_row(_("Deliver from Location:"), 'Location', null, false, true);
  		if (list_updated('Location'))
@@ -600,8 +621,12 @@ function display_delivery_details(&$order)
 			$title = _("Order Delivery Details");
 			$delname = _("Required Delivery Date").':';
 		}
-		display_heading($title);
-		start_outer_table(TABLESTYLE2, "width=90%");
+    //echo '<div class="panel panel-default">';
+    //echo '<div class="panel-heading">'.$title.'</div>';
+		//start_outer_table(TABLESTYLE2, "width=90%");
+    start_table(ENTRY_FOOTER);
+		display_caption($title);
+    echo "<tr valign=top><td>\n"; // outer table
 		table_section(1);
 
 		locations_list_row(_("Deliver from Location:"), 'Location', null, false, true);
@@ -631,6 +656,7 @@ function display_delivery_details(&$order)
 		end_outer_table(1);
 	}
 	div_end();
+  //echo  '</div>';
 }
 
 ?>

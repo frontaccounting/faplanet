@@ -23,6 +23,10 @@ if ($use_date_picker)
 
 add_js_file('reports.js');
 
+$Class = (int)$_GET['Class'];
+$pages = array('customer_reports', 'supplier_reports', 'item_reports', 'manufacturing_reports', 'dimension_reports', 'banking_reports', 'ledger_reports');
+$page_id = $pages[(int)$Class];
+
 page(_($help_context = "Reports and Analysis"), false, false, "", $js);
 
 $reports = new BoxReports;

@@ -323,13 +323,13 @@ start_form();
 
 if (db_has_customers()) 
 {
-	start_table(TABLESTYLE_NOBORDER);
-	start_row();
-	customer_list_cells(_("Select a customer: "), 'customer_id', null,
+  start_selector(_("Select a customer: "));
+	echo customer_list('customer_id', null,
 		_('New customer'), true, check_value('show_inactive'));
+  echo '</td>';
 	check_cells(_("Show inactive:"), 'show_inactive', null, true);
-	end_row();
-	end_table();
+  echo '<td>';
+	end_selector();
 
 	if (get_post('_show_inactive_update')) {
 		$Ajax->activate('customer_id');

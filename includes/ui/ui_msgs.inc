@@ -29,9 +29,14 @@ function display_notification_centered($msg)
 	display_notification($msg, true);
 }
 
+function display_caption($msg)
+{
+	echo "<caption>$msg</caption>\n";	
+}
+
 function display_heading($msg)
 {
-	echo "<center><span class='headingtext'>$msg</span></center>\n";	
+	echo "<center><p class='headingtext'>$msg</p></center>\n";	
 }
 
 function display_heading2($msg)
@@ -39,8 +44,17 @@ function display_heading2($msg)
 	echo "<center><span class='headingtext2'>$msg</span></center>\n";	
 }
 
+function display_note_warning($msg, $center=true)
+{
+	//trigger_error($msg, E_USER_WARNING);
+  echo '<div class="alert alert-warning alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>'.$msg.'</div>';
+
+}
+
 function display_note($msg, $br=0, $br2=0, $extra="")
 {
+/*
 	for ($i = 0; $i < $br; $i++)
 		echo "<br>";
 	if ($extra != "")	
@@ -49,6 +63,8 @@ function display_note($msg, $br=0, $br2=0, $extra="")
 		echo "<center><span>$msg</span></center>\n";	
 	for ($i = 0; $i < $br2; $i++)
 		echo "<br>";
+    */
+  echo "<p class='overdue'>$msg</p>";
 }
 
 function stock_item_heading($stock_id)

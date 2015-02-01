@@ -23,11 +23,33 @@ function page_footer($no_menu=false, $is_index=false)
 	$edits = "editors = ".$Ajax->php2js($Editors).";";
 	$Ajax->addScript('editors', $edits);
 
+        //todayBtn: "linked",
+      echo '<script>
+        $.fn.datepicker.dates["en"] = {
+          days: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+          daysShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+          daysMin: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
+          months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+          monthsShort: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+          today: "Today",
+        };
+      
+      $(document).ready(function() {
+        $(".input-group.date").datepicker({
+        calendarWeeks: false,
+        autoclose: true,
+        todayHighlight: false,
+        format: "'.$_SESSION["wa_current_user"]->prefs->date_display_2().'",
+        language: "en"
+        }); });
+        </script>';
+
 	echo "<script>
 		_focus = '" . get_post('_focus') . "';
 		_validate = " . $Ajax->php2js($Validate).";
 		var $edits
 	</script>";
+
 
    	add_user_js_data();
 	echo "\n<script type=\"text/javascript\"><!--\n";

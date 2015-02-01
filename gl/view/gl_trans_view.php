@@ -61,13 +61,13 @@ $dim = get_company_pref('use_dimension');
 
 if ($dim == 2)
 	$th = array(_("Account Code"), _("Account Name"), _("Dimension")." 1", _("Dimension")." 2",
-		_("Debit"), _("Credit"), _("Memo"));
+		_("Debit") => array('align' => 'right'), _("Credit") => array('align' => 'right'), _("Memo"));
 else if ($dim == 1)
 	$th = array(_("Account Code"), _("Account Name"), _("Dimension"),
-		_("Debit"), _("Credit"), _("Memo"));
+		_("Debit") => array('align' => 'right'), _("Credit") => array('align' => 'right'), _("Memo"));
 else		
 	$th = array(_("Account Code"), _("Account Name"),
-		_("Debit"), _("Credit"), _("Memo"));
+		_("Debit") => array('align' => 'right'), _("Credit") => array('align' => 'right'), _("Memo"));
 $k = 0; //row colour counter
 $heading_shown = false;
 
@@ -112,7 +112,7 @@ if ($heading_shown)
     amount_cell(-$credit);
     label_cell('');
     end_row();
-	end_table(1);
+	end_table(0);
 }
 
 //end of while loop

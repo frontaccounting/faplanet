@@ -17,7 +17,7 @@ function display_credit_header(&$order)
 {
 	global $Ajax, $Refs;
 
-	start_outer_table(TABLESTYLE, "width=80%");
+	start_outer_table(TABLESTYLE2, "width=100%");
 	table_section(1);
 
 	$customer_error = "";
@@ -99,7 +99,7 @@ function display_credit_header(&$order)
 
     if (!isset($_POST['sales_type_id']))
     	$_POST['sales_type_id'] = $order->sales_type;
-    sales_types_list_row(_("Sales Type"), 'sales_type_id', $_POST['sales_type_id'], true);
+    sales_types_list_row(_("Sales Type:"), 'sales_type_id', $_POST['sales_type_id'], true);
 	
 	if ($order->sales_type != $_POST['sales_type_id']) {
 		$myrow = get_sales_type($_POST['sales_type_id']);
@@ -161,11 +161,15 @@ function display_credit_items($title, &$order)
 {
     global $path_to_root;
 
-    display_heading($title);
     div_start('items_table');
-    start_table(TABLESTYLE, "width=90%");
-    $th = array(_("Item Code"), _("Item Description"), _("Quantity"), _("Unit"),
-	_("Price"), _("Discount %"), _("Total"),'');
+    start_table(ENTRY_ITEMS, "width=100%");
+    display_caption($title);
+    $th = array(_("Item Code"), _("Item Description"), 
+      _("Quantity") => array('align' => 'right'),
+      _("Unit"),
+	    _("Price") => array('align' => 'right'),
+      _("Discount %") => array('align' => 'right'),
+      _("Total") => array('align' => 'right'),'');
 
     if (count($order->line_items)) $th[]= '';
 

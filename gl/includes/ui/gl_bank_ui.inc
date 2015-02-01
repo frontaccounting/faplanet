@@ -17,7 +17,7 @@ function display_bank_header(&$order)
 	$customer_error = false;
 	div_start('pmt_header');
 
-	start_outer_table(TABLESTYLE2, "width=90%"); // outer table
+	start_outer_table(TABLESTYLE2, "width=100%"); // outer table
 
 	table_section(1);
 	
@@ -143,20 +143,20 @@ function display_gl_items($title, &$order)
 
 	$dim = get_company_pref('use_dimension');
 	$colspan = ($dim == 2 ? 4 : ($dim == 1 ? 3 : 2));
-	display_heading($title);
 
     div_start('items_table');
-	start_table(TABLESTYLE, "colspan=7 width=95%");
+	start_table(ENTRY_ITEMS, "colspan=7 width=100%");
+	display_caption($title);
 
 	if ($dim == 2)
 		$th = array(_("Account Code"), _("Account Description"), _("Dimension")." 1",
-			_("Dimension")." 2", _("Amount"), _("Memo"), "");
+			_("Dimension")." 2", _("Amount") => array('align' => 'right'), _("Memo"), "");
 	else if ($dim == 1)
 		$th = array(_("Account Code"), _("Account Description"), _("Dimension"),
-			_("Amount"), _("Memo"), "");
+			_("Amount") => array('align' => 'right'), _("Memo"), "");
 	else
 		$th = array(_("Account Code"), _("Account Description"),
-			_("Amount"), _("Memo"), "");
+			_("Amount") => array('align' => 'right'), _("Memo"), "");
 
 	if (count($order->gl_items)) $th[] = '';
 
@@ -295,7 +295,7 @@ function gl_edit_item_controls(&$order, $dim, $Index=null)
 function gl_options_controls($order)
 {
 	div_start('footer');
-	echo "<br><table align='center'>";
+  start_table(TABLESTYLE2);
 
 	$type = get_post('PayType');
 	$bank_curr = get_bank_account_currency(get_post('bank_account'));
@@ -312,7 +312,7 @@ function gl_options_controls($order)
 	textarea_row(_("Memo"), 'memo_', null, 50, 3);
 
   	echo "</table>";
-  	div_end();
+  	div_end(0);
 }
 
 

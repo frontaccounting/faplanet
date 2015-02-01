@@ -25,9 +25,9 @@ start_form(false, true);
 if (!isset($_POST['stock_id']))
 	$_POST['stock_id'] = get_global_stock_item();
 
-echo "<center>" . _("Select an item to display its parent item(s).") . "&nbsp;";
+start_selector(_("Select an item to display its parent item(s)."));
 echo stock_items_list('stock_id', $_POST['stock_id'], false, true);
-echo "<hr></center>";
+end_selector();
 
 set_global_stock_item($_POST['stock_id']);
 //-----------------------------------------------------------------------------

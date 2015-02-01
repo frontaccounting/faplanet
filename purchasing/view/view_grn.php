@@ -34,11 +34,15 @@ display_heading(_("Purchase Order Delivery") . " #" . $_GET['trans_no']);
 echo "<BR>";
 display_grn_summary($purchase_order);
 
-display_heading2(_("Line Details"));
 
 start_table(TABLESTYLE, "colspan=9 width=90%");
-$th = array(_("Item Code"), _("Item Description"), _("Delivery Date"), _("Quantity"),
-	_("Unit"), _("Price"), _("Line Total"), _("Quantity Invoiced"));
+$th = array(_("Item Code"), _("Item Description"), _("Delivery Date"), 
+  _("Quantity") => array('align' => 'right'),
+	_("Unit") => array('align' => 'right'),
+  _("Price") => array('align' => 'right'),
+  _("Line Total") => array('align' => 'right'),
+  _("Quantity Invoiced") => array('align' => 'right'));
+display_caption(_("Line Details"));
 
 table_header($th);
 
@@ -81,7 +85,7 @@ label_cell('');
 end_row();
 
 
-end_table(1);
+end_table(0);
 
 is_voided_display(ST_SUPPRECEIVE, $_GET['trans_no'], _("This delivery has been voided."));
 

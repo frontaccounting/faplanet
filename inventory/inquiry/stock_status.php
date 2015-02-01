@@ -44,12 +44,12 @@ if (!isset($_POST['stock_id']))
 
 if (!@$_GET['popup'])
 {
-	echo "<center> " . _("Item:"). " ";
+  start_selector(_("Item:"));
 	echo stock_costable_items_list('stock_id', $_POST['stock_id'], false, true);
+  end_selector();
 }	
-echo "<br>";
 
-echo "<hr></center>";
+//echo "<hr>";
 
 set_global_stock_item($_POST['stock_id']);
 
@@ -70,11 +70,16 @@ start_table(TABLESTYLE);
 if ($kitset_or_service == true)
 {
 	$th = array(_("Location"), _("Demand"));
+  $aligns = array('left', 'right');
 }
 else
 {
-	$th = array(_("Location"), _("Quantity On Hand"), _("Re-Order Level"),
-		_("Demand"), _("Available"), _("On Order"));
+	$th = array(_("Location"),
+    _("Quantity On Hand") => array('align' => 'right'),
+    _("Re-Order Level") => array('align' => 'right'),
+		_("Demand") => array('align' => 'right'),
+    _("Available") => array('align' => 'right'),
+    _("On Order") => array('align' => 'right'));
 }
 table_header($th);
 $dec = get_qty_dec($_POST['stock_id']);

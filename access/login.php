@@ -67,11 +67,8 @@ function defaultCompany()
 	div_start('_page_body');
 	start_form(false, false, $_SESSION['timeout']['uri'], "loginform");
 
-	//$password = $allow_demo_mode ? "password":"";
-
   echo ' <div class="container"><div class="panel panel-default">';
-  //echo '<div class="page-login"><div>';
-  echo '<h3 class="form-signin-heading">Please login here</h3>';
+  echo '<h3 class="">Please login here</h3>';
 
 	echo "<input type='hidden' id=ui_mode name='ui_mode' value='".$_SESSION["wa_current_user"]->ui_mode."' />\n";
 	$value = $login_timeout ? $_SESSION['wa_current_user']->loginname : ($allow_demo_mode ? "demouser":"");
@@ -81,7 +78,7 @@ function defaultCompany()
 	} 
 
   if ($login_fail) {
-        $login_msg = _("Incorrect Password");
+    $login_msg = _("Incorrect Password");
   }
 
   if (isset($_GET['logout']))
@@ -102,7 +99,6 @@ function defaultCompany()
 	// Display demo user name and password within login form if "$allow_demo_mode" is true
 	if ($allow_demo_mode == true)
 	{
-	    //$demo_text = _("Login as user: demouser and password: password");
     echo '
     <input type="hidden" name="user_name_entry_field" value="demouser"/>
     <input type="hidden" name="password" value="password"/>
@@ -121,7 +117,6 @@ function defaultCompany()
     <input type="password" id="password" name="password" class="form-control" placeholder="Password">
     ';
 	}
-
 
 	if ($login_timeout) {
 		hidden('company_login_name', $_SESSION["wa_current_user"]->company);
@@ -142,13 +137,10 @@ function defaultCompany()
 		}
 	}; 
 
-	if ($allow_demo_mode == true) {
-    echo '<button name="SubmitUser" class="btn btn-lg btn-primary btn-block" type="submit">View demo</button>
-  ';
-  }else{
-    echo '<button name="SubmitUser" class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-  ';
-  }
+	if ($allow_demo_mode)
+    echo '<button name="SubmitUser" class="btn btn-lg btn-primary btn-block" type="submit">View demo</button> ';
+  else
+    echo '<button name="SubmitUser" class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>';
 
 
 	//echo "<center><input type='submit' value='&nbsp;&nbsp;"._("Login -->")."&nbsp;&nbsp;' name='SubmitUser'"

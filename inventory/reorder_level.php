@@ -45,10 +45,9 @@ if (!isset($_POST['stock_id']))
 
 if (!@$_GET['popup'])
 {
-	echo "<center>" . _("Item:"). "&nbsp;";
+	start_selector(_("Item:"));
 	echo stock_costable_items_list('stock_id', $_POST['stock_id'], false, true);
-
-	echo "<hr></center>";
+  end_selector();
 }
 else
 	br(2);
@@ -62,7 +61,7 @@ set_global_stock_item($_POST['stock_id']);
 div_start('reorders');
 start_table(TABLESTYLE, "width=30%");
 
-$th = array(_("Location"), _("Quantity On Hand"), _("Re-Order Level"));
+$th = array(_("Location"), _("Quantity On Hand") => array('align' => 'right'), _("Re-Order Level") => array('align' => 'right'));
 table_header($th);
 
 $j = 1;

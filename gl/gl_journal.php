@@ -323,14 +323,14 @@ start_form();
 
 display_order_header($_SESSION['journal_items']);
 
-start_table(TABLESTYLE2, "width=90%", 10);
+start_table(TABLESTYLE3, "width=100%", 10);
 start_row();
 echo "<td>";
 display_gl_items(_("Rows"), $_SESSION['journal_items']);
 gl_options_controls();
 echo "</td>";
 end_row();
-end_table(1);
+end_table(0);
 
 submit_center('Process', _("Process Journal Entry"), true , 
 	_('Process journal entry only if debits equal to credits'), 'default');

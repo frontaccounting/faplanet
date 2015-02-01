@@ -164,7 +164,7 @@ function delivery_link($row)
 
 function order_link($row)
 {
-  return pager_link( _("Sales Order"),
+  return pager_link( _("Order quotation"),
 	"/sales/sales_order_entry.php?NewQuoteToSalesOrder=" .$row['order_no'], ICON_DOC);
 }
 

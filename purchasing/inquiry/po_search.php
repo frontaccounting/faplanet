@@ -136,7 +136,7 @@ $cols = array(
 		_("Supplier's Reference"), 
 		_("Order Date") => array('name'=>'ord_date', 'type'=>'date', 'ord'=>'desc'),
 		_("Currency") => array('align'=>'center'), 
-		_("Order Total") => 'amount',
+		_("Order Total") => array('type' => 'amount', 'align' => 'right'),
 		array('insert'=>true, 'fun'=>'edit_link'),
 		array('insert'=>true, 'fun'=>'prt_link'),
 		array('insert'=>true, 'fun'=>'receive_link')

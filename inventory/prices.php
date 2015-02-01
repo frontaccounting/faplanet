@@ -58,9 +58,9 @@ if (!isset($_POST['stock_id']))
 
 if (!@$_GET['popup'])
 {
-	echo "<center>" . _("Item:"). "&nbsp;";
+  start_selector(_("Item:"));
 	echo sales_items_list('stock_id', $_POST['stock_id'], false, true, '', array('editable' => false));
-	echo "<hr></center>";
+  end_selector();
 }
 else
 	br(2);
@@ -143,7 +143,7 @@ $prices_list = get_prices($_POST['stock_id']);
 div_start('price_table');
 start_table(TABLESTYLE, "width=30%");
 
-$th = array(_("Currency"), _("Sales Type"), _("Price"), "", "");
+$th = array(_("Currency"), _("Sales Type"), _("Price") => array('align' => 'right'), "", "");
 table_header($th);
 $k = 0; //row colour counter
 $calculated = false;

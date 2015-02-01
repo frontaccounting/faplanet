@@ -81,8 +81,12 @@ div_start('doc_tbl');
 start_table(TABLESTYLE);
 $th = array(_("Type"), _("#"), _("Reference"));
 if($display_location) array_push($th, _("Location"));
-array_push($th, _("Date"), _("Detail"), _("Quantity In"), _("Quantity Out"), _("Quantity On Hand"));
+$_th = array(_("Date"), _("Detail"), 
+             _("Quantity In") => array('align' => 'right'),
+             _("Quantity Out") => array('align' => 'right'),
+             _("Quantity On Hand") => array('align' => 'right'));
 
+$th = array_merge($th, $_th);
 
 table_header($th);
 

@@ -184,16 +184,16 @@ start_table(TABLESTYLE);
 $tableheader =  "<tr>
 	<td rowspan=2 class='tableheader'>" . _("Account") . "</td>
 	<td rowspan=2 class='tableheader'>" . _("Account Name") . "</td>
-	<td colspan=2 class='tableheader'>" . _("Brought Forward") . "</td>
-	<td colspan=2 class='tableheader'>" . _("This Period") . "</td>
-	<td colspan=2 class='tableheader'>" . _("Balance") . "</td>
+	<td colspan=2 class='tableheader align-right'>" . _("Brought Forward") . "</td>
+	<td colspan=2 class='tableheader align-right'>" . _("This Period") . "</td>
+	<td colspan=2 class='tableheader align-right'>" . _("Balance") . "</td>
 	</tr><tr>
-	<td class='tableheader'>" . _("Debit") . "</td>
-	<td class='tableheader'>" . _("Credit") . "</td>
-	<td class='tableheader'>" . _("Debit") . "</td>
-	<td class='tableheader'>" . _("Credit") . "</td>
-	<td class='tableheader'>" . _("Debit") . "</td>
-	<td class='tableheader'>" . _("Credit") . "</td>
+	<td class='tableheader align-right'>" . _("Debit") . "</td>
+	<td class='tableheader align-right'>" . _("Credit") . "</td>
+	<td class='tableheader align-right'>" . _("Debit") . "</td>
+	<td class='tableheader align-right'>" . _("Credit") . "</td>
+	<td class='tableheader align-right'>" . _("Debit") . "</td>
+	<td class='tableheader align-right'>" . _("Credit") . "</td>
 	</tr>";
 
 echo $tableheader;
@@ -237,7 +237,7 @@ while ($class = db_fetch($classresult))
 	display_debit_or_credit_cells($tbal);
 	end_row();
 
-	end_table(1);
+	end_table(0);
 	if (($pbal = round2($pbal, user_price_dec())) != 0 && $_POST['Dimension'] == 0 && $_POST['Dimension2'] == 0)
 		display_warning(_("The Opening Balance is not in balance, probably due to a non closed Previous Fiscalyear."));
 	div_end();

@@ -36,10 +36,11 @@ if (!isset($_POST['customer_id']))
 
 start_form();
 
+start_search();
 start_table(TABLESTYLE_NOBORDER);
 start_row();
 
-customer_list_cells(_("Select a customer: "), 'customer_id', $_POST['customer_id'], true);
+customer_list_cells(_("Customer:"), 'customer_id', $_POST['customer_id'], true);
 
 date_cells(_("from:"), 'TransAfterDate', '', null, -30);
 date_cells(_("to:"), 'TransToDate', '', null, 1);
@@ -54,6 +55,7 @@ set_global_customer($_POST['customer_id']);
 
 end_row();
 end_table();
+end_search();
 //------------------------------------------------------------------------------------------------
 function check_overdue($row)
 {
@@ -151,8 +153,8 @@ $cols = array(
 	_("Currency") => array('align'=>'center'),
 	_("Debit") => array('align'=>'right','fun'=>'fmt_debit'), 
 	_("Credit") => array('align'=>'right','insert'=>true, 'fun'=>'fmt_credit'), 
-	_("Allocated") => 'amount', 
-	_("Balance") => array('type'=>'amount', 'insert'=>true, 'fun'=>'fmt_balance'),
+	_("Allocated") => array('align' => 'right', 'type' => 'amount'), 
+	_("Balance") => array('align' => 'right', 'type'=>'amount', 'insert'=>true, 'fun'=>'fmt_balance'),
 	array('insert'=>true, 'fun'=>'alloc_link')
 	);
 

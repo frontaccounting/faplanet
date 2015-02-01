@@ -109,8 +109,12 @@ start_table(TABLESTYLE, "width=95%");
 
 if (db_num_rows($result) > 0)
 {
-	$th = array(_("Item Code"), _("Item Description"), _("Quantity"),
-		_("Unit"), _("Price"), _("Discount %"), _("Total"));
+	$th = array(_("Item Code"), _("Item Description"),
+    _("Quantity") => array('align' => 'right'),
+		_("Unit") => array('align' => 'right'),
+    _("Price") => array('align' => 'right'),
+    _("Discount %") => array('align' => 'right'),
+    _("Total") => array('align' => 'right'));
 	table_header($th);
 
 	$k = 0;	//row colour counter
@@ -161,7 +165,7 @@ $display_total = price_format($myrow["ov_freight"]+$myrow["ov_amount"]+$myrow["o
 
 label_row(_("TOTAL VALUE"), $display_total, "colspan=6 align=right",
 	"nowrap align=right");
-end_table(1);
+end_table(0);
 
 is_voided_display(ST_CUSTDELIVERY, $trans_id, _("This dispatch has been voided."));
 

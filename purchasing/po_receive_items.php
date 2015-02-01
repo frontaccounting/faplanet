@@ -58,9 +58,10 @@ if ((!isset($_GET['PONumber']) || $_GET['PONumber'] == 0) && !isset($_SESSION['P
 function display_po_receive_items()
 {
 	div_start('grn_items');
-    start_table(TABLESTYLE, "colspan=7 width=90%");
-    $th = array(_("Item Code"), _("Description"), _("Ordered"), _("Units"), _("Received"),
-    	_("Outstanding"), _("This Delivery"), _("Price"), _("Total"));
+    start_table(ENTRY_ITEMS, "colspan=7 width=90%");
+    display_caption(_("Items to Receive"));
+    $th = array(_("Item Code"), _("Description"), _("Ordered") => array('align' => 'right'), _("Units"), _("Received") => array('align' => 'right'),
+    	_("Outstanding") => array('align' => 'right'), _("This Delivery") => array('align' => 'right'), _("Price") => array('align' => 'right'), _("Total") => array('align' => 'right'));
     table_header($th);
 
     /*show the line items on the order with the quantity being received for modification */
@@ -327,10 +328,9 @@ if (isset($_POST['ProcessGoodsReceived']))
 start_form();
 
 edit_grn_summary($_SESSION['PO'], true);
-display_heading(_("Items to Receive"));
 display_po_receive_items();
 
-echo '<br>';
+//echo '<br>';
 submit_center_first('Update', _("Update"), '', true);
 submit_center_last('ProcessGoodsReceived', _("Process Receive Items"), _("Clear all GL entry fields"), 'default');
 

@@ -17,7 +17,7 @@ if (file_exists($path_to_root.'/config_db.php'))
 
 include($path_to_root . "/install/isession.inc");
 
-page(_("FrontAccouting ERP Installation Wizard"), true, false, "", '', false, 'stylesheet.css');
+page(_("FrontAccouting ERP Installation Wizard"), true, false, "", '', false);
 
 include($path_to_root . "/includes/ui.inc");
 include($path_to_root . "/includes/system_tests.inc");
@@ -31,8 +31,8 @@ function subpage_title($txt)
 {
 	global $path_to_root;
 	
-	echo '<center><img src="'.$path_to_root.'/themes/default/images/logo_frontaccounting.png" width="250" height="50" alt="Logo" />
-		</center>';
+	//echo '<center><img src="'.$path_to_root.'/themes/default/images/logo_frontaccounting.png" width="250" height="50" alt="Logo" />
+//		</center>';
 
 	$page = @$_POST['Page'] ? $_POST['Page'] : 1;
 
@@ -105,7 +105,7 @@ function instlang_list_row($label, $name, $value=null) {
 	foreach ($inst_langs as $n => $lang)
 			$langs[$n] = $lang['name'];
 
-	echo "<td>$label</td>\n" . "<td>\n" 
+	echo "<td class='label'>$label</td>\n" . "<td>\n" 
 		.array_selector($name, $value, $langs, 
 			array(
 				'select_submit' => true,
@@ -344,9 +344,10 @@ start_form();
 			yesno_list_row(_("Use '0_' Table Prefix:"), 'tbpref', 1, _('Yes'), _('No'), false);
 			check_row(_("Install Additional Language Packs from FA Repository:"), 'sel_langs');
 			check_row(_("Install Additional COAs from FA Repository:"), 'sel_coas');
-			end_table(1);
-			display_note(_('Use table prefix if you share selected database for more than one FA company.'));
-			display_note(_("Do not select additional langs nor COAs if you have no working internet connection right now. You can install them later."));
+			end_table(0);
+			display_note_warning(_('Use table prefix if you share selected database for more than one FA company.'));
+			display_note_warning(_("Do not select additional langs nor COAs if you have no working internet connection right now. You can install them later."));
+      echo '<br/>';
 			submit_center_first('back', _('<< Back'));
 			submit_center_last('db_test', _('Continue >>'));
 			break;
@@ -384,16 +385,17 @@ start_form();
 			password_row(_("Reenter Password:"), 'repass', @$_POST['repass']);
 			coa_list_row(_("Select Chart of Accounts:"), 'coa');
 			languages_list_row(_("Select Default Language:"), 'lang');
-			end_table(1);
+			end_table(0);
 			submit_center_first('back', _('<< Back'));
 			submit_center_last('set_admin', _('Continue >>'));
 			break;
 
 		case '6': // final screen
 			subpage_title(_('FrontAccounting ERP has been installed successsfully.'));
-			display_note(_('Please do not forget to remove install wizard folder.'));
+			display_note_warning(_('Please do not forget to remove install wizard folder.'));
 			session_unset();
 			session_destroy();
+      echo '<br/>';
 			hyperlink_no_params($path_to_root.'/index.php', _('Click here to start.'));
 			break;
 
@@ -401,7 +403,7 @@ start_form();
 
 	hidden('Tests');
 	hidden('Page');
-end_form(1);
+end_form(0);
 
 end_page(false, false, true);
 

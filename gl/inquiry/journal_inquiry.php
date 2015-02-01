@@ -129,10 +129,10 @@ $cols = array(
 	_("Type") => array('fun'=>'systype_name'), 
 	_("Trans #") => array('fun'=>'view_link'), 
 	_("Reference"), 
-	_("Amount") => array('type'=>'amount'),
+	_("Amount") => array('type'=>'amount', 'align' => 'right'),
 	_("Memo"),
 	_("User"),
-	_("View") => array('insert'=>true, 'fun'=>'gl_link'),
+	_("View") => array('insert'=>true, 'fun'=>'gl_link', 'option' => true),
 	array('insert'=>true, 'fun'=>'edit_link')
 );
 

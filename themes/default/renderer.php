@@ -33,7 +33,145 @@
 			end_page(false, true);
 		}
 
+    function page_header()
+    {
+    }
+
+    function page_footer()
+    {
+    }
+
 		function menu_header($title, $no_menu, $is_index)
+    {
+      global $menu, $path_to_root;
+
+      if ($no_menu) {
+				//echo "<br>";
+        echo "<div class='container-fluid no-menu'><div class='panel panel-default' id='main-page'>";
+        error_box();
+        return;
+      }
+
+      echo '<nav class="navbar navbar-default navbar-static-top"><div class="container-fluid">';
+      echo '
+        <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        </button>
+        <a href="'.$path_to_root.'/includes/start.php">
+        <img id="logo" src="'.$path_to_root.'/themes/default/logo.png" height="32" width="32"/>
+        </a>
+        </div>
+        ';
+      echo '<div class="collapse navbar-collapse" id="main-navbar"><ul class="nav navbar-nav">';
+      foreach ($menu->root as $app) {
+        $acc = access_string(_($menu->items[$app]->data['title']));
+        if (count($menu->items[$app]->children) > 0) {
+          echo '<li class="dropdown">';
+          echo '  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">';
+          echo $acc[0];
+          echo ' <span class="caret"></span></a>';
+          echo '  <ul class="dropdown-menu" role="menu">';
+          foreach($menu->items[$app]->children as $child) {
+            //if ($_SESSION["wa_current_user"]->can_access_page($menu->items[$child]->data['access'])) {
+
+            $acc = access_string(_($menu->items[$child]->data['title']));
+            $link = $menu->items[$child]->data['link'];
+            if (empty($link)) {
+              $first = $menu->items[$child]->children[0];
+              $link = $menu->items[$first]->data['link'];
+              //$link .= '&current='.$first;
+            }
+            else {
+              //$link .= '&current='.$child;
+            }
+            //echo '  <li>';
+            //echo menu_link($link, $menu->items[$child]->data['title']);
+            //echo '  </li>';
+
+            echo '<li><a href="'.$path_to_root.'/'.$link.'" '.$acc[1].'>'.$acc[0].'</a></li>';
+          }
+          //echo '  <li class="divider"></li>';
+          echo '</ul> </li>';
+        }
+        else {
+          $acc = access_string(_($menu->items[$app]->data['title']));
+          $link = $menu->items[$app]->data['link'];
+          echo '<li><a href="'.$path_to_root.'/'.$link.'" '.$acc[1].'>'.$acc[0].'</a></li>';
+        }
+      }
+      echo '</ul>';
+      echo '<ul class="nav navbar-nav navbar-right">';
+      $icon = '<span class="glyphicon glyphicon-question-sign"></span>';
+      echo '<li><a href="">'.$icon.'</a></li>';
+      $icon = '<span class="glyphicon glyphicon-log-out"></span>';
+      echo '<li><a href="'.$path_to_root.'/access/logout.php">'.$icon.'</a></li>';
+      echo '</ul>';
+      echo '</div></div></nav>';
+
+      if (count($menu->context) > 0) {
+        echo '<div id="context-menu">';
+        foreach ($menu->context as $child) {
+          $acc = access_string(_($menu->items[$child]->data['title']));
+          $link = $menu->items[$child]->data['link'];
+          //$link .= '&current='.$child;
+
+          $type = $menu->items[$child]->data['type'];
+
+          $icon = '';
+          if ($type == 'entry')
+            $icon = '<span class="glyphicon glyphicon-plus"></span>';
+          if ($type == 'maintenance')
+            $icon = '<span class="glyphicon glyphicon-cog"></span>';
+          
+          $class = '';
+          if ($child == $menu->current)
+            $class = 'btn-primary';
+
+          echo '<a class="btn btn-default navbar-btn '.$class.'" style="margin-left:6px" href="'.$path_to_root.'/'.$link.'" '.$acc[1].'>'.$icon.' '.$acc[0].'</a>';
+          // btn-sm
+        }
+        echo '</div>';
+      }
+
+			if ($title && !$is_index)
+			{
+        //echo "<div class='panel panel-primary'>";
+        //echo "<div class='panel-heading'>";
+        //echo "<h3 class='panel-title'>".$title."</h3>";
+        //echo "</div><div class='panel-body'>";
+        //echo user_hints();
+        echo "<div class='container-fluid'><div class='panel panel-default' id='main-page'>";
+        error_box();
+        //echo "<div><div>";
+			}
+
+    }
+
+		function menu_footer($no_menu, $is_index)
+    {
+      //echo "</div>";
+      echo "</div></div>";
+      //echo "</div></div></div>";
+      //echo "<script language='javascript' type='text/javascript' > $('.combobox').combobox();</script>";
+      //echo "<script language='javascript' type='text/javascript' > $('.typeahead').select2();</script>";
+    }
+
+    function draw_tabs() {
+        echo '<ul class="nav nav-pills">';
+        foreach ($menu->context as $child) {
+          $class = ($child == $menu->current) ? 'active' : '';
+          $acc = access_string(_($menu->items[$child]->data['title']));
+          $link = $menu->items[$child]->data['link'];
+          //$link .= '&current='.$child;
+          echo '<li role="presentation" class="'.$class.'"><a href="'.$path_to_root.'/'.$link.'">'.$acc[0].'</a></li>';
+        }
+    }
+
+		function menu_header_bak($title, $no_menu, $is_index)
 		{
 			global $path_to_root, $help_base_url, $db_connections;
 			echo "<table class='callout_main' border='0' cellpadding='0' cellspacing='0'>\n";
@@ -98,7 +236,7 @@
 			}
 		}
 
-		function menu_footer($no_menu, $is_index)
+		function menu_footer_bak($no_menu, $is_index)
 		{
 			global $version, $allow_demo_mode, $app_title, $power_url, 
 				$power_by, $path_to_root, $Pagehelp, $Ajax;

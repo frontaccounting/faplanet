@@ -375,9 +375,9 @@ if ($id != -1 || $id2 != -1)
 if (get_post('AddGLCodeToTrans'))
 	$Ajax->activate('inv_tot');
 
-br();
+//br();
 submit_center('PostInvoice', _("Enter Invoice"), true, '', 'default');
-br();
+//br();
 
 end_form();
 

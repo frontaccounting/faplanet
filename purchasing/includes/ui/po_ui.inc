@@ -116,7 +116,7 @@ function display_po_header(&$order)
 
 	$editable = ($order->order_no == 0);
 
-	start_outer_table(TABLESTYLE2, 'width=80%');
+	start_outer_table(TABLESTYLE2, 'width=100%');
 
 	table_section(1);
     if ($editable)
@@ -165,7 +165,7 @@ function display_po_header(&$order)
 
 	if (!is_company_currency($order->curr_code))
 	{
-		label_row(_("Supplier Currency:"), $order->curr_code);
+		//label_row(_("Supplier Currency:"), $order->curr_code);
 		exchange_rate_display(get_company_currency(), $order->curr_code,
 			$_POST['OrderDate']);
 	}
@@ -225,14 +225,19 @@ function display_po_header(&$order)
 
 function display_po_items(&$order, $editable=true)
 {
-    display_heading(_("Order Items"));
 
     div_start('items_table');
-    start_table(TABLESTYLE, "width=80%");
-
-   	$th = array(_("Item Code"), _("Item Description"), _("Quantity"),
-		_("Received"), _("Unit"),
-   		_("Required Delivery Date"), $order->tax_included ? _("Price after Tax") : _("Price before Tax"), _("Line Total"), "");
+    start_table(ENTRY_ITEMS, "width=80%");
+    display_caption(_("Order Items"));
+    
+    $tax_text = $order->tax_included ? _("Price after Tax") : _("Price before Tax");
+   	$th = array(_("Item Code"), _("Item Description"),
+      _("Quantity") => array('align' => 'right'),
+		  _("Received") => array('align' => 'right'),
+      _("Unit"),
+   		_("Required Delivery Date"), 
+      $tax_text => array('align' => 'right'),
+      _("Line Total") => array('align' => 'right'), "");
 	if ($order->trans_type != ST_PURCHORDER)
 		array_remove($th, 5);
 		
@@ -297,7 +302,7 @@ function display_po_items(&$order, $editable=true)
 		: label_cell('', "colspan=2");
 	end_row();
 
-	end_table(1);
+	end_table(0);
 	div_end();
 }
 

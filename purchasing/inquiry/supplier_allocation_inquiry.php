@@ -42,10 +42,11 @@ start_form();
 if (!isset($_POST['supplier_id']))
 	$_POST['supplier_id'] = get_global_supplier();
 
+start_search();
 start_table(TABLESTYLE_NOBORDER);
 start_row();
 
-supplier_list_cells(_("Select a supplier: "), 'supplier_id', $_POST['supplier_id'], true);
+supplier_list_cells(_("Supplier:"), 'supplier_id', $_POST['supplier_id'], true);
 
 date_cells(_("From:"), 'TransAfterDate', '', null, -30);
 date_cells(_("To:"), 'TransToDate', '', null, 1);
@@ -60,6 +61,7 @@ set_global_supplier($_POST['supplier_id']);
 
 end_row();
 end_table();
+end_search();
 //------------------------------------------------------------------------------------------------
 function check_overdue($row)
 {

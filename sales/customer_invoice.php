@@ -379,7 +379,7 @@ $is_edition = $_SESSION['Items']->trans_type == ST_SALESINVOICE && $_SESSION['It
 start_form();
 hidden('cart_id');
 
-start_table(TABLESTYLE2, "width=80%", 5);
+start_table(TABLESTYLE2, "width=100%", 5);
 
 start_row();
 $colspan = 1;
@@ -411,16 +411,6 @@ if ($_SESSION['Items']->trans_no == 0) {
 label_cells(_("Sales Type"), $_SESSION['Items']->sales_type_name, "class='tableheader2'");
 
 label_cells(_("Currency"), $_SESSION['Items']->customer_currency, "class='tableheader2'");
-// 2010-09-03 Joe Hunt
-//if ($dim > 0) 
-//	label_cells(_("Dimension"), get_dimension_string($_SESSION['Items']->dimension_id), "class='tableheader2'");
-if ($dim > 0) {
-	label_cell(_("Dimension").":", "class='tableheader2'");
-	$_POST['dimension_id'] = $_SESSION['Items']->dimension_id;
-	dimensions_list_cells(null, 'dimension_id', null, true, ' ', false, 1, false);
-}		
-else
-	hidden('dimension_id', 0);
 
 end_row();
 start_row();
@@ -446,6 +436,21 @@ if (!isset($_POST['due_date']) || !is_date($_POST['due_date'])) {
 }
 
 date_cells(_("Due Date"), 'due_date', '', null, 0, 0, 0, "class='tableheader2'");
+end_row();
+
+start_row();
+
+// 2010-09-03 Joe Hunt
+//if ($dim > 0) 
+//	label_cells(_("Dimension"), get_dimension_string($_SESSION['Items']->dimension_id), "class='tableheader2'");
+if ($dim > 0) {
+	label_cell(_("Dimension").":", "class='tableheader2'");
+	$_POST['dimension_id'] = $_SESSION['Items']->dimension_id;
+	dimensions_list_cells(null, 'dimension_id', null, true, ' ', false, 1, false);
+}		
+else
+	hidden('dimension_id', 0);
+
 /*
 if ($dim > 1) 
 	label_cells(_("Dimension"). " 2", get_dimension_string($_SESSION['Items']->dimension2_id), "class='tableheader2'");
@@ -471,12 +476,12 @@ if ($row['dissallow_invoices'] == 1)
 	exit();
 }	
 
-display_heading(_("Invoice Items"));
 
 div_start('Items');
-start_table(TABLESTYLE, "width=80%");
-$th = array(_("Item Code"), _("Item Description"), _("Delivered"), _("Units"), _("Invoiced"),
-	_("This Invoice"), _("Price"), _("Tax Type"), _("Discount"), _("Total"));
+start_table(ENTRY_ITEMS, "width=100%");
+display_caption(_("Invoice Items"));
+$th = array(_("Item Code"), _("Item Description"), _("Delivered") => array('align' => 'right'), _("Units"), _("Invoiced") => array('align' => 'right'),
+	_("This Invoice") => array('align' => 'right'), _("Price") => array('align' => 'right'), _("Tax Type"), _("Discount") => array('align' => 'right'), _("Total") => array('align' => 'right'));
 
 if ($is_batch_invoice) {
     $th[] = _("DN");
@@ -580,13 +585,11 @@ $display_total = price_format(($inv_items_total + input_num('ChargeFreightCost')
 
 label_row(_("Invoice Total"), $display_total, "colspan=$colspan align=right","align=right", $is_batch_invoice ? 2 : 0);
 
-end_table(1);
+end_table(0);
 div_end();
 
-start_table(TABLESTYLE2);
-textarea_row(_("Memo"), 'Comments', null, 50, 4);
+memo_control('Comments', null, 50, 4);
 
-end_table(1);
 
 submit_center_first('Update', _("Update"),
   _('Refresh document page'), true);

@@ -20,23 +20,19 @@ function display_order_header(&$Order)
 
 	$qes = has_quick_entries(QE_JOURNAL);
 	$new = $Order->order_id==0;
-	start_outer_table(TABLESTYLE2, "width=90%");
+	start_outer_table(ENTRY_HEADER, "width=100%");
 	table_section(1, $qes ? "20%" : "");
 
-	start_row();
-    date_cells(_("Date:"), 'date_', '', $new);
+  date_row(_("Date:"), 'date_', '', $new);
 
 	table_section(2, $qes ? "20%" : "50%");
-	ref_cells(_("Reference:"), 'ref', '');
+	ref_row(_("Reference:"), 'ref', '');
 	hidden('ref_original');
-	end_row();
 
 
  	if ($new) {
 		table_section(3, "20%");
- 		start_row();
- 		check_cells(_("Reverse Transaction:"), 'Reverse', null);
- 		end_row();
+ 		check_row(_("Reverse Transaction:"), 'Reverse', null);
  	}
 
 	if ($qes !== false)
@@ -64,7 +60,7 @@ function display_order_header(&$Order)
 
 	}
 		
-	end_outer_table(1);
+	end_outer_table();
 }
 
 //---------------------------------------------------------------------------------
@@ -73,25 +69,32 @@ function display_gl_items($title, &$order)
 {
 	global $path_to_root;
 
-	display_heading($title);
+	//display_heading($title);
 
 	$dim = get_company_pref('use_dimension');
 
     div_start('items_table');
-	start_table(TABLESTYLE, "colspan=7 width=95%");
-	if ($dim == 2)
-		$th = array(_("Account Code"), _("Account Description"), _("Dimension")." 1",
-			_("Dimension")." 2", _("Debit"), _("Credit"), _("Memo"), "");
-	else if ($dim == 1)
-		$th = array(_("Account Code"), _("Account Description"), _("Dimension"),
-			_("Debit"), _("Credit"), _("Memo"), "");
-	else
-		$th = array(_("Account Code"), _("Account Description"),
-			_("Debit"), _("Credit"), _("Memo"), "");
+	start_table(ENTRY_ITEMS, "colspan=7 width=95%");
+	display_caption($title);
+	if ($dim == 2) {
+		$th = array(_("Account"), _(""), _("Dimension")." 1",
+			_("Dimension")." 2", _("Debit") => array('align' => 'right'),
+      _("Credit") => array('align' => 'right'), _("Memo"), "");
+  }
+	else if ($dim == 1) {
+		$th = array(_("Account"), _(""), _("Dimension"),
+			_("Debit") => array('align' => 'right'), _("Credit") => array('align' => 'right'), _("Memo"), "");
+  }
+	else {
+		$th = array(_("Account"), _(""),
+			_("Debit") => array('align' => 'right'), _("Credit") => array('align' => 'right'), _("Memo"), "");
+  }
 
-	if (count($order->gl_items)) $th[] = '';
+	if (count($order->gl_items)) {
+    $th[] = '';
+  }
 
-	table_header($th);	
+	table_header($th, '');
 
 	$k = 0;
 
@@ -235,11 +238,7 @@ function gl_edit_item_controls(&$order, $dim, $Index=null)
 
 function gl_options_controls()
 {
-	  echo "<br><table align='center'>";
-
-	  textarea_row(_("Memo"), 'memo_', null, 50, 3);
-
-	  echo "</table>";
+  memo_control('memo_', null, 50, 3);
 }
 
 

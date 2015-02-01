@@ -38,7 +38,7 @@ while ($adjustment = db_fetch($adjustment_items))
 	{
 		$adjustment_type = get_movement_type($adjustment['person_id']) ;
 
-		start_table(TABLESTYLE2, "width=90%");
+		start_table(TABLESTYLE2, "width=100%");
 		start_row();
 		label_cells(_("At Location"), $adjustment['location_name'], "class='tableheader2'");
     	label_cells(_("Reference"), $adjustment['reference'], "class='tableheader2'", "colspan=6");
@@ -51,10 +51,12 @@ while ($adjustment = db_fetch($adjustment_items))
 		$header_shown = true;
 
 		echo "<br>";
-		start_table(TABLESTYLE, "width=90%");
+		start_table(VIEW_ITEMS, "width=100%");
 
-    	$th = array(_("Item"), _("Description"), _("Quantity"),
-    		_("Units"), _("Unit Cost"));
+    	$th = array(_("Item"), _("Description"),
+        _("Quantity") => array('align' => 'right'),
+    		_("Units") => array('align' => 'left'),
+        _("Unit Cost") => array('align' => 'right'));
     	table_header($th);
 	}
 
@@ -68,7 +70,7 @@ while ($adjustment = db_fetch($adjustment_items))
     end_row();
 }
 
-end_table(1);
+end_table(0);
 
 is_voided_display(ST_INVADJUST, $trans_no, _("This adjustment has been voided."));
 
