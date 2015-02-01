@@ -187,7 +187,8 @@ class JsHttpRequest
         if ($this->SCRIPT_DECODE_MODE == 'entities')
             return str_replace(array('"', '<', '>'), array('&quot;', '&lt;', '&gt;'), $s);
         else
-            return htmlspecialchars($s);
+            // Bugfix, see mantis 0002780.
+            return htmlspecialchars($s, ENT_COMPAT | ENT_HTML401, $_SESSION['language']->encoding=='iso-8859-2' ? 'ISO-8859-1' : $_SESSION['language']->encoding);
     }
     
 
