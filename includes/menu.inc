@@ -6,9 +6,8 @@ function load_menu($menu_name = 'default') {
   global $menu;
 
   $menu = new stdClass();
-  $menu->root = array(); // root page ids
   $menu->items = array(); // page data by ids
-  $menu->links = array(); // page ids by links
+  $menu->root = array(); // root page ids
   $menu->current = ''; // page id of the current page
   $menu->context = array(); // sibling menu of current page
 
@@ -25,18 +24,18 @@ function load_menu($menu_name = 'default') {
         continue;
       }
 
-      $menu->items[$parent]->weights[$id] = $line['weight'];
+      if (!$line['inactive'])
+        $menu->items[$parent]->weights[$id] = $line['weight'];
     }
-    else
-      $menu->root[] = $id;
+    else {
+      if (!$line['inactive'])
+        $menu->root[] = $id;
+    }
 
     $menu->items[$id] = new stdClass;
     $menu->items[$id]->data = $line;
     $menu->items[$id]->parent = $parent;
     $menu->items[$id]->weights = array();
-
-    $p = parse_url($line['link'], PHP_URL_PATH);  
-    $menu->links[$p] = $id;
   }
 
   foreach ($menu->items as &$item) {
@@ -44,7 +43,7 @@ function load_menu($menu_name = 'default') {
     $item->children = array_keys($item->weights);
   }
 
-  $exclude = array();
+  $exclude = array('dashboard');
 
   // Hide dimension
   $dim = get_company_pref('use_dimension');
@@ -54,18 +53,19 @@ function load_menu($menu_name = 'default') {
   if (@$hide_manufacturing)
     $exclude[] = 'manufacturing';
 
-  // TODO: implement
-  /*
-  foreach ($exclude as $ex) {
-    $key = array_search($ex, $menu->items);
-    if ($key !== FALSE) {
-      unset($menu->root[$key]);
+  foreach ($exclude as $id) {
+    if (array_key_exists($id, $menu->items)) {
+      $parent = $menu->items[$id]->parent;
+      if (empty($parent)) {
+        $key = array_search($id, $menu->root);
+        unset ($menu->root[$key]);
+      }
+      else {
+        $key = array_search($id, $menu->items[$parent]->children);
+        unset($menu->items[$parent]->children[$key]);
+      }
     }
   }
-  */
-
-  // unset dashboard
-  unset($menu->root[0]);
 }
 
 function load_page_id() {
@@ -75,6 +75,13 @@ function load_page_id() {
   if ($menu == NULL)
     // we are in installer
     return;
+
+  // create link to id mapping
+  $paths = array();
+  foreach ($menu->items as $item) {
+    $p = parse_url($item->data['link'], PHP_URL_PATH);  
+    $paths[$p] = $item->data['id'];
+  }
 
   if (empty($page_id)) {
 
@@ -86,8 +93,8 @@ function load_page_id() {
     $script_filename = realpath($_SERVER['SCRIPT_FILENAME']);
     $script_path = substr($script_filename, $len);
 
-    if (isset($menu->links[$script_path]))
-      $page_id = $menu->links[$script_path];
+    if (isset($paths[$script_path]))
+      $page_id = $paths[$script_path];
   }
 
   if (!empty($page_id)) {
