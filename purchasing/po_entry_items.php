@@ -394,8 +394,12 @@ function can_commit()
 		set_focus('StkLocation');
 		return false;
 	} 
-	if (!db_has_currency_rates($_SESSION['PO']->curr_code, $_POST['OrderDate']))
+	if (!db_has_currency_rates($_SESSION['PO']->curr_code, $_POST['OrderDate'])) {
+    display_error(
+        sprintf(_("Cannot retrieve exchange rate for currency %s as of %s. Please add exchange rate manually on Exchange Rates page."),
+          $_SESSION['PO']->curr_code, $_POST['OrderDate']));
 		return false;
+  }
 	if ($_SESSION['PO']->order_has_items() == false)
 	{
      	display_error (_("The order cannot be placed because there are no lines entered on this order."));
