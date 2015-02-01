@@ -21,31 +21,20 @@ function defaultCompany()
 }
 </script>";
 	add_js_file('login.js');
-	// Display demo user name and password within login form if "$allow_demo_mode" is true
-	if ($allow_demo_mode == true)
-	{
-	    $demo_text = _("Login as user: demouser and password: password");
-	}
-	else
-	{
-		$demo_text = _("Please login here");
-    if (@$allow_password_reset) {
-      $demo_text .= " "._("or")." <a href='$path_to_root/index.php?reset=1'>"._("request new password")."</a>";
-    }
-	}
 
 	if (check_faillog())
 	{
-		$blocked_msg = '<span class=redfg>'._('Too many failed login attempts.<br>Please wait a while or try later.').'</span>';
+		$login_msg = _('Too many failed login attempts.<br>Please wait a while or try later.');
 
-	    $js .= "<script>setTimeout(function() {
-	    	document.getElementsByName('SubmitUser')[0].disabled=0;
-	    	document.getElementById('log_msg').innerHTML='$demo_text'}, 1000*$login_delay);</script>";
-	    $demo_text = $blocked_msg;
+    $js .= "<script>setTimeout(function() {
+      document.getElementsByName('SubmitUser')[0].disabled=0;
+      document.getElementById('log_msg').innerHTML='$demo_text'}, 1000*$login_delay);</script>";
 	}
+
 	if (!isset($def_coy))
 		$def_coy = 0;
 	$def_theme = "default";
+	$theme = "default";
 
 	$login_timeout = $_SESSION["wa_current_user"]->last_act;
 
@@ -57,9 +46,15 @@ function defaultCompany()
 	echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n";
 	echo "<html dir='$rtl' >\n";
 	echo "<head profile=\"http://www.w3.org/2005/10/profile\"><title>$title</title>\n";
-   	echo "<meta http-equiv='Content-type' content='text/html; charset=$encoding' />\n";
-	echo "<link href='$path_to_root/themes/$def_theme/default.css' rel='stylesheet' type='text/css'> \n";
+ 	echo "<meta http-equiv='Content-type' content='text/html; charset=$encoding' />\n";
+
+	echo "<link href='$path_to_root/themes/$theme/css/bootstrap.css' rel='stylesheet' type='text/css'> \n";
+	echo "<link href='$path_to_root/themes/$theme/css/bootstrap-custom.css' rel='stylesheet' type='text/css'> \n";
+	echo "<link href='$path_to_root/themes/$theme/default.css' rel='stylesheet' type='text/css'> \n";
  	echo "<link href='$path_to_root/themes/default/images/favicon.ico' rel='icon' type='image/x-icon'> \n";
+ 	echo "<script language='javascript' type='text/javascript' src='$path_to_root/themes/$theme/js/jquery-1.11.2.min.js'></script>";
+ 	echo "<script language='javascript' type='text/javascript' src='$path_to_root/themes/$theme/js/bootstrap.min.js'></script>";
+
 	send_scripts();
 	if (!$login_timeout)
 	{
@@ -69,32 +64,64 @@ function defaultCompany()
 
 	echo "<body id='loginscreen' $onload>\n";
 
-	echo "<table class='titletext'><tr><td>$title</td></tr></table>\n";
-	
 	div_start('_page_body');
-	br();br();
 	start_form(false, false, $_SESSION['timeout']['uri'], "loginform");
-	start_table(false, "class='login'");
-	start_row();
-	echo "<td align='center' colspan=2>";
-	if (!$login_timeout) { // FA logo
-    	echo "<a target='_blank' href='$power_url'><img src='$path_to_root/themes/$def_theme/images/logo_frontaccounting.png' alt='FrontAccounting' height='50' onload='fixPNG(this)' border='0' /></a>";
-	} else { 
-		echo "<font size=5>"._('Authorization timeout')."</font>";
-	} 
-	echo "</td>\n";
-	end_row();
+
+	//$password = $allow_demo_mode ? "password":"";
+
+  echo ' <div class="container"><div class="panel panel-default">';
+  //echo '<div class="page-login"><div>';
+  echo '<h3 class="form-signin-heading">Please login here</h3>';
 
 	echo "<input type='hidden' id=ui_mode name='ui_mode' value='".$_SESSION["wa_current_user"]->ui_mode."' />\n";
-	if (!$login_timeout)
-		table_section_title(_("Version")." $version   Build $build_version - "._("Login"));
 	$value = $login_timeout ? $_SESSION['wa_current_user']->loginname : ($allow_demo_mode ? "demouser":"");
 
-	text_row(_("User name"), "user_name_entry_field", $value, 20, 30);
+	if ($login_timeout) {
+		$login_msg = _('Authorization timeout');
+	} 
 
-	$password = $allow_demo_mode ? "password":"";
+  if ($login_fail) {
+        $login_msg = _("Incorrect Password");
+  }
 
-	password_row(_("Password:"), 'password', $password);
+  if (isset($_GET['logout']))
+  {
+    echo '<div class="alert alert-success alert-dismissible" role="alert">';
+    echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
+    echo _('You have been logged out.');
+    echo '</div>';
+  }
+
+  if (isset($login_msg) && !empty($login_msg))
+  {
+    echo '<div class="alert alert-danger alert-dismissible" role="alert">';
+    echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
+    echo $login_msg;
+    echo '</div>';
+  }
+	// Display demo user name and password within login form if "$allow_demo_mode" is true
+	if ($allow_demo_mode == true)
+	{
+	    //$demo_text = _("Login as user: demouser and password: password");
+    echo '
+    <input type="hidden" name="user_name_entry_field" value="demouser"/>
+    <input type="hidden" name="password" value="password"/>
+    ';
+	}
+	else
+	{
+		$demo_text = _("Please login here");
+    if (@$allow_password_reset) {
+      $demo_text .= " "._("or")." <a href='$path_to_root/index.php?reset=1'>"._("request new password")."</a>";
+    }
+    echo '
+    <label for="user_name_entry_field" class="sr-only">Username</label>
+    <input type="text" name="user_name_entry_field" id="user_name_entry_field" class="form-control" placeholder="Username" required autofocus>
+    <label for="password" class="sr-only">Password</label>
+    <input type="password" id="password" name="password" class="form-control" placeholder="Password">
+    ';
+	}
+
 
 	if ($login_timeout) {
 		hidden('company_login_name', $_SESSION["wa_current_user"]->company);
@@ -103,23 +130,29 @@ function defaultCompany()
 			$coy =  $_SESSION['wa_current_user']->company;
 		else
 			$coy = $def_coy;
+    echo '<label for="company_login_name" class="sr-only">Company</label>';
 		if (!@$text_company_selection) {
-			echo "<tr><td>"._("Company")."</td><td><select name='company_login_name'>\n";
+			echo "<select name='company_login_name' class='form-control'>\n";
 			for ($i = 0; $i < count($db_connections); $i++)
 				echo "<option value=$i ".($i==$coy ? 'selected':'') .">" . $db_connections[$i]["name"] . "</option>";
 			echo "</select>\n";
-			echo "</td></tr>";
 		} else {
 //			$coy = $def_coy;
-			text_row(_("Company"), "company_login_nickname", "", 20, 50);
+			echo '<input type="text" id="company_login_name" class="form-control" placeholder="Company" required>';
 		}
-		start_row();
-		label_cell($demo_text, "colspan=2 align='center' id='log_msg'");
-		end_row();
 	}; 
-	end_table(1);
-	echo "<center><input type='submit' value='&nbsp;&nbsp;"._("Login -->")."&nbsp;&nbsp;' name='SubmitUser'"
-		.($login_timeout ? '':" onclick='set_fullmode();'").(isset($blocked_msg) ? " disabled" : '')." /></center>\n";
+
+	if ($allow_demo_mode == true) {
+    echo '<button name="SubmitUser" class="btn btn-lg btn-primary btn-block" type="submit">View demo</button>
+  ';
+  }else{
+    echo '<button name="SubmitUser" class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+  ';
+  }
+
+
+	//echo "<center><input type='submit' value='&nbsp;&nbsp;"._("Login -->")."&nbsp;&nbsp;' name='SubmitUser'"
+		//.($login_timeout ? '':" onclick='set_fullmode();'").(isset($blocked_msg) ? " disabled" : '')." /></center>\n";
 
 	foreach($_SESSION['timeout']['post'] as $p => $val) {
 		// add all request variables to be resend together with login data
@@ -131,6 +164,7 @@ function defaultCompany()
 				foreach($val as $i => $v)
 					echo "<input type='hidden' name='{$p}[$i]' value='$v'>";
 	}
+    echo "</div></div>";
 	end_form(1);
 	$Ajax->addScript(true, "document.forms[0].password.focus();");
 
@@ -143,22 +177,6 @@ function defaultCompany()
     //]]>
     </script>";
     div_end();
-	echo "<table class='bottomBar'>\n";
-	echo "<tr>";
-	if (isset($_SESSION['wa_current_user'])) 
-		$date = Today() . " | " . Now();
-	else	
-		$date = date("m/d/Y") . " | " . date("h.i am");
-	echo "<td class='bottomBarCell'>$date</td>\n";
-	echo "</tr></table>\n";
-	echo "<table class='footer'>\n";
-	echo "<tr>\n";
-	echo "<td><a target='_blank' href='$power_url' tabindex='-1'>$app_title $version - " . _("Theme:") . " " . $def_theme . "</a></td>\n";
-	echo "</tr>\n";
-	echo "<tr>\n";
-	echo "<td><a target='_blank' href='$power_url' tabindex='-1'>$power_by</a></td>\n";
-	echo "</tr>\n";
-	echo "</table><br><br>\n";
 	echo "</body></html>\n";
 
 ?>
