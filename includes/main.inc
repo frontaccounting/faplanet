@@ -133,7 +133,8 @@ function js_compress($sJS)
 		for($j=0;$j<$len;$j++)
 		{
 			$c = $line[$j];		// this is _really_ faster than subst
-			$d = $c.$line[$j+1];
+      if ($j+1 < $len)
+			  $d = $c.$line[$j+1];
 	
 			//look for start of quote
 			if(!$inQuote && !$inComment)
