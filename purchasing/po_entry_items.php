@@ -43,21 +43,25 @@ if (isset($_GET['ModifyOrderNumber']) && is_numeric($_GET['ModifyOrderNumber']))
 	copy_from_cart();
 } elseif (isset($_GET['NewOrder'])) {
 
+  $_SESSION['page_id'] = 'purchase_order_entry';
 	$_SESSION['page_title'] = _($help_context = "Purchase Order Entry");
 	create_new_po(ST_PURCHORDER, 0);
 	copy_from_cart();
 } elseif (isset($_GET['NewGRN'])) {
 
+  $_SESSION['page_id'] = 'purchase_grn_entry';
 	$_SESSION['page_title'] = _($help_context = "Direct GRN Entry");
 	create_new_po(ST_SUPPRECEIVE, 0);
 	copy_from_cart();
 } elseif (isset($_GET['NewInvoice'])) {
 
+  $_SESSION['page_id'] = 'purchase_invoice_entry';
 	$_SESSION['page_title'] = _($help_context = "Direct Purchase Invoice Entry");
 	create_new_po(ST_SUPPINVOICE, 0);
 	copy_from_cart();
 }
 
+$page_id = $_SESSION['page_id'];
 page($_SESSION['page_title'], false, false, "", $js);
 
 //---------------------------------------------------------------------------------------------------

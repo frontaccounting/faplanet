@@ -25,10 +25,12 @@ if (@$_GET['type'] == "account" || get_post('type') == TAG_ACCOUNT) {
 // We use $_POST['type'] throughout this script, so convert $_GET vars
 // if $_POST['type'] is not set.
 if (!isset($_POST['type'])) {
-	if ($_GET['type'] == "account")
+	if ($_GET['type'] == "account") {
 		$_POST['type'] = TAG_ACCOUNT;
-	elseif ($_GET['type'] == "dimension")
+	}
+  elseif ($_GET['type'] == "dimension") {
 		$_POST['type'] = TAG_DIMENSION;
+  }
 	else
 		die(_("Unspecified tag type"));
 }
@@ -37,13 +39,16 @@ if (!isset($_POST['type'])) {
 switch ($_POST['type']) {
 	case TAG_ACCOUNT:
 		// Account tags
+    $_SESSION['page_id'] = 'gl_account_tags';
 		$_SESSION['page_title'] = _($help_context = "Account Tags");
 		break;
 	case TAG_DIMENSION:
 		// Dimension tags
+    $_SESSION['page_id'] = 'dimension_tags';
 		$_SESSION['page_title'] = _($help_context = "Dimension Tags");
 }
 
+$page_id = $_SESSION['page_id'];
 page($_SESSION['page_title']);
 
 simple_page_mode(true);

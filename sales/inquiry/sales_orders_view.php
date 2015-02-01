@@ -36,27 +36,32 @@ if ($trans_type == ST_SALESORDER)
 {
 	if (isset($_GET['OutstandingOnly']) && ($_GET['OutstandingOnly'] == true))
 	{
+    $_SESSION['page_id'] = 'sales_delivery_against';
 		$_POST['order_view_mode'] = 'OutstandingOnly';
 		$_SESSION['page_title'] = _($help_context = "Search Outstanding Sales Orders");
 	}
 	elseif (isset($_GET['InvoiceTemplates']) && ($_GET['InvoiceTemplates'] == true))
 	{
+    $_SESSION['page_id'] = 'sales_invoice_template';
 		$_POST['order_view_mode'] = 'InvoiceTemplates';
 		$_SESSION['page_title'] = _($help_context = "Search Template for Invoicing");
 	}
 	elseif (isset($_GET['DeliveryTemplates']) && ($_GET['DeliveryTemplates'] == true))
 	{
+    $_SESSION['page_id'] = 'sales_delivery_template';
 		$_POST['order_view_mode'] = 'DeliveryTemplates';
 		$_SESSION['page_title'] = _($help_context = "Select Template for Delivery");
 	}
 	elseif (!isset($_POST['order_view_mode']))
 	{
+    $_SESSION['page_id'] = 'sales_order_inquiry';
 		$_POST['order_view_mode'] = false;
 		$_SESSION['page_title'] = _($help_context = "Search All Sales Orders");
 	}
 }
 else
 {
+  $_SESSION['page_id'] = 'sales_quot_inquiry';
 	$_POST['order_view_mode'] = "Quotations";
 	$_SESSION['page_title'] = _($help_context = "Search All Sales Quotations");
 }
@@ -68,6 +73,7 @@ if (!@$_GET['popup'])
 		$js .= get_js_open_window(900, 600);
 	if ($use_date_picker)
 		$js .= get_js_date_picker();
+  $page_id = $_SESSION['page_id'];
 	page($_SESSION['page_title'], false, false, "", $js);
 }
 

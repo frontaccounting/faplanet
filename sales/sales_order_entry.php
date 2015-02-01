@@ -61,11 +61,13 @@ if ($use_date_picker) {
 
 if (isset($_GET['NewDelivery']) && is_numeric($_GET['NewDelivery'])) {
 
+  $_SESSION['page_id'] = 'sales_delivery_entry';
 	$_SESSION['page_title'] = _($help_context = "Direct Sales Delivery");
 	create_cart(ST_CUSTDELIVERY, $_GET['NewDelivery']);
 
 } elseif (isset($_GET['NewInvoice']) && is_numeric($_GET['NewInvoice'])) {
 
+  $_SESSION['page_id'] = 'sales_invoice_entry';
 	$_SESSION['page_title'] = _($help_context = "Direct Sales Invoice");
 	create_cart(ST_SALESINVOICE, $_GET['NewInvoice']);
 
@@ -83,10 +85,12 @@ if (isset($_GET['NewDelivery']) && is_numeric($_GET['NewDelivery'])) {
 
 } elseif (isset($_GET['NewOrder'])) {
 
+  $_SESSION['page_id'] = 'sales_order_entry';
 	$_SESSION['page_title'] = _($help_context = "New Sales Order Entry");
 	create_cart(ST_SALESORDER, 0);
 } elseif (isset($_GET['NewQuotation'])) {
 
+  $_SESSION['page_id'] = 'sales_quot_entry';
 	$_SESSION['page_title'] = _($help_context = "New Sales Quotation Entry");
 	create_cart(ST_SALESQUOTE, 0);
 } elseif (isset($_GET['NewQuoteToSalesOrder'])) {
@@ -94,6 +98,7 @@ if (isset($_GET['NewDelivery']) && is_numeric($_GET['NewDelivery'])) {
 	create_cart(ST_SALESQUOTE, $_GET['NewQuoteToSalesOrder']);
 }
 
+$page_id = $_SESSION['page_id'];
 page($_SESSION['page_title'], false, false, "", $js);
 //-----------------------------------------------------------------------------
 

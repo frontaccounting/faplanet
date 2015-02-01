@@ -25,11 +25,13 @@ if ($use_date_picker)
 
 if (isset($_GET['outstanding_only']) && $_GET['outstanding_only'])
 {
+  $page_id = 'dimensions_out';
 	$outstanding_only = 1;
 	page(_($help_context = "Search Outstanding Dimensions"), false, false, "", $js);
 }
 else
 {
+  $page_id = 'dimension_inquiry';
 	$outstanding_only = 0;
 	page(_($help_context = "Search Dimensions"), false, false, "", $js);
 }
