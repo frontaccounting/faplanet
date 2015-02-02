@@ -69,6 +69,7 @@ include_once($path_to_root . "/includes/errors.inc");
 // collect all error msgs
 set_error_handler('error_handler' /*, errtypes */);
 
+include_once($path_to_root . "/includes/menu.inc");
 include_once($path_to_root . "/includes/current_user.inc");
 include_once($path_to_root . "/includes/lang/language.php");
 include_once($path_to_root . "/includes/ajax.inc");

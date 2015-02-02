@@ -38,7 +38,7 @@ while ($adjustment = db_fetch($adjustment_items))
 	{
 		$adjustment_type = get_movement_type($adjustment['person_id']) ;
 
-		start_table(TABLESTYLE2, "width=100%");
+		start_table(VIEW_HEADER, "width=100%");
 		start_row();
 		label_cells(_("At Location"), $adjustment['location_name'], "class='tableheader2'");
     	label_cells(_("Reference"), $adjustment['reference'], "class='tableheader2'", "colspan=6");

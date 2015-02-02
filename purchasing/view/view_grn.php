@@ -35,7 +35,7 @@ echo "<BR>";
 display_grn_summary($purchase_order);
 
 
-start_table(TABLESTYLE, "colspan=9 width=90%");
+start_table(TABLESTYLE, "colspan=9 width=100%");
 $th = array(_("Item Code"), _("Item Description"), _("Delivery Date"), 
   _("Quantity") => array('align' => 'right'),
 	_("Unit") => array('align' => 'right'),

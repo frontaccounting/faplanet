@@ -43,7 +43,8 @@ function load_menu($menu_name = 'default') {
     $item->children = array_keys($item->weights);
   }
 
-  $exclude = array('dashboard');
+  //$exclude = array('dashboard');
+  $exclude = array();
 
   // Hide dimension
   $dim = get_company_pref('use_dimension');

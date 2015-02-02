@@ -323,13 +323,18 @@ start_form();
 
 if (db_has_customers()) 
 {
-  start_selector(_("Select a customer: "));
-	echo customer_list('customer_id', null,
-		_('New customer'), true, check_value('show_inactive'));
-  echo '</td>';
-	check_cells(_("Show inactive:"), 'show_inactive', null, true);
-  echo '<td>';
-	end_selector();
+  if (isset($_POST['legacy']) || isset($_GET['legacy'])) {
+    start_selector(_("Select a customer: "));
+    echo customer_list('customer_id', null,
+      _('New customer'), true, check_value('show_inactive'));
+    echo '</td>';
+    check_cells(_("Show inactive:"), 'show_inactive', null, true);
+    echo '<td>';
+    end_selector();
+    hidden('legacy', 1);
+  }
+  else
+    hidden('customer_id');
 
 	if (get_post('_show_inactive_update')) {
 		$Ajax->activate('customer_id');
@@ -344,7 +349,8 @@ else
 if (!$selected_id || list_updated('customer_id'))
 	unset($_POST['_tabs_sel']); // force settings tab for new customer
 
-tabbed_content_start('tabs', array(
+if ($selected_id) {
+  tabbed_content_start('tabs', array(
 		'settings' => array(_('&General settings'), $selected_id),
 		'contacts' => array(_('&Contacts'), $selected_id),
 		'transactions' => array(_('&Transactions'), $selected_id),
@@ -371,6 +377,10 @@ tabbed_content_start('tabs', array(
 			include_once($path_to_root."/sales/inquiry/sales_orders_view.php");
 			break;
 	};
+} 
+else
+	customer_settings($selected_id); 
+
 br();
 tabbed_content_end();
 

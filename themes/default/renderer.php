@@ -61,11 +61,11 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         </button>
-        <a href="'.$path_to_root.'/includes/start.php">
-        <img id="logo" src="'.$path_to_root.'/themes/default/logo.png" height="32" width="32"/>
+        <a role="button" href="'.$path_to_root.'/includes/start.php">
         </a>
         </div>
         ';
+        //<img id="logo" src="'.$path_to_root.'/themes/default/logo.png" height="32" width="32"/>
       echo '<div class="collapse navbar-collapse" id="main-navbar"><ul class="nav navbar-nav">';
       foreach ($menu->root as $app) {
         $acc = access_string(_($menu->items[$app]->data['title']));
@@ -113,7 +113,7 @@
       echo '</div></div></nav>';
 
       if (count($menu->context) > 0) {
-        echo '<div id="context-menu">';
+        echo '<div id="header-context" class="container-fluid">';
         foreach ($menu->context as $child) {
           $acc = access_string(_($menu->items[$child]->data['title']));
           $link = $menu->items[$child]->data['link'];

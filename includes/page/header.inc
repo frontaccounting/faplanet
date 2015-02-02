@@ -135,7 +135,7 @@ function page_header($title, $no_menu=false, $is_index=false, $onload="", $js=""
 	echo "<link href='$path_to_root/themes/$theme/css/dataTables.bootstrap.css' rel='stylesheet' type='text/css'> \n";
 	echo "<link href='$path_to_root/themes/$theme/css/bootstrap-custom.css' rel='stylesheet' type='text/css'> \n";
 	echo "<link href='$path_to_root/themes/$theme/default.css' rel='stylesheet' type='text/css'> \n";
- 	echo "<link href='$path_to_root/themes/default/images/favicon.ico' rel='icon' type='image/x-icon'> \n";
+ 	//echo "<link href='$path_to_root/themes/default/images/favicon.ico' rel='icon' type='image/x-icon'> \n";
  	echo "<script language='javascript' type='text/javascript' src='$path_to_root/themes/$theme/js/jquery-1.11.2.min.js'></script>";
  	echo "<script language='javascript' type='text/javascript' src='$path_to_root/themes/$theme/js/bootstrap.min.js'></script>";
  	echo "<script language='javascript' type='text/javascript' src='$path_to_root/themes/$theme/js/select2.min.js'></script>";
@@ -144,8 +144,12 @@ function page_header($title, $no_menu=false, $is_index=false, $onload="", $js=""
  	echo "<script language='javascript' type='text/javascript' src='$path_to_root/themes/$theme/js/dataTables.bootstrap.min.js'></script>";
 
   echo "<script type='text/javascript' src='$path_to_root/themes/$theme/js/Chart.js'></script>\n";
+  echo "<script type='text/javascript' src='$path_to_root/themes/$theme/js/document.js'></script>\n";
+  /*
   echo '<script> $(document).ready(function() { $(".select2").select2({ placeholder: "Select a State", maximumSelectionSize: 6 }); }); </script>';
-  echo '<script> $(document).ready(function() { $(".dynamic-table").DataTable({"columnDefs": [{orderable: false, "targets": -1}], "paging": false, "info": false}); }); </script>';
+  echo '<script> $(document).ready(function() { datatable = $(".dynamic-table").DataTable({"columnDefs": [{orderable: false, "targets": -1}], "paging": false, "info": false, "bFilter": false}); });
+  $(document).ready(function() { $("#pager-search").keyup(function() {datatable.search(($this).val).draw()}); </script>';
+  */
 
 	if ($css)
 		echo '<link href="'.$css.'" rel="stylesheet" type="text/css">';

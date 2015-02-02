@@ -14,9 +14,10 @@ table {
   margin-bottom: 0px;
 }
 
-#context-menu {
-  width: 100%;
+#header-context .btn {
+  margin-bottom: 0;
 }
+
 
 table.view-items {
   border-bottom: 1px solid #ddd;
@@ -39,7 +40,7 @@ p.headingtext {
   padding: 0px 20px 0 20px;
 }
 
-.widget-title {
+.page-title, .widget-title {
   margin-top: 16px;
   color: #777;
   font-size: 16px;
@@ -56,6 +57,12 @@ p.headingtext {
 .search .date-group {
   width: 150px;
 }
+
+/*
+.section-1, .section-2, .section-3 {
+  width: 33%;
+}
+*/
 
 .section-3 {
   text-align: left;
@@ -74,10 +81,6 @@ p.headingtext {
 .combo-container {
   min-width: 180px;
   text-align: left;
-}
-
-#context-menu .btn {
-  margin-bottom: 0;
 }
 
 #main-page .alert {
@@ -108,7 +111,7 @@ td.static {
 
 .btn-primary{
   background-color: #072b59;
-    border-color: #021d40;
+  border-color: #021d40;
 }
 
 .btn-success {
@@ -117,10 +120,13 @@ td.static {
 }
 
 /*
-table.tablestyle2 td.section-2, table.tablestyle2 td.section-3 {
-	border-collapse: collapse;
-	border-left: 1px solid #ddd;
-  padding: 2px 8px 2px 8px;
+table.tablestyle2 .tablestyle_inner {
+	border-collapse: separate;
+  border-spacing: 0px;
+}
+
+table.tablestyle2 .tablestyle_inner td {
+  border: 1px solid #ddd;
 }
 */
 
@@ -134,6 +140,14 @@ td.options-cell {
   text-align: center;
 }
 
+.table {
+}
+
+th.cell-options, td.cell-options {
+  width: 50px !important;
+  text-align: right;
+}
+
 td.button-add {
   width: 50px;
   text-align: center;
@@ -144,6 +158,7 @@ tr.control-row {
 }
 
 td.label, td.tableheader, td.tableheader2 {
+  width: 150px;
   padding-top: 4px;
   padding-bottom: 4px;
   padding-left: 10px;
@@ -222,7 +237,7 @@ th {
 }
 
 .tablestyle2 td.label, .entry-header .tablestyle_inner td.label, .tablestyle2 td.tableheader2 {
-  color: #555;
+  color: #333;
   background-color: #eee;
 }
 
@@ -255,6 +270,14 @@ th {
 	border: 1px solid #ddd;
 }
 
+.entry-items thead {
+  background-color: #eee;
+}
+
+.entry-items thead th {
+  font-weight: normal;
+}
+
 /*td.tableheader {
   color: white;
   background-color: #cc5750;
@@ -283,13 +306,17 @@ tr.overduebg > td {
 
 /* login */
 
+#loginscreen .footer-text {
+  color: #999;
+  font-size: 10px;
+}
 #loginscreen .container {
   max-width: 350px;
   margin: 0 auto;
   margin-top: 60px;
 }
 #loginscreen .panel {
-  padding: 2px 25px 25px 25px;
+  padding: 2px 25px 5px 25px;
 }
 /*
 #loginscreen form {
@@ -326,5 +353,6 @@ padding: 10px;
 }
 #loginscreen form .btn-lg {
   margin-top: 16px;
+  margin-bottom: 8px;
 }
 

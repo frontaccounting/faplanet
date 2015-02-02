@@ -39,7 +39,7 @@ $branch = get_branch($myrow["branch_code"]);
 display_heading("<font color=red>" . sprintf(_("CREDIT NOTE #%d"), $trans_id). "</font>");
 echo "<br>";
 
-start_table(TABLESTYLE2, "width=95%");
+start_table(TABLESTYLE3, "width=100%");
 echo "<tr valign=top><td>"; // outer table
 
 /*Now the customer charged to details in a sub table*/
@@ -63,7 +63,7 @@ end_table();
 
 echo "</td><td>"; // outer table
 
-start_table(TABLESTYLE, "width=100%");
+start_table(VIEW_HEADER, "width=100%");
 start_row();
 label_cells(_("Ref"), $myrow["reference"], "class='tableheader2'");
 label_cells(_("Date"), sql2date($myrow["tran_date"]), "class='tableheader2'");

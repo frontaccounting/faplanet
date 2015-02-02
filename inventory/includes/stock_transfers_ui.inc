@@ -45,7 +45,7 @@ function display_order_header(&$order)
 
     movement_types_list_row(_("Transfer Type:"), 'type', null);
 
-	end_outer_table(); // outer table
+	end_outer_table(1); // outer table
 }
 
 //---------------------------------------------------------------------------------

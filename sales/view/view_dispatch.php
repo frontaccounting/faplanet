@@ -43,11 +43,11 @@ $sales_order = get_sales_order_header($myrow["order_"], ST_SALESORDER);
 display_heading(sprintf(_("DISPATCH NOTE #%d"),$trans_id));
 
 echo "<br>";
-start_table(TABLESTYLE2, "width=95%");
+start_table(TABLESTYLE3, "width=100%");
 echo "<tr valign=top><td>"; // outer table
 
 /*Now the customer charged to details in a sub table*/
-start_table(TABLESTYLE, "width=100%");
+start_table(VIEW_HEADER, "width=100%");
 $th = array(_("Charge To"));
 table_header($th);
 
@@ -61,7 +61,7 @@ echo "</td><td>"; // outer table
 
 /*end of the main table showing the company name and charge to details */
 
-start_table(TABLESTYLE, "width=100%");
+start_table(VIEW_HEADER, "width=100%");
 $th = array(_("Charge Branch"));
 table_header($th);
 
@@ -70,7 +70,7 @@ end_table();
 
 echo "</td><td>"; // outer table
 
-start_table(TABLESTYLE, "width=100%");
+start_table(VIEW_HEADER, "width=100%");
 $th = array(_("Delivered To"));
 table_header($th);
 
@@ -80,7 +80,7 @@ end_table();
 
 echo "</td><td>"; // outer table
 
-start_table(TABLESTYLE, "width=100%");
+start_table(VIEW_HEADER, "width=100%");
 start_row();
 label_cells(_("Reference"), $myrow["reference"], "class='tableheader2'");
 label_cells(_("Currency"), $sales_order["curr_code"], "class='tableheader2'");

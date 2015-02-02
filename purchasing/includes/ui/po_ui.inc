@@ -310,7 +310,7 @@ function display_po_items(&$order, $editable=true)
 
 function display_po_summary(&$po, $is_self=false, $editable=false)
 {
-    start_table(TABLESTYLE, "width=90%");
+    start_table(VIEW_HEADER, "width=100%");
 
     start_row();
     label_cells(_("Reference"), $po->reference, "class='tableheader2'");

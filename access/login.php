@@ -51,7 +51,7 @@ function defaultCompany()
 	echo "<link href='$path_to_root/themes/$theme/css/bootstrap.css' rel='stylesheet' type='text/css'> \n";
 	echo "<link href='$path_to_root/themes/$theme/css/bootstrap-custom.css' rel='stylesheet' type='text/css'> \n";
 	echo "<link href='$path_to_root/themes/$theme/default.css' rel='stylesheet' type='text/css'> \n";
- 	echo "<link href='$path_to_root/themes/default/images/favicon.ico' rel='icon' type='image/x-icon'> \n";
+ 	//echo "<link href='$path_to_root/themes/default/images/favicon.ico' rel='icon' type='image/x-icon'> \n";
  	echo "<script language='javascript' type='text/javascript' src='$path_to_root/themes/$theme/js/jquery-1.11.2.min.js'></script>";
  	echo "<script language='javascript' type='text/javascript' src='$path_to_root/themes/$theme/js/bootstrap.min.js'></script>";
 
@@ -142,7 +142,6 @@ function defaultCompany()
   else
     echo '<button name="SubmitUser" class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>';
 
-
 	//echo "<center><input type='submit' value='&nbsp;&nbsp;"._("Login -->")."&nbsp;&nbsp;' name='SubmitUser'"
 		//.($login_timeout ? '':" onclick='set_fullmode();'").(isset($blocked_msg) ? " disabled" : '')." /></center>\n";
 
@@ -156,6 +155,8 @@ function defaultCompany()
 				foreach($val as $i => $v)
 					echo "<input type='hidden' name='{$p}[$i]' value='$v'>";
 	}
+
+  echo '<p class="footer-text">Version '.$version.", Build ".$build_version."</p>";
     echo "</div></div>";
 	end_form(1);
 	$Ajax->addScript(true, "document.forms[0].password.focus();");

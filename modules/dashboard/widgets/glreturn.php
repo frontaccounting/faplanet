@@ -55,7 +55,7 @@ class glreturn
 
         $calculated = _("Calculated Return");
         if ($this->graph_type=='Table') {
-            start_table(TABLESTYLE2, "width=98%");
+            start_table(TABLESTYLE, "width=98%");
             $total = 0;
             while ($myrow = db_fetch($result))
             {

@@ -14,7 +14,7 @@
 function display_grn_summary(&$po)
 {
 	global $Refs;
-    start_table(TABLESTYLE2, "width=90%");
+    start_table(VIEW_HEADER, "width=100%");
 
     start_row();
 	label_cells(_("Supplier"), $po->supplier_name, "class='tableheader2'");

@@ -33,7 +33,7 @@ $to_trans = $transfer_items[1];
 display_heading($systypes_array[ST_LOCTRANSFER] . " #$trans_no");
 
 echo "<br>";
-start_table(TABLESTYLE2, "width=100%");
+start_table(VIEW_HEADER, "width=100%");
 
 start_row();
 label_cells(_("Item"), $from_trans['stock_id'] . " - " . $from_trans['description'], "class='tableheader2'");

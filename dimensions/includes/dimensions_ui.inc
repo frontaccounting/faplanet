@@ -25,10 +25,10 @@ function display_dimension_balance($id, $from, $to)
     }
     else
     {
-		display_heading2(_("Balance for this Dimension"));
 		br();
 		start_table(TABLESTYLE);
-		$th = array(_("Account"), _("Debit"), _("Credit"));
+		display_caption(_("Balance for this Dimension"));
+		$th = array(_("Account"), _("Debit") => array('align' => 'right'), _("Credit") => array('align' => 'right'));
 		table_header($th);
 
         $total = $k = 0;

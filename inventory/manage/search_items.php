@@ -25,7 +25,7 @@ page(_($help_context = "Items"), false, false, "", $js);
 
 //-----------------------------------------------------------------------------
 
-function format_row(&$row) {
+function format_row(&$row, &$options) {
   global $path_to_root, $stock_types;
 
   $row['inactive'] = $row['inactive'] ? 'Inactive' : 'Active';
@@ -47,7 +47,7 @@ $headers = array('Code', 'Name', 'Category', 'Type', 'Status');
 
 //echo '<a class="btn btn-success" style="margin-left:6px" href="'.$path_to_root.'/inventory/manage/items.php?"><span class="glyphicon glyphicon-plus"></span> Add Item</a>';
 
-render_table ($data, $headers);
+render_pager ($data, $headers);
 
 end_page();
 ?>

@@ -73,6 +73,8 @@ if ($myrow["closed"] == true)
 	display_note(_("This dimension is closed."));
 }
 
+echo '<br/>';
+
 start_form();
 
 start_table(TABLESTYLE_NOBORDER);

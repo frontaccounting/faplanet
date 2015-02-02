@@ -46,7 +46,7 @@ if ($from_trans['bank_curr_code'] != $from_trans['settle_curr'])
 display_heading(_("GL Payment") . " #$trans_no");
 
 echo "<br>";
-start_table(TABLESTYLE, "width=80%");
+start_table(VIEW_HEADER, "width=100%");
 
 if ($show_currencies)
 {
@@ -92,22 +92,23 @@ if (db_num_rows($items)==0)
 else
 {
 
-	display_heading2(_("Items for this Payment"));
-	if ($show_currencies)
+	if ($show_currencies) {
 		display_heading2(_("Item Amounts are Shown in:") . " " . $company_currency);
-
     echo "<br>";
+  }
+
     start_table(TABLESTYLE, "width=80%");
+	display_caption(_("Items for this Payment"));
     $dim = get_company_pref('use_dimension');
     if ($dim == 2)
         $th = array(_("Account Code"), _("Account Description"), _("Dimension")." 1", _("Dimension")." 2",
-            _("Amount"), _("Memo"));
+            _("Amount") => array('align' => 'right'), _("Memo"));
     else if ($dim == 1)
         $th = array(_("Account Code"), _("Account Description"), _("Dimension"),
-            _("Amount"), _("Memo"));
+            _("Amount") => array('align' => 'right'), _("Memo"));
     else
         $th = array(_("Account Code"), _("Account Description"),
-            _("Amount"), _("Memo"));
+            _("Amount") => array('align' => 'right'), _("Memo"));
 	table_header($th);
 
     $k = 0; //row colour counter

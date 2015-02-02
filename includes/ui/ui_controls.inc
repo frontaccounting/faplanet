@@ -76,6 +76,24 @@ function check_csrf_token()
 	return true;
 }
 
+function show_breadcrumbs($items) {
+  echo '<ol class="breadcrumb">', "\n";
+
+  $cnt = count($items) - 1;
+
+  for ($i=0; $i < $cnt; $i++) {
+    echo '<li><a href="'. $items[$i]['link'] .'">'. $items[$i]['text']. "</a>\n";
+  }
+   
+  echo '<li class="active">'. $items[$cnt]['text']. "</li>\n";
+
+  echo "</ol>\n";
+}
+
+function display_page_title($title) {
+  echo '<p class="page-title">'. $title. "</p>\n";
+}
+
 function start_selector($label) {
   echo '<center><table class="selector">';
   echo '<tr><td class="label">'.$label.'</td><td class="input">';
@@ -101,7 +119,7 @@ function start_table($class=false, $extra="", $padding='2', $spacing='0')
 	if ($class == TABLESTYLE_NOBORDER)
 		echo " class='tablestyle_noborder'";
 	elseif ($class == TABLESTYLE2) 
-		echo " class='tablestyle2'";
+		echo " class='tablestyle2 '";
 	elseif ($class == TABLESTYLE3) 
 		echo " class='tablestyle3'";
 	elseif ($class == TABLESTYLE)
