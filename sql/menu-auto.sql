@@ -97,7 +97,8 @@ INSERT INTO `0_menu` VALUES ('default','purchase_reports','purchase','&Reports',
 INSERT INTO `0_menu` VALUES ('default','supplier_reports','purchase_reports','Supplier and Purchasing &Reports','reporting/reports_main.php?Class=1','SA_SUPPTRANSVIEW','report',0,0,'');
 INSERT INTO `0_menu` VALUES ('default','inventory','','&Inventory','','','',0,0,'');
 INSERT INTO `0_menu` VALUES ('default','inventory_items','inventory','&Items','','','',0,0,'');
-INSERT INTO `0_menu` VALUES ('default','items','inventory_items','&Items','inventory/manage/items.php?','SA_ITEM','index',0,0,'');
+INSERT INTO `0_menu` VALUES ('default','search_items','inventory_items','&Items','inventory/manage/search_items.php?','SA_ITEM','index',0,0,'');
+INSERT INTO `0_menu` VALUES ('default','items','inventory_items','Item Entry','inventory/manage/items.php?','SA_ITEM','entry',0,0,'');
 INSERT INTO `0_menu` VALUES ('default','item_categories','inventory_items','Item &Categories','inventory/manage/item_categories.php?','SA_ITEMCATEGORY','maintenance',0,0,'');
 INSERT INTO `0_menu` VALUES ('default','item_units','inventory_items','&Units of Measure','inventory/manage/item_units.php?','SA_UOM','maintenance',0,0,'');
 INSERT INTO `0_menu` VALUES ('default','sales_kits','inventory_items','Sales &Kits','inventory/manage/sales_kits.php?','SA_SALESKIT','maintenance',0,0,'');

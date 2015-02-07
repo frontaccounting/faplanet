@@ -425,14 +425,20 @@ start_form(true);
 
 if (db_has_stock_items()) 
 {
-  start_selector(_("Select an item:"));
-  echo stock_items_list('stock_id', null,
-	  _('New item'), true, array('cells' => false, 'show_inactive'=>check_value('show_inactive')));
-	$new_item = get_post('stock_id')=='';
-  echo '</td>';
-	check_cells(_("Show inactive:"), 'show_inactive', null, true);
-  echo '<td>';
-	end_selector();
+  $new_item = get_post('stock_id')=='';
+
+  if (isset($_POST['ui_legacy']) || isset($_GET['ui_legacy'])) {
+    start_selector(_("Select an item:"));
+    echo stock_items_list('stock_id', null,
+      _('New item'), true, array('cells' => false, 'show_inactive'=>check_value('show_inactive')));
+    echo '</td>';
+    check_cells(_("Show inactive:"), 'show_inactive', null, true);
+    echo '<td>';
+    end_selector();
+    hidden('ui_legacy', 1);
+  }
+  else
+    hidden ('stock_id');
 
 	if (get_post('_show_inactive_update')) {
 		$Ajax->activate('stock_id');
@@ -450,6 +456,7 @@ $stock_id = get_post('stock_id');
 if (!$stock_id)
 	unset($_POST['_tabs_sel']); // force settings tab for new customer
 
+/*
 tabbed_content_start('tabs', array(
 		'settings' => array(_('&General settings'), $stock_id),
 		'sales_pricing' => array(_('S&ales Pricing'), $stock_id),
@@ -502,6 +509,8 @@ tabbed_content_start('tabs', array(
 	};
 br();
 tabbed_content_end();
+*/
+item_settings($stock_id); 
 
 div_end();
 
