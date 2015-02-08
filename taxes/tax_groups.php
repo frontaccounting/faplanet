@@ -166,18 +166,10 @@ if ($selected_id != -1)
 }
 text_row_ex(_("Description:"), 'name', 40);
 yesno_list_row(_("Tax applied to Shipping:"), 'tax_shipping', null, "", "", true);
-
-end_table();
-
-display_note(_("Select the taxes that are included in this group."), 1, 1);
+table_section_title(_("Taxes included:"));
 
 // null means transport tax group, but for new we do not use real rates
 $items = get_tax_group_rates($selected_id!=-1 ? $selected_id : null);
-
-$th = array(_("Tax"), "");
-
-start_table(TABLESTYLE2);
-table_header($th);
 
 while($item = db_fetch_assoc($items)) 
 {
@@ -185,7 +177,9 @@ while($item = db_fetch_assoc($items))
 		$selected_id!=-1 && isset($item['rate']), "align='center'");
 }
 
-end_table(1);
+end_table();
+
+//display_note(_("Select the taxes that are included in this group."), 1, 1);
 
 submit_add_or_update_center($selected_id == -1, '', 'both');
 

@@ -174,32 +174,23 @@ text_row_ex(_("Description:"), 'name', 50);
 
 yesno_list_row(_("Is Fully Tax-exempt:"), 'exempt', null, "", "", true);
 
-end_table(1);
-
 if (!isset($_POST['exempt']) || $_POST['exempt'] == 0) 
 {
 
-    display_note(_("Select which taxes this item tax type is exempt from."), 0, 1);
+    table_section_title(_("Exempt from taxes:"));
+
+    //display_note(_("Select which taxes this item tax type is exempt from."), 0, 1);
     
-    start_table(TABLESTYLE2);
-    $th = array(_("Tax Name"), _("Rate"), _("Is exempt"));
-    table_header($th);
-    	
     $tax_types = get_all_tax_types_simple();    	
     
     while ($myrow = db_fetch($tax_types)) 
     {
-    	
-    	alt_table_row_color($k);	
-    
-    	label_cell($myrow["name"]);
-		label_cell(percent_format($myrow["rate"])." %", "nowrap align=right");
-    	check_cells("", 'ExemptTax' . $myrow["id"], null);
-    	end_row();
+      $label = $myrow["name"].' ('.percent_format($myrow["rate"])."%)";
+    	check_row($label, 'ExemptTax' . $myrow["id"], null);
     }
-    
-    end_table(1);
 }
+
+end_table(1);
 
 submit_add_or_update_center($selected_id == -1, '', 'both');
 
