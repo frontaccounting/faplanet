@@ -1159,6 +1159,195 @@ INSERT INTO `0_loc_stock` VALUES('DEF', '103', 0);
 INSERT INTO `0_loc_stock` VALUES('DEF', '104', 0);
 INSERT INTO `0_loc_stock` VALUES('DEF', '201', 0);
 INSERT INTO `0_loc_stock` VALUES('DEF', '3400', 0);
+-- --------------------------------------------------------
+
+--
+-- table structure for table `0_menu`
+--
+
+drop table if exists `0_menu`;
+create table `0_menu` (
+  `menu` varchar(60) not null default '',
+  `id` varchar(255) not null default '',
+  `parent` varchar(255) not null default '',
+  `title` varchar(255) not null default '',
+  `link` varchar(255) default '',
+  `access` varchar(60) default '',
+  `type` varchar(60) default '',
+  `weight` int(11) not null default '0',
+  `inactive` tinyint(1) not null default '0',
+  `params` varchar(255) default '',
+  primary key (`menu`,`id`)
+) engine=myisam default charset=utf8;
+
+--
+-- dumping data for table `0_menu`
+--
+
+insert into `0_menu` values ('default','dashboard','','dashboard','','','',0,0,'');
+insert into `0_menu` values ('default','sales','','&sales','','','',0,0,'');
+insert into `0_menu` values ('default','sales_orders','sales','orders / quotations','','','',0,0,'');
+insert into `0_menu` values ('default','sales_order_inquiry','sales_orders','sales order &inquiry','sales/inquiry/sales_orders_view.php?type=30','sa_salestransview','inquiryinquiry',0,0,'');
+insert into `0_menu` values ('default','sales_order_entry','sales_orders','sales &order entry','sales/sales_order_entry.php?neworder=yes','sa_salesorder','entry',0,0,'');
+insert into `0_menu` values ('default','sales_quot_inquiry','sales_orders','sales quotation i&nquiry','sales/inquiry/sales_orders_view.php?type=32','sa_salestransview','inquiry',0,0,'');
+insert into `0_menu` values ('default','sales_quot_entry','sales_orders','sales &quotation entry','sales/sales_order_entry.php?newquotation=yes','sa_salesquote','entry',0,0,'');
+insert into `0_menu` values ('default','sales_delivery_against','sales_orders','&delivery against sales orders','sales/inquiry/sales_orders_view.php?outstandingonly=1','sa_salesdelivery','inquiry',0,0,'');
+insert into `0_menu` values ('default','sales_deliveries','sales','&deliveries','','','',0,0,'');
+insert into `0_menu` values ('default','sales_delivery_entry','sales_deliveries','direct &delivery','sales/sales_order_entry.php?newdelivery=0','sa_salesdelivery','entry',0,0,'');
+insert into `0_menu` values ('default','sales_delivery_template','sales_deliveries','&template delivery','sales/inquiry/sales_orders_view.php?deliverytemplates=yes','sa_salesdelivery','inquiry',0,0,'');
+insert into `0_menu` values ('default','sales_invoice_against','sales_deliveries','&invoice against sales delivery','sales/inquiry/sales_deliveries_view.php?outstandingonly=1','sa_salesinvoice','inquiry',0,0,'');
+insert into `0_menu` values ('default','sales_invoices','sales','invoices','','','',0,0,'');
+insert into `0_menu` values ('default','customer_transactions','sales_invoices','customer transactions','sales/inquiry/customer_inquiry.php?','sa_salestransview','inquiry',0,0,'');
+insert into `0_menu` values ('default','customer_allocations','sales_invoices','customer allocations','sales/inquiry/customer_allocation_inquiry.php?','sa_salesalloc','inquiry',0,0,'');
+insert into `0_menu` values ('default','sales_invoice_entry','sales_invoices','direct &invoice','sales/sales_order_entry.php?newinvoice=0','sa_salesinvoice','entry',0,0,'');
+insert into `0_menu` values ('default','sales_invoice_recurrent','sales_invoices','recurrent invoices','sales/create_recurrent_invoices.php?','sa_salesinvoice','inquiry',0,0,'');
+insert into `0_menu` values ('default','sales_recurrent','sales_invoices','recurrent &invoices setup','sales/manage/recurrent_invoices.php?','sa_srecurrent','maintenance',0,0,'');
+insert into `0_menu` values ('default','sales_invoice_template','sales_invoices','&template invoice','sales/inquiry/sales_orders_view.php?invoicetemplates=yes','sa_salesinvoice','unknown',0,0,'');
+insert into `0_menu` values ('default','sales_payments','sales','payments','','','',0,0,'');
+insert into `0_menu` values ('default','costomer_payment_entry','sales_payments','customer payments or credit notes','sales/allocations/customer_allocation_main.php?','sa_salesalloc','inquiry',0,0,'');
+insert into `0_menu` values ('default','customer_payments','sales_payments','customer &payments','sales/customer_payments.php?','sa_salespaymnt','entry',0,0,'');
+insert into `0_menu` values ('default','customer_credits','sales_payments','customer &credit notes','sales/credit_note_entry.php?newcredit=yes','sa_salescredit','entry',0,0,'');
+insert into `0_menu` values ('default','sales_customers','sales','customers','','','',0,0,'');
+insert into `0_menu` values ('default','search_customers','sales_customers','&customers','sales/manage/search_customers.php?','sa_customer','',0,0,'');
+insert into `0_menu` values ('default','customers','sales_customers','customer entry','sales/manage/customers.php?','sa_customer','entry',0,0,'');
+insert into `0_menu` values ('default','branches','sales_customers','customer &branches','sales/manage/customer_branches.php?','sa_customer','index',0,0,'');
+insert into `0_menu` values ('default','sales_reports','sales','reports','','','',0,0,'');
+insert into `0_menu` values ('default','customer_reports','sales_reports','customer and sales &reports','reporting/reports_main.php?class=0','sa_salestransview','report',0,0,'');
+insert into `0_menu` values ('default','purchase','','&purchases','','','',0,0,'');
+insert into `0_menu` values ('default','purchase_orders','purchase','orders','','','',0,0,'');
+insert into `0_menu` values ('default','purchase_order_inquiry','purchase_orders','purchase orders &inquiry','purchasing/inquiry/po_search_completed.php?','sa_supptransview','inquiry',0,0,'');
+insert into `0_menu` values ('default','purchase_order_entry','purchase_orders','purchase &order entry','purchasing/po_entry_items.php?neworder=yes','sa_purchaseorder','entry',0,0,'');
+insert into `0_menu` values ('default','purchase_deliveries','purchase','deliveries','','','',0,0,'');
+insert into `0_menu` values ('default','purchase_grn_entry','purchase_deliveries','direct &grn','purchasing/po_entry_items.php?newgrn=yes','sa_grn','entry',0,0,'');
+insert into `0_menu` values ('default','purchase_invoice_against','purchase_deliveries','supplier &invoices','purchasing/supplier_invoice.php?new=1','sa_supplierinvoice','entry',0,0,'');
+insert into `0_menu` values ('default','purchase_orders_out','purchase_deliveries','&outstanding purchase orders maintenance','purchasing/inquiry/po_search.php?','sa_grn','inquiry',0,0,'');
+insert into `0_menu` values ('default','purchase_invoices','purchase','invoices','','','',0,0,'');
+insert into `0_menu` values ('default','supplier_transactions','purchase_invoices','supplier transactions','purchasing/inquiry/supplier_inquiry.php?','sa_supptransview','inquiry',0,0,'');
+insert into `0_menu` values ('default','supplier_allocations','purchase_invoices','supplier allocations','purchasing/inquiry/supplier_allocation_inquiry.php?','sa_supplieralloc','inquiry',0,0,'');
+insert into `0_menu` values ('default','purchase_invoice_entry','purchase_invoices','direct &invoice','purchasing/po_entry_items.php?newinvoice=yes','sa_supplierinvoice','entry',0,0,'');
+insert into `0_menu` values ('default','purchase_payments','purchase','payments','','','',0,0,'');
+insert into `0_menu` values ('default','supplier_payments','purchase_payments','supplier payments or credit notes','purchasing/allocations/supplier_allocation_main.php?','sa_supplieralloc','inquiry',0,0,'');
+insert into `0_menu` values ('default','supplier_payment_entry','purchase_payments','&payments to suppliers','purchasing/supplier_payment.php?','sa_supplierpaymnt','entry',0,0,'');
+insert into `0_menu` values ('default','purchase_suppliers','purchase','&suppliers','','','',0,0,'');
+insert into `0_menu` values ('default','suppliers','purchase_suppliers','&suppliers','purchasing/manage/suppliers.php?','sa_supplier','index',0,0,'');
+insert into `0_menu` values ('default','purchase_reports','purchase','&reports','','','',0,0,'');
+insert into `0_menu` values ('default','supplier_reports','purchase_reports','supplier and purchasing &reports','reporting/reports_main.php?class=1','sa_supptransview','report',0,0,'');
+insert into `0_menu` values ('default','inventory','','&inventory','','','',0,0,'');
+insert into `0_menu` values ('default','inventory_items','inventory','&items','','','',0,0,'');
+insert into `0_menu` values ('default','search_items','inventory_items','&items','inventory/manage/search_items.php?','sa_item','index',0,0,'');
+insert into `0_menu` values ('default','items','inventory_items','item entry','inventory/manage/items.php?','sa_item','entry',0,0,'');
+insert into `0_menu` values ('default','item_categories','inventory_items','item &categories','inventory/manage/item_categories.php?','sa_itemcategory','maintenance',0,0,'');
+insert into `0_menu` values ('default','item_units','inventory_items','&units of measure','inventory/manage/item_units.php?','sa_uom','maintenance',0,0,'');
+insert into `0_menu` values ('default','sales_kits','inventory_items','sales &kits','inventory/manage/sales_kits.php?','sa_saleskit','maintenance',0,0,'');
+insert into `0_menu` values ('default','item_codes','inventory_items','&foreign item codes','inventory/manage/item_codes.php?','sa_foritemcode','maintenance',0,0,'');
+insert into `0_menu` values ('default','inv_movements','inventory','transfers / adjustments','','','',0,0,'');
+insert into `0_menu` values ('default','item_movements','inv_movements','item &movements','inventory/inquiry/stock_movements.php?','sa_itemstransview','inquiry',0,0,'');
+insert into `0_menu` values ('default','item_transfer','inv_movements','location &transfers','inventory/transfers.php?newtransfer=1','sa_locationtransfer','entry',0,0,'');
+insert into `0_menu` values ('default','item_adjustment','inv_movements','&adjustments','inventory/adjustments.php?newadjustment=1','sa_inventoryadjustment','entry',0,0,'');
+insert into `0_menu` values ('default','locations','inv_movements','&locations','inventory/manage/locations.php?','sa_inventorylocation','maintenance',0,0,'');
+insert into `0_menu` values ('default','movement_types','inv_movements','&movement types','inventory/manage/movement_types.php?','sa_inventorymovetype','maintenance',0,0,'');
+insert into `0_menu` values ('default','inv_status','inventory','status','','','',0,0,'');
+insert into `0_menu` values ('default','item_status','inv_status','item &status','inventory/inquiry/stock_status.php?','sa_itemsstatview','inquiry',0,0,'');
+insert into `0_menu` values ('default','reorder_levels','inv_status','&reorder levels','inventory/reorder_level.php?','sa_reorder','maintenance',0,0,'');
+insert into `0_menu` values ('default','pricing','inventory','pricing','','','',0,0,'');
+insert into `0_menu` values ('default','pricing_sales','pricing','sales &pricing','inventory/prices.php?','sa_salesprice','maintenance',0,0,'');
+insert into `0_menu` values ('default','pricing_purchase','pricing','purchasing &pricing','inventory/purchasing_data.php?','sa_purchasepricing','maintenance',0,0,'');
+insert into `0_menu` values ('default','standard_costs','pricing','standard &costs','inventory/cost_update.php?','sa_standardcost','maintenance',0,0,'');
+insert into `0_menu` values ('default','inventory_reports','inventory','&reports','','','',0,0,'');
+insert into `0_menu` values ('default','item_reports','inventory_reports','item &reports','reporting/reports_main.php?class=2','sa_itemstransview','report',0,0,'');
+insert into `0_menu` values ('default','manufacturing','','&manufacturing','','','',0,0,'');
+insert into `0_menu` values ('default','work_orders','manufacturing','work orders','','','',0,0,'');
+insert into `0_menu` values ('default','work_order_inquiry','work_orders','work order &inquiry','manufacturing/search_work_orders.php?','sa_manuftransview','inquiry',0,0,'');
+insert into `0_menu` values ('default','work_orders_out','work_orders','&outstanding work orders','manufacturing/search_work_orders.php?outstanding_only=1','a_manuftransview','inquiry',0,0,'');
+insert into `0_menu` values ('default','work_order_entry','work_orders','work &order entry','manufacturing/work_order_entry.php?','sa_workorderentry','entry',0,0,'');
+insert into `0_menu` values ('default','man_bom','manufacturing','&bills of material','','','',0,0,'');
+insert into `0_menu` values ('default','bom','man_bom','&bills of material','manufacturing/manage/bom_edit.php?','sa_bom','index',0,0,'');
+insert into `0_menu` values ('default','bom_costed','man_bom','costed bill of material inquiry','manufacturing/inquiry/bom_cost_inquiry.php?','sa_workordercost','inquiry',0,0,'');
+insert into `0_menu` values ('default','bom_used','man_bom','inventory item where used &inquiry','manufacturing/inquiry/where_used_inquiry.php?','sa_workorderanalytic','inquiry',0,0,'');
+insert into `0_menu` values ('default','work_centres','man_bom','&work centres','manufacturing/manage/work_centres.php?','sa_workcentres','maintenance',0,0,'');
+insert into `0_menu` values ('default','man_reports','manufacturing','reports','','','',0,0,'');
+insert into `0_menu` values ('default','manufacturing_reports','man_reports','manufacturing &reports','reporting/reports_main.php?class=3','sa_manuftransview','report',0,0,'');
+insert into `0_menu` values ('default','gl','','&general ledger','','','',0,0,'');
+insert into `0_menu` values ('default','journal','gl','journal','','','',0,0,'');
+insert into `0_menu` values ('default','journal_inquiry','journal','&journal inquiry','gl/inquiry/journal_inquiry.php?','sa_glanalytic','inquiry',0,0,'');
+insert into `0_menu` values ('default','journal_entry','journal','&journal entry','gl/gl_journal.php?newjournal=yes','sa_journalentry','entry',0,0,'');
+insert into `0_menu` values ('default','budget_entry','journal','&budget entry','gl/gl_budget.php?','sa_budgetentry','entry',0,0,'');
+insert into `0_menu` values ('default','accruals','journal','revenue / &costs accruals','gl/accruals.php?','sa_accruals','entry',0,0,'');
+insert into `0_menu` values ('default','banking','gl','banking','','','',0,0,'');
+insert into `0_menu` values ('default','bank_statement','banking','bank account &inquiry','gl/inquiry/bank_inquiry.php?','sa_banktransview','inquiry',0,0,'');
+insert into `0_menu` values ('default','deposit','banking','&deposits','gl/gl_bank.php?newdeposit=yes','sa_deposit','entry',0,0,'');
+insert into `0_menu` values ('default','payment','banking','&payments','gl/gl_bank.php?newpayment=yes','sa_payment','entry',0,0,'');
+insert into `0_menu` values ('default','transfer','banking','bank account &transfers','gl/bank_transfer.php?','sa_banktransfer','entry',0,0,'');
+insert into `0_menu` values ('default','bank_accounts','banking','bank &accounts','gl/manage/bank_accounts.php?','sa_bankaccount','maintenance',0,0,'');
+insert into `0_menu` values ('default','bank_account_reconcile','banking','&reconcile bank account','gl/bank_account_reconcile.php?','sa_reconcile','maintenance',0,0,'');
+insert into `0_menu` values ('default','taxes','gl','taxes','','','',0,0,'');
+insert into `0_menu` values ('default','tax_inquiry','taxes','ta&x inquiry','gl/inquiry/tax_inquiry.php?','sa_taxrep','inquiry',0,0,'');
+insert into `0_menu` values ('default','tax_types','taxes','&taxes','taxes/tax_types.php?','sa_taxrates','maintenance',0,0,'');
+insert into `0_menu` values ('default','tax_groups','taxes','tax &groups','taxes/tax_groups.php?','sa_taxgroups','maintenance',0,0,'');
+insert into `0_menu` values ('default','tax_items','taxes','item ta&x types','taxes/item_tax_types.php?','sa_itemtaxtype','maintenance',0,0,'');
+insert into `0_menu` values ('default','gl2','gl','genereal ledger','','','',0,0,'');
+insert into `0_menu` values ('default','gl_inquiry','gl2','gl &inquiry','gl/inquiry/gl_account_inquiry.php?','sa_gltransview','inquiry',0,0,'');
+insert into `0_menu` values ('default','trial_balance','gl2','trial &balance','gl/inquiry/gl_trial_balance.php?','sa_glanalytic','report',0,0,'');
+insert into `0_menu` values ('default','balance_sheet','gl2','balance &sheet drilldown','gl/inquiry/balance_sheet.php?','sa_glanalytic','report',0,0,'');
+insert into `0_menu` values ('default','profit_loss','gl2','&profit and loss drilldown','gl/inquiry/profit_loss.php?','sa_glanalytic','report',0,0,'');
+insert into `0_menu` values ('default','gl_accounts','gl','gl accounts','','','',0,0,'');
+insert into `0_menu` values ('default','gl_account_analytic','gl_accounts','&gl accounts','gl/manage/gl_accounts.php?','sa_glaccount','index',0,0,'');
+insert into `0_menu` values ('default','gl_account_groups','gl_accounts','gl account &groups','gl/manage/gl_account_types.php?','sa_glaccountgroup','maintenance',1,0,'');
+insert into `0_menu` values ('default','gl_account_classes','gl_accounts','gl account &classes','gl/manage/gl_account_classes.php?','sa_glaccountclass','maintenance',-1,0,'');
+insert into `0_menu` values ('default','gl_account_tags','gl_accounts','account &tags','admin/tags.php?type=account','sa_glaccounttags','maintenance',0,0,'');
+insert into `0_menu` values ('default','gl_currencies','gl','exchange rates','','','',0,0,'');
+insert into `0_menu` values ('default','exchange_rates','gl_currencies','&exchange rates','gl/manage/exchange_rates.php?','sa_exchangerate','',0,0,'');
+insert into `0_menu` values ('default','currencies','gl_currencies','&currencies','gl/manage/currencies.php?','sa_currency','maintenance',0,0,'');
+insert into `0_menu` values ('default','currency_revaluate','gl_currencies','&revaluation of currency accounts','gl/manage/revaluate_currencies.php?','sa_exchangerate','maintenance',0,0,'');
+insert into `0_menu` values ('default','dimensions','gl','&dimensions','','','',0,0,'');
+insert into `0_menu` values ('default','dimension_inquiry','dimensions','dimension &inquiry','dimensions/inquiry/search_dimensions.php?','sa_dimtransview','inquiry',0,0,'');
+insert into `0_menu` values ('default','dimensions_out','dimensions','&outstanding dimensions','dimensions/inquiry/search_dimensions.php?outstanding_only=1','sa_dimtransview','inquiry',0,0,'');
+insert into `0_menu` values ('default','dimension_entry','dimensions','dimension &entry','dimensions/dimension_entry.php?','sa_dimension','entry',0,0,'');
+insert into `0_menu` values ('default','dimension_tags','dimensions','dimension &tags','admin/tags.php?type=dimension','sa_dimtags','maintenance',0,0,'');
+insert into `0_menu` values ('default','dimension_reports','dimensions','dimension &reports','reporting/reports_main.php?class=4','sa_dimensionrep','',0,0,'');
+insert into `0_menu` values ('default','gl_reports','gl','reports','','','',0,0,'');
+insert into `0_menu` values ('default','ledger_reports','gl_reports','general ledger &reports','reporting/reports_main.php?class=6','sa_glrep','report',0,0,'');
+insert into `0_menu` values ('default','banking_reports','gl_reports','banking &reports','reporting/reports_main.php?class=5','sa_bankrep','report',0,0,'');
+insert into `0_menu` values ('default','setup','','s&etup','','','',0,0,'');
+insert into `0_menu` values ('default','setup_company','setup','general','','','setup',0,0,'');
+insert into `0_menu` values ('default','company_setup','setup_company','&company setup','admin/company_preferences.php?','sa_setupcompany','setup',0,0,'');
+insert into `0_menu` values ('default','gl_setup','setup_company','system and &general gl setup','admin/gl_setup.php?','sa_glsetup','setup',0,0,'');
+insert into `0_menu` values ('default','forms_setup','setup_company','&forms setup','admin/forms_setup.php?','sa_formsetup','setup',0,0,'');
+insert into `0_menu` values ('default','setup_display','setup','&display','','','',0,0,'');
+insert into `0_menu` values ('default','display_setup','setup_display','&display setup','admin/display_prefs.php?','sa_setupdisplay','setup',0,0,'');
+insert into `0_menu` values ('default','print_profiles','setup_display','&print profiles','admin/print_profiles.php?','sa_printprofile','setup',0,0,'');
+insert into `0_menu` values ('default','printers','setup_display','&printers','admin/printers.php?','sa_printers','maintenance',0,0,'');
+insert into `0_menu` values ('default','setup_fiscal_years','setup','&fiscal years','admin/fiscalyears.php?','sa_fiscalyears','maintenance',0,0,'');
+insert into `0_menu` values ('default','fiscal_years','setup_fiscal_years','&fiscal years','admin/fiscalyears.php?','sa_fiscalyears','maintenance',0,0,'');
+insert into `0_menu` values ('default','sales_setup','setup','sales','','','',0,0,'');
+insert into `0_menu` values ('default','sales_persons','sales_setup','sales &persons','sales/manage/sales_people.php?','sa_salesman','maintenance',0,0,'');
+insert into `0_menu` values ('default','sales_groups','sales_setup','sales &groups','sales/manage/sales_groups.php?','sa_salesgroup','maintenance',0,0,'');
+insert into `0_menu` values ('default','sales_types','sales_setup','sales t&ypes','sales/manage/sales_types.php?','sa_salestypes','maintenance',0,0,'');
+insert into `0_menu` values ('default','sales_areas','sales_setup','sales &areas','sales/manage/sales_areas.php?','sa_salesarea','maintenance',0,0,'');
+insert into `0_menu` values ('default','sales_credits','sales_setup','credit &status setup','sales/manage/credit_status.php?','sa_crstatus','maintenance',0,0,'');
+insert into `0_menu` values ('default','payment_setup','sales_setup','pa&yment terms','admin/payment_terms.php?','sa_payterms','maintenance',0,0,'');
+insert into `0_menu` values ('default','shipping_companies','sales_setup','shi&pping company','admin/shipping_companies.php?','sa_shipping','maintenance',0,0,'');
+insert into `0_menu` values ('default','setup_users','setup','&users','','','',0,0,'');
+insert into `0_menu` values ('default','change_password','setup_users','change password','admin/change_current_user_password.php?','sa_users','setup',0,0,'');
+insert into `0_menu` values ('default','user_setup','setup_users','&user accounts setup','admin/users.php?','sa_users','setup',0,0,'');
+insert into `0_menu` values ('default','access_setup','setup_users','&access setup','admin/security_roles.php?','sa_secroles','setup',0,0,'');
+insert into `0_menu` values ('default','setup_trans','setup','transactions','','','',0,0,'');
+insert into `0_menu` values ('default','transactions','setup_trans','view or &print transactions','admin/view_print_transaction.php?','sa_viewprinttransaction','maintenance',0,0,'');
+insert into `0_menu` values ('default','void_transaction','setup_trans','&void a transaction','admin/void_transaction.php?','sa_voidtransaction','maintenance',0,0,'');
+insert into `0_menu` values ('default','attach_documents','setup_trans','&attach documents','admin/attachments.php?filtertype=20','sa_attachdocument','maintenance',0,0,'');
+insert into `0_menu` values ('default','quick_entries','setup_trans','&quick entries','gl/manage/gl_quick_entries.php?','sa_quickentry','maintenance',0,0,'');
+insert into `0_menu` values ('default','misc','setup','miscellaneous','','','',0,0,'');
+insert into `0_menu` values ('default','sales_points','misc','&points of sale','sales/manage/sales_points.php?','sa_possetup','maintenance',0,0,'');
+insert into `0_menu` values ('default','crm_categories','misc','contact &categories','admin/crm_categories.php?','sa_crmcategory','maintenance',0,0,'');
+insert into `0_menu` values ('default','setup_ext','setup','extensions','','','',0,0,'');
+insert into `0_menu` values ('default','backups','setup_ext','&backup and restore','admin/backups.php?','sa_backup','',0,0,'');
+insert into `0_menu` values ('default','companies','setup_ext','create/update &companies','admin/create_coy.php?','sa_createcompany','',0,0,'');
+insert into `0_menu` values ('default','languages','setup_ext','install/update &languages','admin/inst_lang.php?','sa_createlanguage','',0,0,'');
+insert into `0_menu` values ('default','modules','setup_ext','install/activate &extensions','admin/inst_module.php?','sa_createmodules','',0,0,'');
+insert into `0_menu` values ('default','themes','setup_ext','install/activate &themes','admin/inst_theme.php?','sa_createmodules','',0,0,'');
+insert into `0_menu` values ('default','charts','setup_ext','install/activate &chart of accounts','admin/inst_chart.php?','sa_createmodules','',0,0,'');
+insert into `0_menu` values ('default','upgrade','setup_ext','software &upgrade','admin/inst_upgrade.php?','sa_softwareupgrade','',0,0,'');
+insert into `0_menu` values ('default','diagnostic','setup_ext','system &diagnostics','admin/system_diagnostics.php?','sa_softwareupgrade','',0,0,'');
 
 -- --------------------------------------------------------
 
